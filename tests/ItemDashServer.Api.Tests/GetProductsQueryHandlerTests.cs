@@ -1,13 +1,10 @@
-﻿using Xunit;
-using FluentAssertions;
-using ItemDashServer.Application.Products;
+﻿using FluentAssertions;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Application.Products.Queries;
-using ItemDashServer.Application.Products.Handlers;
+using ItemDashServer.Application.Products.QueryHandlers;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using System.Threading;
-using System.Threading.Tasks;
+using ItemDashServer.Application;
 
 namespace ItemDashServer.Api.Tests
 {

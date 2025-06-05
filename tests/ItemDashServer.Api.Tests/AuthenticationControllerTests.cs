@@ -1,100 +1,184 @@
 ﻿using Xunit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using ItemDashServer.Api.Controllers;
-using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Domain.Entities;
+using Moq;
+using Moq.Async;
+using MediatR;
+using Moq.Language.Flow;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+using ItemDashServer.Api.Controllers;
+using ItemDashServer.Api.Services;
+using ItemDashServer.Application.Users.Queries;
+using ItemDashServer.Application.Users;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
+using Microsoft.Extensions.Configuration;
 
-namespace ItemDashServer.Api.Tests
+namespace ItemDashServer.Api.Tests;
+
+public class AuthenticationControllerTest
 {
-    public class AuthenticationControllerTests
+    private readonly Mock<IMediator> _mediatorMock = new();
+    private readonly Mock<ILogger<AuthenticationController>> _loggerMock = new();
+
+    private static JwtTokenService CreateJwtTokenService()
     {
-        private readonly ApplicationDbContext _dbContext;
-        private readonly IConfiguration _configuration;
-        private readonly AuthenticationController _controller;
+        var inMemorySettings = new Dictionary<string, string?>
+    {
+        {"JwtSettings:Secret", "supersecretkey1234567890supersecretkey1234567890"},
+        {"JwtSettings:Issuer", "TestIssuer"},
+        {"JwtSettings:Audience", "TestAudience"},
+        {"JwtSettings:ExpiryInMinutes", "60"}
+    };
+        var configuration = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings!)
+            .Build();
 
-        public AuthenticationControllerTests()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
-            _dbContext = new ApplicationDbContext(options);
+        return new JwtTokenService(configuration);
+    }
 
-            // Add a test user
-            var hmac = new System.Security.Cryptography.HMACSHA512();
-            var testUser = new User
-            {
-                Username = "testuser",
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("password")),
-                PasswordSalt = hmac.Key
-            };
-            _dbContext.Users.Add(testUser);
-            _dbContext.SaveChanges();
+    private AuthenticationController CreateController(JwtTokenService? jwtTokenService = null)
+    {
+        return new AuthenticationController(
+            _mediatorMock.Object,
+            jwtTokenService ?? CreateJwtTokenService(),
+            _loggerMock.Object
+        );
+    }
 
-            var inMemorySettings = new Dictionary<string, string?>
-            {
-                {"JwtSettings:Secret", "supersecretkeysupersecretkey123456"},
-                {"JwtSettings:ExpiryInMinutes", "60"},
-                {"JwtSettings:Issuer", "TestIssuer"},
-                {"JwtSettings:Audience", "TestAudience"}
-            };
-            _configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
-                .Build();
+    private static AuthenticationController.LoginRequest ValidLoginRequest =>
+        new("testuser", "testpass");
 
-            _controller = new AuthenticationController(_configuration, _dbContext);
-        }
+    private static UserDto GetUserDto() =>
+        new() { Id = 1, Username = "testuser" };
 
-        [Fact]
-        public void Login_WithValidCredentials_ReturnsTokenAndUser()
-        {
-            var request = new AuthenticationController.LoginRequest("testuser", "password");
-            var result = _controller.Login(request) as OkObjectResult;
+    [Fact]
+    public async Task Login_ValidCredentials_ReturnsOkWithTokenAndUserr()
+    {
+        var userDto = GetUserDto();
+        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult<(bool Success, UserDto? User)>((true, userDto)));
 
-            Assert.NotNull(result);
-            Assert.NotNull(result.Value);
+        var controller = CreateController();
 
-            var json = JsonSerializer.Serialize(result.Value);
-            using var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
+        var result = await controller.Login(ValidLoginRequest);
 
-            Assert.True(root.TryGetProperty("token", out _));
-            Assert.True(root.TryGetProperty("user", out var userProp));
-            Assert.Equal("testuser", userProp.GetProperty("Username").GetString());
-        }
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Equal(200, okResult.StatusCode);
+        dynamic response = okResult.Value!;
+        Assert.False(string.IsNullOrWhiteSpace((string)response.Token));
+        Assert.Equal(userDto.Id, (int)response.User.Id);
+        Assert.Equal(userDto.Username, (string)response.User.Username);
+    }
 
-        [Fact]
-        public void Login_WithInvalidCredentials_ReturnsUnauthorized()
-        {
-            var request = new AuthenticationController.LoginRequest("testuser", "wrongpassword");
-            var result = _controller.Login(request);
+    [Fact]
+    public void JwtTokenService_GeneratesToken()
+    {
+        var service = CreateJwtTokenService();
+        var token = service.GenerateJwtToken("testuser");
+        Assert.False(string.IsNullOrWhiteSpace(token));
+    }
 
-            Assert.IsType<UnauthorizedResult>(result);
-        }
+    [Fact]
+    public async Task Login_InvalidCredentials_ReturnsUnauthorized()
+    {
+        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((false, null));
 
-        [Fact]
-        public void Register_WithNewUsername_ReturnsOk()
-        {
-            var request = new AuthenticationController.LoginRequest("newuser", "newpassword");
-            var result = _controller.Register(request);
+        var controller = CreateController();
 
-            Assert.IsType<OkResult>(result);
-            Assert.NotNull(_dbContext.Users.SingleOrDefault(u => u.Username == "newuser"));
-        }
+        var result = await controller.Login(ValidLoginRequest);
 
-        [Fact]
-        public void Register_WithExistingUsername_ReturnsBadRequest()
-        {
-            var request = new AuthenticationController.LoginRequest("testuser", "password");
-            var result = _controller.Register(request) as BadRequestObjectResult;
+        Assert.IsType<UnauthorizedResult>(result.Result);
+    }
 
-            Assert.NotNull(result);
-            Assert.Equal("Username already exists.", result.Value);
-        }
+    [Fact]
+    public async Task Login_ExceptionThrown_ReturnsInternalServerError()
+    {
+        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception("fail"));
+
+        var controller = CreateController();
+
+        var result = await controller.Login(ValidLoginRequest);
+
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+        Assert.Equal("Internal server error", objectResult.Value);
+    }
+
+    [Fact]
+    public async Task Login_InvalidModelState_ReturnsBadRequest()
+    {
+        var controller = CreateController();
+        controller.ModelState.AddModelError("Username", "Required");
+
+        var result = await controller.Login(new AuthenticationController.LoginRequest(string.Empty, "pass"));
+
+        Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Register_Success_ReturnsOkWithUser()
+    {
+        var userDto = GetUserDto();
+        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(userDto);
+
+        var controller = CreateController();
+
+        var result = await controller.Register(ValidLoginRequest);
+
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnedUser = Assert.IsType<UserDto>(okResult.Value);
+        Assert.Equal(userDto.Id, returnedUser.Id);
+        Assert.Equal(userDto.Username, returnedUser.Username);
+    }
+
+    [Fact]
+    public async Task Register_UsernameExists_ReturnsBadRequest()
+    {
+        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("Username already exists."));
+
+        var controller = CreateController();
+
+        var result = await controller.Register(ValidLoginRequest);
+
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+        Assert.Equal("Username already exists.", badRequest.Value);
+    }
+
+    [Fact]
+    public async Task Register_ExceptionThrown_ReturnsInternalServerError()
+    {
+        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception("fail"));
+
+        var controller = CreateController();
+
+        var result = await controller.Register(ValidLoginRequest);
+
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+        Assert.Equal("Internal server error", objectResult.Value);
+    }
+
+    [Fact]
+    public async Task Register_InvalidModelState_ReturnsBadRequest()
+    {
+        var controller = CreateController();
+        controller.ModelState.AddModelError("Username", "Required");
+
+        var result = await controller.Register(new AuthenticationController.LoginRequest(string.Empty, "pass"));
+
+        Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    // Minimal DTO for test context
+    public class LoginResponseDto
+    {
+        public required string Token { get; set; }
+        public required UserDto User { get; set; }
     }
 }
