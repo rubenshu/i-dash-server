@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Api", "ItemD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2ECA5B05-F2E1-45A9-AB85-9B3533160024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application.Tests", "tests\ItemDashServer.Application.Tests\ItemDashServer.Application.Tests.csproj", "{877B0A2B-C731-4677-A27E-BB2902B5A3A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application.Tests", "tests\ItemDashServer.Api.Tests\ItemDashServer.Api.Tests.csproj", "{877B0A2B-C731-4677-A27E-BB2902B5A3A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
