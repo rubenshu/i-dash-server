@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Domain", "ItemDashServer.Domain\ItemDashServer.Domain.csproj", "{604F51FA-7A54-457E-B579-1DB8E094BB78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Infrastructure", "ItemDashServer.Infrastructure\ItemDashServer.Infrastructure.csproj", "{E90668BF-20F9-43E0-992E-75BC13359923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application", "ItemDashServer.Application\ItemDashServer.Application.csproj", "{D58B735C-F7A2-44EB-9664-130926414DD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Api", "ItemDashServer.Api\ItemDashServer.Api.csproj", "{1E2E83BD-0911-4102-81D8-F85DB56C781B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2ECA5B05-F2E1-45A9-AB85-9B3533160024}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application.Tests", "tests\ItemDashServer.Application.Tests\ItemDashServer.Application.Tests.csproj", "{877B0A2B-C731-4677-A27E-BB2902B5A3A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{604F51FA-7A54-457E-B579-1DB8E094BB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604F51FA-7A54-457E-B579-1DB8E094BB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604F51FA-7A54-457E-B579-1DB8E094BB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604F51FA-7A54-457E-B579-1DB8E094BB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E90668BF-20F9-43E0-992E-75BC13359923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E90668BF-20F9-43E0-992E-75BC13359923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E90668BF-20F9-43E0-992E-75BC13359923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E90668BF-20F9-43E0-992E-75BC13359923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D58B735C-F7A2-44EB-9664-130926414DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58B735C-F7A2-44EB-9664-130926414DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58B735C-F7A2-44EB-9664-130926414DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58B735C-F7A2-44EB-9664-130926414DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E2E83BD-0911-4102-81D8-F85DB56C781B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E2E83BD-0911-4102-81D8-F85DB56C781B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E2E83BD-0911-4102-81D8-F85DB56C781B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E2E83BD-0911-4102-81D8-F85DB56C781B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{877B0A2B-C731-4677-A27E-BB2902B5A3A8} = {2ECA5B05-F2E1-45A9-AB85-9B3533160024}
+	EndGlobalSection
+EndGlobal

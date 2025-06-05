@@ -1,0 +1,1033 @@
+2025-06-05 09:49:16.077 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 09:49:16.151 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 09:49:44.204 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 09:49:45.480 +02:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 09:49:45.495 +02:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 09:49:45.498 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 09:49:45.501 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 09:49:45.514 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-06-05 09:49:45.524 +02:00 [INF] Applying migration '20250605074919_AddUserTable'.
+2025-06-05 09:49:45.549 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Username] nvarchar(450) NOT NULL,
+    [PasswordHash] varbinary(max) NOT NULL,
+    [PasswordSalt] varbinary(max) NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-06-05 09:49:45.561 +02:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Username] ON [Users] ([Username]);
+2025-06-05 09:49:45.564 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250605074919_AddUserTable', N'8.0.0');
+2025-06-05 09:55:26.403 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 09:55:26.887 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 09:55:26.889 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 09:55:26.891 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 09:55:26.893 +02:00 [INF] Hosting environment: Development
+2025-06-05 09:55:26.894 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 09:55:28.135 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 09:55:28.298 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 53.7974 ms
+2025-06-05 09:55:28.303 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 170.9788ms
+2025-06-05 09:55:28.321 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 09:55:28.335 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 13.8765ms
+2025-06-05 09:55:28.353 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 09:55:28.391 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 38.3574ms
+2025-06-05 09:55:28.463 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 09:55:28.521 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 55.5881 ms
+2025-06-05 09:55:28.525 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 62.2881ms
+2025-06-05 10:04:20.419 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/.well-known/appspecific/com.chrome.devtools.json - null null
+2025-06-05 10:04:22.639 +02:00 [INF] HTTP GET /.well-known/appspecific/com.chrome.devtools.json responded 404 in 2207.6911 ms
+2025-06-05 10:04:22.647 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/.well-known/appspecific/com.chrome.devtools.json - 404 0 null 2227.2765ms
+2025-06-05 10:04:22.664 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7126/.well-known/appspecific/com.chrome.devtools.json, Response status code: 404
+2025-06-05 10:04:26.646 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/register - application/json 50
+2025-06-05 10:04:26.666 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api)'
+2025-06-05 10:04:26.708 +02:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Register(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:04:28.322 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 10:04:30.061 +02:00 [INF] Executed DbCommand (121ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Username] = @__request_Username_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 10:04:30.256 +02:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (Size = 8000) (DbType = Binary), @p1='?' (Size = 8000) (DbType = Binary), @p2='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([PasswordHash], [PasswordSalt], [Username])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2025-06-05 10:04:30.288 +02:00 [INF] Executing StatusCodeResult, setting HTTP status code 200
+2025-06-05 10:04:30.296 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api) in 3575.5927ms
+2025-06-05 10:04:30.300 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api)'
+2025-06-05 10:04:30.302 +02:00 [INF] HTTP POST /api/v1/auth/register responded 200 in 3645.9312 ms
+2025-06-05 10:04:30.314 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/register - 200 0 null 3668.0817ms
+2025-06-05 10:05:05.600 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/register - null null
+2025-06-05 10:05:05.610 +02:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2025-06-05 10:05:05.611 +02:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2025-06-05 10:05:05.613 +02:00 [INF] HTTP OPTIONS /api/v1/auth/register responded 405 in 5.1618 ms
+2025-06-05 10:05:05.615 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/register - 405 0 null 15.6512ms
+2025-06-05 10:10:04.274 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 10:10:04.982 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 10:10:04.984 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 10:10:04.986 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 10:10:04.987 +02:00 [INF] Hosting environment: Development
+2025-06-05 10:10:04.989 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 10:10:06.495 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 10:10:06.674 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 49.9891 ms
+2025-06-05 10:10:06.681 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 188.8016ms
+2025-06-05 10:10:06.682 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 10:10:06.695 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 12.358ms
+2025-06-05 10:10:06.695 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 10:10:06.727 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 31.5182ms
+2025-06-05 10:10:06.748 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 10:10:06.804 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 52.6366 ms
+2025-06-05 10:10:06.807 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 59.9003ms
+2025-06-05 10:10:20.734 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/register - null null
+2025-06-05 10:10:20.746 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:10:20.750 +02:00 [INF] HTTP OPTIONS /api/v1/auth/register responded 204 in 8.3813 ms
+2025-06-05 10:10:20.754 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/register - 204 null null 19.5829ms
+2025-06-05 10:10:20.757 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/register - application/json 69
+2025-06-05 10:10:20.772 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:10:23.123 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api)'
+2025-06-05 10:10:23.156 +02:00 [INF] Route matched with {action = "Register", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Register(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:10:24.845 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 10:10:26.943 +02:00 [INF] Executed DbCommand (179ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Username] = @__request_Username_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 10:10:27.155 +02:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (Size = 8000) (DbType = Binary), @p1='?' (Size = 8000) (DbType = Binary), @p2='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([PasswordHash], [PasswordSalt], [Username])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2025-06-05 10:10:27.189 +02:00 [INF] Executing StatusCodeResult, setting HTTP status code 200
+2025-06-05 10:10:27.196 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api) in 4030.1721ms
+2025-06-05 10:10:27.200 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Register (ItemDashServer.Api)'
+2025-06-05 10:10:27.202 +02:00 [INF] HTTP POST /api/v1/auth/register responded 200 in 6430.9998 ms
+2025-06-05 10:10:27.215 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/register - 200 0 null 6457.9403ms
+2025-06-05 10:15:22.937 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 10:15:22.947 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:15:22.949 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 2.7882 ms
+2025-06-05 10:15:22.954 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 18.5091ms
+2025-06-05 10:15:22.962 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 10:15:22.972 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:15:22.976 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:15:22.982 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:15:23.085 +02:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 10:15:23.258 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 10:15:23.268 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 279.5236ms
+2025-06-05 10:15:23.274 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:15:23.276 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 303.3342 ms
+2025-06-05 10:15:23.280 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 318.1427ms
+2025-06-05 10:18:49.390 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:18:49.398 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:18:49.400 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 2.5307 ms
+2025-06-05 10:18:49.404 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 14.8965ms
+2025-06-05 10:18:49.411 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:18:49.417 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:18:49.424 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:18:49.430 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:18:49.432 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 15.3692 ms
+2025-06-05 10:18:49.437 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 25.2115ms
+2025-06-05 10:31:34.505 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:31:34.517 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:31:34.518 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.6921 ms
+2025-06-05 10:31:34.522 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 17.391ms
+2025-06-05 10:31:34.527 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:31:34.541 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:31:34.546 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:31:34.550 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:31:34.553 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 12.1201 ms
+2025-06-05 10:31:34.560 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 32.3639ms
+2025-06-05 10:31:45.583 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:31:45.588 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:31:45.589 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.3173 ms
+2025-06-05 10:31:45.591 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 8.7086ms
+2025-06-05 10:31:45.593 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:31:45.598 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:31:45.600 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:31:45.603 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:31:45.605 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 7.3207 ms
+2025-06-05 10:31:45.609 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 15.6853ms
+2025-06-05 10:32:12.784 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:32:12.793 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:12.795 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2514 ms
+2025-06-05 10:32:12.797 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 13.4104ms
+2025-06-05 10:32:12.802 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:32:12.807 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:12.821 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:32:12.853 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:32:12.856 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:32:12.861 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:32:12.864 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 57.4156 ms
+2025-06-05 10:32:12.868 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 65.6005ms
+2025-06-05 10:32:40.512 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:32:40.523 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:40.525 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2465 ms
+2025-06-05 10:32:40.527 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 15.7295ms
+2025-06-05 10:32:40.529 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:32:40.534 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:40.535 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:32:40.537 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:32:40.539 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:32:40.540 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:32:40.541 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 7.5286 ms
+2025-06-05 10:32:40.544 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 14.5951ms
+2025-06-05 10:32:47.964 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:32:47.971 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:47.973 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 2.4005 ms
+2025-06-05 10:32:47.977 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.9698ms
+2025-06-05 10:32:47.980 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/products - application/json 2
+2025-06-05 10:32:47.988 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:32:47.989 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:32:47.992 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:32:47.993 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:32:47.994 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:32:47.996 +02:00 [INF] HTTP POST /api/v1/products responded 401 in 7.6516 ms
+2025-06-05 10:32:47.998 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/products - 401 0 null 18.4778ms
+2025-06-05 10:35:15.503 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:15.514 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:15.516 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.6889 ms
+2025-06-05 10:35:15.519 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 16.5782ms
+2025-06-05 10:35:15.526 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:15.535 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:15.537 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:35:15.542 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:35:15.545 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:35:15.547 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:35:15.550 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 14.6229 ms
+2025-06-05 10:35:15.555 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 28.8196ms
+2025-06-05 10:35:21.528 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:21.531 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:21.532 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.0524 ms
+2025-06-05 10:35:21.536 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 8.1164ms
+2025-06-05 10:35:21.538 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:21.544 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:21.545 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:35:21.547 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:35:21.548 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:35:21.550 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:35:21.551 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 7.5674 ms
+2025-06-05 10:35:21.554 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 16.6717ms
+2025-06-05 10:35:49.530 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:49.539 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:49.541 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 2.1654 ms
+2025-06-05 10:35:49.545 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 14.7467ms
+2025-06-05 10:35:49.553 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:49.564 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:49.565 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:35:49.568 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:35:49.570 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:35:49.571 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:35:49.572 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 7.8986 ms
+2025-06-05 10:35:49.574 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 21.5451ms
+2025-06-05 10:35:52.567 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:35:52.573 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:52.574 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:35:52.577 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:35:52.578 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:35:52.580 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:35:52.581 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 8.2349 ms
+2025-06-05 10:35:52.583 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 16.1844ms
+2025-06-05 10:35:57.335 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 10:35:57.341 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:57.342 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.5019 ms
+2025-06-05 10:35:57.345 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 9.9348ms
+2025-06-05 10:35:57.346 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 10:35:57.352 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:35:57.353 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:35:57.354 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:35:57.453 +02:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 10:35:57.460 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 10:35:57.462 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 106.0525ms
+2025-06-05 10:35:57.468 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:35:57.471 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 119.7756 ms
+2025-06-05 10:35:57.476 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 129.5577ms
+2025-06-05 10:36:03.724 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:36:03.730 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:36:03.732 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.7228 ms
+2025-06-05 10:36:03.736 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.5809ms
+2025-06-05 10:36:03.740 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:36:03.749 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:36:03.751 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:36:03.759 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:36:03.763 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:36:03.765 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:36:03.767 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 17.6615 ms
+2025-06-05 10:36:03.769 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 29.7257ms
+2025-06-05 10:39:20.042 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:39:20.113 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:39:20.125 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 10:39:20.312 +02:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 10:39:20.342 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 10:39:20.361 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 229.4709ms
+2025-06-05 10:39:20.367 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:39:20.372 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 317.4154 ms
+2025-06-05 10:39:20.378 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 337.9745ms
+2025-06-05 10:41:28.888 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 10:41:29.600 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 10:41:29.602 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 10:41:29.605 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 10:41:29.607 +02:00 [INF] Hosting environment: Development
+2025-06-05 10:41:29.610 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 10:41:31.105 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 10:41:31.284 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 46.9005 ms
+2025-06-05 10:41:31.289 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 188.5015ms
+2025-06-05 10:41:31.299 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 10:41:31.309 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 10.869ms
+2025-06-05 10:41:31.310 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 10:41:31.342 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 32.1412ms
+2025-06-05 10:41:31.365 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 10:41:31.420 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 53.1152 ms
+2025-06-05 10:41:31.423 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 58.674ms
+2025-06-05 10:41:37.448 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:41:37.462 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:37.465 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 6.6184 ms
+2025-06-05 10:41:37.468 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 19.8172ms
+2025-06-05 10:41:37.471 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:41:37.482 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:39.801 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:41:39.835 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:41:39.842 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:41:39.848 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:41:39.850 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 2369.0608 ms
+2025-06-05 10:41:39.853 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 2382.8129ms
+2025-06-05 10:41:43.359 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:41:43.366 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:43.367 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 2.2553 ms
+2025-06-05 10:41:43.371 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.3745ms
+2025-06-05 10:41:43.375 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:41:43.388 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:43.395 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:41:43.401 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:41:43.406 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:41:43.412 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:41:43.416 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 28.3855 ms
+2025-06-05 10:41:43.421 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 46.0167ms
+2025-06-05 10:41:50.241 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 10:41:50.247 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:50.248 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.3415 ms
+2025-06-05 10:41:50.251 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 9.7437ms
+2025-06-05 10:41:50.253 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 10:41:50.265 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:41:50.274 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:41:50.317 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:41:51.903 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 10:41:54.059 +02:00 [INF] Executed DbCommand (169ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 10:41:54.172 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 10:41:54.184 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 3853.8427ms
+2025-06-05 10:41:54.187 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:41:54.190 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 3925.4568 ms
+2025-06-05 10:41:54.203 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 3950.1311ms
+2025-06-05 10:42:01.916 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:42:01.922 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:42:01.924 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 2.3398 ms
+2025-06-05 10:42:01.927 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.121ms
+2025-06-05 10:42:01.930 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:42:01.939 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:42:01.941 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:42:01.947 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:42:01.952 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:42:01.955 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:42:01.958 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 18.6168 ms
+2025-06-05 10:42:01.965 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 35.856ms
+2025-06-05 10:42:15.557 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:42:15.619 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:42:15.629 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 10:42:15.844 +02:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 10:42:15.882 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 10:42:15.903 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 269.2105ms
+2025-06-05 10:42:15.912 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:42:15.916 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 351.8001 ms
+2025-06-05 10:42:15.921 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 364.2588ms
+2025-06-05 10:47:23.203 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 10:47:23.383 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 10:47:23.384 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 10:47:23.386 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 10:47:23.387 +02:00 [INF] Hosting environment: Development
+2025-06-05 10:47:23.389 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 10:47:27.537 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 10:47:27.676 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 47.1386 ms
+2025-06-05 10:47:27.683 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 148.286ms
+2025-06-05 10:47:27.731 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 10:47:27.736 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 10:47:27.744 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 13.8613ms
+2025-06-05 10:47:27.770 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.1773ms
+2025-06-05 10:47:27.885 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 10:47:27.942 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 52.9055 ms
+2025-06-05 10:47:27.944 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 59.8458ms
+2025-06-05 10:49:10.032 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:49:10.052 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:10.056 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 9.3190 ms
+2025-06-05 10:49:10.065 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 32.918ms
+2025-06-05 10:49:10.069 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:49:10.082 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:10.229 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:49:10.308 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:49:10.321 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:49:10.332 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:49:10.336 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 255.0300 ms
+2025-06-05 10:49:10.342 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 273.6147ms
+2025-06-05 10:49:15.596 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 10:49:15.600 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:15.603 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 3.4964 ms
+2025-06-05 10:49:15.607 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 11.9464ms
+2025-06-05 10:49:15.609 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 10:49:15.616 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:15.624 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:49:15.654 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 10:49:16.451 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 10:49:17.403 +02:00 [INF] Executed DbCommand (48ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 10:49:17.530 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 10:49:17.545 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 1879.2963ms
+2025-06-05 10:49:17.551 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 10:49:17.554 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 1938.4311 ms
+2025-06-05 10:49:17.569 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 1959.5086ms
+2025-06-05 10:49:23.098 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:49:23.106 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:23.108 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.7835 ms
+2025-06-05 10:49:23.112 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 14.3855ms
+2025-06-05 10:49:23.115 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:49:23.126 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:49:23.131 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:49:23.137 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:49:23.142 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:49:23.146 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:49:23.149 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 23.0997 ms
+2025-06-05 10:49:23.153 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 38.6751ms
+2025-06-05 10:50:22.313 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:50:22.321 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:50:22.322 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.3308 ms
+2025-06-05 10:50:22.324 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 11.842ms
+2025-06-05 10:50:22.327 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:50:22.334 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:50:22.337 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:50:22.341 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:50:22.343 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:50:22.345 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:50:22.346 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 12.3310 ms
+2025-06-05 10:50:22.349 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 21.95ms
+2025-06-05 10:51:36.273 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:51:36.286 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:51:36.287 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2443 ms
+2025-06-05 10:51:36.289 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 19.6576ms
+2025-06-05 10:51:36.291 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:51:36.297 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:51:36.299 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:51:36.302 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:51:36.304 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:51:36.305 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:51:36.307 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 9.2593 ms
+2025-06-05 10:51:36.309 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 18.2762ms
+2025-06-05 10:52:08.865 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:52:08.875 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:52:08.876 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.1178 ms
+2025-06-05 10:52:08.880 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 14.7873ms
+2025-06-05 10:52:08.882 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:52:08.886 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:52:08.887 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:52:08.889 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:52:08.890 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:52:08.891 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:52:08.893 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 6.7761 ms
+2025-06-05 10:52:08.895 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 12.9027ms
+2025-06-05 10:52:28.148 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:52:28.153 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:52:28.154 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2774 ms
+2025-06-05 10:52:28.157 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 9.3977ms
+2025-06-05 10:52:28.159 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:52:28.163 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:52:28.164 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:52:28.167 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:52:28.168 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:52:28.169 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:52:28.170 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 7.1233 ms
+2025-06-05 10:52:28.177 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 18.1623ms
+2025-06-05 10:53:04.082 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:53:04.094 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:53:04.095 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.5901 ms
+2025-06-05 10:53:04.098 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 18.0524ms
+2025-06-05 10:53:04.106 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:53:04.121 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:53:04.122 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:53:04.126 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:53:04.127 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:53:04.128 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:53:04.130 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 9.2757 ms
+2025-06-05 10:53:04.134 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 27.7328ms
+2025-06-05 10:53:15.823 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:53:15.830 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:53:15.832 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.7459 ms
+2025-06-05 10:53:15.835 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.9576ms
+2025-06-05 10:53:15.839 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:53:15.845 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:53:15.846 +02:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2025-06-05 10:53:15.849 +02:00 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2025-06-05 10:53:15.850 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 10:53:15.851 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 10:53:15.853 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 8.5160 ms
+2025-06-05 10:53:15.856 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 18.0226ms
+2025-06-05 10:54:37.087 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:54:37.098 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:54:37.099 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2488 ms
+2025-06-05 10:54:37.101 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 14.6555ms
+2025-06-05 10:54:37.107 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:54:37.113 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:54:37.130 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:37.135 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 10:54:37.231 +02:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 10:54:37.242 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 10:54:37.247 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 108.5166ms
+2025-06-05 10:54:37.250 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:37.251 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 137.8222 ms
+2025-06-05 10:54:37.254 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 147.9572ms
+2025-06-05 10:54:38.415 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:54:38.419 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:54:38.423 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:38.425 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 10:54:38.472 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 10:54:38.475 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 10:54:38.477 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 48.8583ms
+2025-06-05 10:54:38.478 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:38.479 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 59.9374 ms
+2025-06-05 10:54:38.481 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 66.5031ms
+2025-06-05 10:54:50.793 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 10:54:50.799 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:54:50.801 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2370 ms
+2025-06-05 10:54:50.803 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 10.6557ms
+2025-06-05 10:54:50.806 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 10:54:50.811 +02:00 [INF] CORS policy execution successful.
+2025-06-05 10:54:50.812 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:50.814 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 10:54:50.820 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 10:54:50.823 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 10:54:50.825 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 7.9646ms
+2025-06-05 10:54:50.826 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 10:54:50.827 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 16.4748 ms
+2025-06-05 10:54:50.829 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 23.9066ms
+2025-06-05 12:04:09.756 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:04:09.764 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:09.766 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:04:09.769 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:04:09.770 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 6.1729 ms
+2025-06-05 12:04:09.774 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 18.4851ms
+2025-06-05 12:04:17.005 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:04:17.010 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:17.012 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:04:17.014 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:04:17.017 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 6.5500 ms
+2025-06-05 12:04:17.021 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 16.555ms
+2025-06-05 12:04:27.799 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:04:27.802 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:27.803 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:04:27.804 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:04:27.806 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 3.7901 ms
+2025-06-05 12:04:27.809 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 9.7068ms
+2025-06-05 12:04:32.443 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:04:32.447 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:32.448 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.2279 ms
+2025-06-05 12:04:32.451 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 8.4925ms
+2025-06-05 12:04:32.453 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:04:32.463 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:32.464 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:04:32.466 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:04:32.496 +02:00 [INF] Executed DbCommand (14ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:04:32.500 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:04:32.504 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 35.9247ms
+2025-06-05 12:04:32.509 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:04:32.513 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 50.5683 ms
+2025-06-05 12:04:32.519 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 66.2331ms
+2025-06-05 12:04:38.389 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:04:38.394 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:04:38.396 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:04:38.398 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:04:38.399 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 5.4206 ms
+2025-06-05 12:04:38.402 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 13.5926ms
+2025-06-05 12:06:27.778 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:06:27.786 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:06:27.787 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:06:27.788 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:06:27.790 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 3.7879 ms
+2025-06-05 12:06:27.792 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 15.3322ms
+2025-06-05 12:06:36.444 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:06:36.448 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:06:36.449 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 0.9943 ms
+2025-06-05 12:06:36.451 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 7.1366ms
+2025-06-05 12:06:36.453 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:06:36.462 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:06:36.463 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:06:36.464 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:06:36.483 +02:00 [INF] Executed DbCommand (16ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:06:36.487 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:06:36.490 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 23.1459ms
+2025-06-05 12:06:36.494 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:06:36.496 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 34.1157 ms
+2025-06-05 12:06:36.498 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 45.7609ms
+2025-06-05 12:06:41.943 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:06:41.948 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:06:41.951 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:06:41.953 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:06:41.954 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 5.5503 ms
+2025-06-05 12:06:41.956 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 13.6015ms
+2025-06-05 12:07:00.522 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:07:00.527 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:00.528 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.3109 ms
+2025-06-05 12:07:00.531 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 9.0103ms
+2025-06-05 12:07:00.533 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:07:00.540 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:00.542 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:07:00.544 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:07:00.549 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:07:00.551 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:07:00.553 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 6.5426ms
+2025-06-05 12:07:00.555 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:07:00.556 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 16.3736 ms
+2025-06-05 12:07:00.559 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 26.2494ms
+2025-06-05 12:07:12.942 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:12.947 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:12.949 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.3461 ms
+2025-06-05 12:07:12.951 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 9.375ms
+2025-06-05 12:07:12.953 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:12.960 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:12.963 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:12.965 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:07:12.971 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:07:12.974 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:07:12.976 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 7.6258ms
+2025-06-05 12:07:12.978 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:12.980 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 19.2892 ms
+2025-06-05 12:07:12.982 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 29.13ms
+2025-06-05 12:07:16.163 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:16.167 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:16.169 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:16.171 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:07:16.177 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:07:16.179 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:07:16.181 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 7.8911ms
+2025-06-05 12:07:16.183 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:16.184 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 16.3338 ms
+2025-06-05 12:07:16.186 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 22.5959ms
+2025-06-05 12:07:16.704 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:16.708 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:16.710 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:16.712 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:07:16.718 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:07:16.721 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:07:16.723 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 7.2704ms
+2025-06-05 12:07:16.725 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:16.726 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 18.1379 ms
+2025-06-05 12:07:16.731 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 27.1531ms
+2025-06-05 12:07:20.071 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:20.076 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:20.078 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.7058 ms
+2025-06-05 12:07:20.082 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 11.2578ms
+2025-06-05 12:07:20.085 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:07:20.092 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:07:20.093 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:20.095 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:07:20.100 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:07:20.103 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:07:20.104 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 6.6505ms
+2025-06-05 12:07:20.106 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:07:20.108 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 15.5115 ms
+2025-06-05 12:07:20.110 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 25.6049ms
+2025-06-05 12:30:32.570 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 12:30:32.578 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:30:32.579 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.2047 ms
+2025-06-05 12:30:32.581 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 12.8828ms
+2025-06-05 12:30:32.584 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:30:32.590 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:30:32.592 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:30:32.594 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:30:32.627 +02:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:30:32.631 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:30:32.633 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 34.9554ms
+2025-06-05 12:30:32.635 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:30:32.636 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 45.9598 ms
+2025-06-05 12:30:32.639 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 55.9942ms
+2025-06-05 12:30:38.842 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/products - null null
+2025-06-05 12:30:38.847 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:30:38.849 +02:00 [INF] HTTP OPTIONS /api/v1/products responded 204 in 1.6155 ms
+2025-06-05 12:30:38.851 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/products - 204 null null 10.05ms
+2025-06-05 12:30:38.853 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:30:38.858 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:30:38.859 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:30:38.860 +02:00 [INF] Route matched with {action = "GetAll", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ItemDashServer.Application.Products.ProductDto]]] GetAll() on controller ItemDashServer.Api.Controllers.ProductsController (ItemDashServer.Api).
+2025-06-05 12:30:38.873 +02:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Name], [p].[Description], [p].[Price]
+FROM [Products] AS [p]
+2025-06-05 12:30:38.876 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[ItemDashServer.Application.Products.ProductDto, ItemDashServer.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 12:30:38.879 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api) in 15.8602ms
+2025-06-05 12:30:38.881 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.ProductsController.GetAll (ItemDashServer.Api)'
+2025-06-05 12:30:38.882 +02:00 [INF] HTTP GET /api/v1/products responded 200 in 24.7048 ms
+2025-06-05 12:30:38.884 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 200 null application/json; charset=utf-8 32.0017ms
+2025-06-05 12:31:02.130 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:31:02.135 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:31:02.135 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 0.9355 ms
+2025-06-05 12:31:02.137 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 6.8006ms
+2025-06-05 12:31:02.141 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:31:02.147 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:31:02.148 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:31:02.149 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:31:02.163 +02:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:31:02.168 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:31:02.171 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 20.2229ms
+2025-06-05 12:31:02.173 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:31:02.174 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 27.0719 ms
+2025-06-05 12:31:02.177 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 35.6683ms
+2025-06-05 12:50:52.752 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:50:52.761 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:50:52.763 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:50:52.764 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:50:52.765 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 4.3313 ms
+2025-06-05 12:50:52.767 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 15.1478ms
+2025-06-05 12:51:06.470 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/api/v1/products - null null
+2025-06-05 12:51:06.475 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:51:06.477 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-06-05 12:51:06.479 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-06-05 12:51:06.481 +02:00 [INF] HTTP GET /api/v1/products responded 401 in 6.2144 ms
+2025-06-05 12:51:06.484 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/api/v1/products - 401 0 null 13.9832ms
+2025-06-05 12:51:15.793 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:51:15.798 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:51:15.799 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 0.7468 ms
+2025-06-05 12:51:15.801 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 8.5045ms
+2025-06-05 12:51:15.803 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:51:15.811 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:51:15.812 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:51:15.814 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:51:15.841 +02:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:51:15.846 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:51:15.849 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 33.7176ms
+2025-06-05 12:51:15.852 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:51:15.855 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 43.8610 ms
+2025-06-05 12:51:15.856 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 53.818ms
+2025-06-05 12:52:18.455 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:52:18.465 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:52:18.467 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.2819 ms
+2025-06-05 12:52:18.469 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 14.7224ms
+2025-06-05 12:52:18.475 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:52:18.488 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:52:18.489 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:52:18.490 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:52:18.511 +02:00 [INF] Executed DbCommand (15ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:52:18.517 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:52:18.519 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 24.6224ms
+2025-06-05 12:52:18.523 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:52:18.524 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 36.4112 ms
+2025-06-05 12:52:18.526 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 51.5712ms
+2025-06-05 12:53:59.966 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:53:59.976 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:53:59.977 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.9258 ms
+2025-06-05 12:53:59.985 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 18.3318ms
+2025-06-05 12:53:59.987 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:54:00.001 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:54:00.003 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:54:00.004 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:54:00.024 +02:00 [INF] Executed DbCommand (15ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:54:00.028 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:54:00.031 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 22.8846ms
+2025-06-05 12:54:00.032 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:54:00.034 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 32.4792 ms
+2025-06-05 12:54:00.036 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 49.5145ms
+2025-06-05 12:56:28.065 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:56:28.072 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:56:28.073 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 0.9004 ms
+2025-06-05 12:56:28.075 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 10.3788ms
+2025-06-05 12:56:28.079 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:56:28.086 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:56:28.087 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:56:28.088 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:56:28.106 +02:00 [INF] Executed DbCommand (15ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:56:28.112 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:56:28.116 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 26.7997ms
+2025-06-05 12:56:28.120 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:56:28.121 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 35.4592 ms
+2025-06-05 12:56:28.123 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 44.3154ms
+2025-06-05 12:57:27.404 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 12:57:27.414 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:57:27.415 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 1.0175 ms
+2025-06-05 12:57:27.417 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 12.6242ms
+2025-06-05 12:57:27.421 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 12:57:27.432 +02:00 [INF] CORS policy execution successful.
+2025-06-05 12:57:27.434 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:57:27.436 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 12:57:27.452 +02:00 [INF] Executed DbCommand (13ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 12:57:27.458 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-06-05 12:57:27.460 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 21.4174ms
+2025-06-05 12:57:27.463 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 12:57:27.465 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 33.0360 ms
+2025-06-05 12:57:27.468 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 46.7453ms
