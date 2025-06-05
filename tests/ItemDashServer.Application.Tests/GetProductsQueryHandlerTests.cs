@@ -9,39 +9,40 @@ using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ItemDashServer.Application.Tests;
-
-public class GetProductsQueryHandlerTests
+namespace ItemDashServer.Application.Tests
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly IMapper _mapper;
-
-    public GetProductsQueryHandlerTests()
+    public class GetProductsQueryHandlerTests
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("TestDb")
-            .Options;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        _dbContext = new ApplicationDbContext(options);
-        _dbContext.Products.Add(new Domain.Entities.Product
+        public GetProductsQueryHandlerTests()
         {
-            Name = "TestProduct",
-            Description = "Test Description",
-            Price = 10.0m
-        });
-        _dbContext.SaveChanges();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestDb")
+                .Options;
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
-        _mapper = config.CreateMapper();
-    }
+            _dbContext = new ApplicationDbContext(options);
+            _dbContext.Products.Add(new Domain.Entities.Product
+            {
+                Name = "TestProduct",
+                Description = "Test Description",
+                Price = 10.0m
+            });
+            _dbContext.SaveChanges();
 
-    [Fact]
-    public async Task Handle_ShouldReturnProducts()
-    {
-        var handler = new GetProductsQueryHandler(_dbContext, _mapper);
-        var result = await handler.Handle(new GetProductsQuery(), CancellationToken.None);
+            var config = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = config.CreateMapper();
+        }
 
-        result.Should().NotBeNull();
-        result.Should().ContainSingle();
+        [Fact]
+        public async Task Handle_ShouldReturnProducts()
+        {
+            var handler = new GetProductsQueryHandler(_dbContext, _mapper);
+            var result = await handler.Handle(new GetProductsQuery(), CancellationToken.None);
+
+            result.Should().NotBeNull();
+            result.Should().ContainSingle();
+        }
     }
 }
