@@ -10,6 +10,7 @@ using ItemDashServer.Application.Products;
 using Microsoft.OpenApi.Models;
 using ItemDashServer.Application.Products.Queries;
 using ItemDashServer.Application;
+using ItemDashServer.Api.Services;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -74,6 +75,9 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // JWT Authentication configuration
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = Encoding.UTF8.GetBytes(jwtSettings["Secret"] ?? throw new Exception("JWT Secret is missing"));
+
+// Register services for JWT token generation
+builder.Services.AddScoped<JwtTokenService>();
 
 builder.Services.AddAuthentication(options =>
 {
