@@ -9,7 +9,6 @@ using AutoMapper;
 using ItemDashServer.Application.Products;
 using Microsoft.OpenApi.Models;
 using ItemDashServer.Application.Products.Queries;
-using ItemDashServer.Application.Products;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -98,7 +97,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
 app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
@@ -115,5 +113,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    // WARNING: This will delete ALL data every time the app starts!
+    dbContext.Database.EnsureDeleted();   // 1. Delete the database
+    dbContext.Database.Migrate();         // 2. Apply migrations
+    ApplicationDbContextSeed.Seed(dbContext); // 3. Seed data
+}
 
 app.Run();
