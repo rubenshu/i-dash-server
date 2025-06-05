@@ -1,4 +1,6 @@
-﻿using ItemDashServer.Domain.Entities;
+﻿using AutoMapper;
+using ItemDashServer.Application.Users;
+using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using MediatR;
+using ItemDashServer.Application.Users.Queries;
 
 namespace ItemDashServer.Api.Controllers;
 
@@ -16,45 +20,47 @@ public class AuthenticationController : ControllerBase
 {
     private readonly IConfiguration _configuration;
     private readonly ApplicationDbContext _dbContext;
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
 
-    public AuthenticationController(IConfiguration configuration, ApplicationDbContext dbContext)
+    public AuthenticationController(
+        IConfiguration configuration,
+        ApplicationDbContext dbContext,
+        IMapper mapper,
+        IMediator mediator)
     {
         _configuration = configuration;
         _dbContext = dbContext;
+        _mapper = mapper;
+        _mediator = mediator;
     }
-
-    public record LoginRequest(string Username, string Password);
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = _dbContext.Users.SingleOrDefault(u => u.Username == request.Username);
-        if (user == null || !VerifyPassword(request.Password, user.PasswordHash, user.PasswordSalt))
+        var (success, userDto) = await _mediator.Send(new LoginUserQuery(request.Username, request.Password));
+        if (!success || userDto == null)
             return Unauthorized();
 
-        var token = GenerateJwtToken(user.Username);
-        return Ok(new { token, user });
+        var token = GenerateJwtToken(request.Username);
+        return Ok(new { token, user = userDto });
     }
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public IActionResult Register([FromBody] LoginRequest request)
+    public async Task<IActionResult> Register([FromBody] LoginRequest request)
     {
-        if (_dbContext.Users.Any(u => u.Username == request.Username))
-            return BadRequest("Username already exists.");
-
-        using var hmac = new System.Security.Cryptography.HMACSHA512();
-        var user = new User
+        try
         {
-            Username = request.Username,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password)),
-            PasswordSalt = hmac.Key
-        };
-        _dbContext.Users.Add(user);
-        _dbContext.SaveChanges();
-        return Ok();
+            var userDto = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
+            return Ok(userDto);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     private bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
@@ -85,4 +91,7 @@ public class AuthenticationController : ControllerBase
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
+
+    public record LoginRequest(string Username, string Password);
+
 }

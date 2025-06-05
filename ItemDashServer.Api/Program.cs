@@ -9,6 +9,7 @@ using AutoMapper;
 using ItemDashServer.Application.Products;
 using Microsoft.OpenApi.Models;
 using ItemDashServer.Application.Products.Queries;
+using ItemDashServer.Application;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
