@@ -1031,3 +1031,54 @@ WHERE [u].[Username] = @__request_Username_0
 2025-06-05 12:57:27.463 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
 2025-06-05 12:57:27.465 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 33.0360 ms
 2025-06-05 12:57:27.468 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 46.7453ms
+2025-06-05 13:35:01.710 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 13:35:02.399 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 13:35:02.401 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 13:35:02.403 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 13:35:02.405 +02:00 [INF] Hosting environment: Development
+2025-06-05 13:35:02.406 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 13:35:03.656 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 13:35:03.840 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 54.2121 ms
+2025-06-05 13:35:03.845 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 192.506ms
+2025-06-05 13:35:03.853 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 13:35:03.861 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 8.1448ms
+2025-06-05 13:35:03.878 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 13:35:03.929 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 51.3216ms
+2025-06-05 13:35:03.954 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 13:35:04.015 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 56.5577 ms
+2025-06-05 13:35:04.017 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 63.2458ms
+2025-06-05 13:35:11.831 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 13:35:11.847 +02:00 [INF] CORS policy execution successful.
+2025-06-05 13:35:11.850 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 8.4285 ms
+2025-06-05 13:35:11.854 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 23.1811ms
+2025-06-05 13:35:11.859 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 13:35:11.881 +02:00 [INF] CORS policy execution successful.
+2025-06-05 13:35:14.242 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 13:35:14.271 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 13:35:15.996 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 13:35:18.081 +02:00 [INF] Executed DbCommand (205ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 13:35:18.317 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[ItemDashServer.Domain.Entities.User, ItemDashServer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 13:35:18.341 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 4058.4036ms
+2025-06-05 13:35:18.345 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 13:35:18.348 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 6468.0766 ms
+2025-06-05 13:35:18.369 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 6510.6464ms
+2025-06-05 13:35:31.253 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - null null
+2025-06-05 13:35:31.262 +02:00 [INF] CORS policy execution successful.
+2025-06-05 13:35:31.264 +02:00 [INF] HTTP OPTIONS /api/v1/auth/login responded 204 in 2.8560 ms
+2025-06-05 13:35:31.272 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7126/api/v1/auth/login - 204 null null 18.2374ms
+2025-06-05 13:35:31.275 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7126/api/v1/auth/login - application/json 69
+2025-06-05 13:35:31.289 +02:00 [INF] CORS policy execution successful.
+2025-06-05 13:35:31.293 +02:00 [INF] Executing endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 13:35:31.299 +02:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(LoginRequest) on controller ItemDashServer.Api.Controllers.AuthenticationController (ItemDashServer.Api).
+2025-06-05 13:35:31.343 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Username_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[PasswordHash], [u].[PasswordSalt], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__request_Username_0
+2025-06-05 13:35:31.357 +02:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[ItemDashServer.Domain.Entities.User, ItemDashServer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-06-05 13:35:31.361 +02:00 [INF] Executed action ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api) in 56.171ms
+2025-06-05 13:35:31.369 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
+2025-06-05 13:35:31.373 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 84.8747 ms
+2025-06-05 13:35:31.380 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 106.3171ms

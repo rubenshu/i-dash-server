@@ -12,6 +12,8 @@
   <ItemGroup>
 	  <ProjectReference Include="..\..\ItemDashServer.Application\ItemDashServer.Application.csproj" />
 	  <ProjectReference Include="..\..\ItemDashServer.Infrastructure\ItemDashServer.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\ItemDashServer.Domain\ItemDashServer.Domain.csproj" />
+	  <ProjectReference Include="..\..\ItemDashServer.Api\ItemDashServer.Api.csproj" />
 	  <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ItemDashServer.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7039d60d878cb006077841adfa1fc4a116044bd9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8355dd26fd347adc1d7f5bed349acb67f0d9f072")]
 [assembly: System.Reflection.AssemblyProductAttribute("ItemDashServer.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ItemDashServer.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
