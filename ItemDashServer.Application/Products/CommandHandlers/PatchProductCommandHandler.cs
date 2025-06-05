@@ -11,8 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace ItemDashServer.Application.Products.Handlers;
-
+namespace ItemDashServer.Application.Products.CommandHandlers;
 
 public class PatchProductCommandHandler : IRequestHandler<PatchProductCommand, bool>
 {

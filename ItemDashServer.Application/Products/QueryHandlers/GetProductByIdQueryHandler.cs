@@ -9,7 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace ItemDashServer.Application.Products.Handlers;
+namespace ItemDashServer.Application.Products.QueryHandlers;
+
 public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto?>
 {
     private readonly ApplicationDbContext _context;

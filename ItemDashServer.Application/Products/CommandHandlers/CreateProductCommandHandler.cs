@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ItemDashServer.Application.Products.Handlers;
+namespace ItemDashServer.Application.Products.CommandHandlers;
 
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>

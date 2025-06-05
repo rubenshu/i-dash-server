@@ -13,18 +13,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ItemDashServer.Application.Products.Handlers;
+namespace ItemDashServer.Application.Products.QueryHandlers;
 
-public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
+public class GetProductsQueryHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetProductsQueryHandler(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {

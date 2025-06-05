@@ -3,7 +3,7 @@ using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
 using AutoMapper;
 
-namespace ItemDashServer.Application.Users;
+namespace ItemDashServer.Application.Users.CommandHandlers;
 
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, UserDto>
 {
