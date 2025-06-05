@@ -1082,3 +1082,208 @@ WHERE [u].[Username] = @__request_Username_0
 2025-06-05 13:35:31.369 +02:00 [INF] Executed endpoint 'ItemDashServer.Api.Controllers.AuthenticationController.Login (ItemDashServer.Api)'
 2025-06-05 13:35:31.373 +02:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 84.8747 ms
 2025-06-05 13:35:31.380 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7126/api/v1/auth/login - 200 null application/json; charset=utf-8 106.3171ms
+2025-06-05 15:32:11.253 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 15:32:12.379 +02:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:32:12.408 +02:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:32:12.414 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:32:12.420 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:32:12.438 +02:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-06-05 15:32:12.449 +02:00 [INF] No migrations were applied. The database is already up to date.
+2025-06-05 15:32:12.543 +02:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:32:12.557 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Products] AS [p]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:32:12.582 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 15:32:13.159 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 15:32:13.161 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 15:32:13.164 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 15:32:13.166 +02:00 [INF] Hosting environment: Development
+2025-06-05 15:32:13.169 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 15:32:13.752 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 15:32:13.966 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 66.1639 ms
+2025-06-05 15:32:13.974 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 227.5596ms
+2025-06-05 15:32:13.982 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 15:32:13.993 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 10.8953ms
+2025-06-05 15:32:14.001 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 15:32:14.062 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 61.9055ms
+2025-06-05 15:32:14.093 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 15:32:14.168 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 71.1935 ms
+2025-06-05 15:32:14.172 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 79.9295ms
+2025-06-05 15:32:16.605 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 15:32:16.632 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 10.8839 ms
+2025-06-05 15:32:16.640 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 36.429ms
+2025-06-05 15:32:16.654 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 15:32:16.662 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 8.2405ms
+2025-06-05 15:32:16.680 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 15:32:16.704 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 24.3998ms
+2025-06-05 15:32:16.726 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 15:32:16.736 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 5.5457 ms
+2025-06-05 15:32:16.739 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 12.7782ms
+2025-06-05 15:35:26.452 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 15:35:26.777 +02:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:35:26.798 +02:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:35:26.807 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:35:26.811 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:35:26.827 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-06-05 15:35:26.842 +02:00 [INF] No migrations were applied. The database is already up to date.
+2025-06-05 15:35:26.933 +02:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:35:26.946 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Products] AS [p]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:35:26.971 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 15:35:27.118 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 15:35:27.121 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 15:35:27.123 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 15:35:27.125 +02:00 [INF] Hosting environment: Development
+2025-06-05 15:35:27.127 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 15:35:30.485 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 15:35:30.620 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 48.9772 ms
+2025-06-05 15:35:30.626 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 143.9307ms
+2025-06-05 15:35:30.630 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 15:35:30.644 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 14.4073ms
+2025-06-05 15:35:30.655 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 15:35:30.688 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 33.4684ms
+2025-06-05 15:35:30.711 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 15:35:30.778 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 60.3252 ms
+2025-06-05 15:35:30.782 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 70.6499ms
+2025-06-05 15:37:48.478 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 15:37:48.776 +02:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:37:51.856 +02:00 [INF] Executed DbCommand (3,054ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [itemdash] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2025-06-05 15:37:52.021 +02:00 [INF] Executed DbCommand (156ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [itemdash];
+2025-06-05 15:37:52.064 +02:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-06-05 15:37:52.434 +02:00 [INF] Executed DbCommand (359ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [itemdash];
+2025-06-05 15:37:52.576 +02:00 [INF] Executed DbCommand (138ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [itemdash] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-06-05 15:37:52.594 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:37:52.653 +02:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2025-06-05 15:37:52.659 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:37:52.670 +02:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:37:52.688 +02:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-06-05 15:37:52.699 +02:00 [INF] Applying migration '20250604210600_InitialCreate'.
+2025-06-05 15:37:52.714 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Products] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [Price] decimal(18,2) NOT NULL,
+    CONSTRAINT [PK_Products] PRIMARY KEY ([Id])
+);
+2025-06-05 15:37:52.723 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250604210600_InitialCreate', N'8.0.0');
+2025-06-05 15:37:52.729 +02:00 [INF] Applying migration '20250605074919_AddUserTable'.
+2025-06-05 15:37:52.743 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Username] nvarchar(450) NOT NULL,
+    [PasswordHash] varbinary(max) NOT NULL,
+    [PasswordSalt] varbinary(max) NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-06-05 15:37:52.753 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Username] ON [Users] ([Username]);
+2025-06-05 15:37:52.764 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250605074919_AddUserTable', N'8.0.0');
+2025-06-05 15:37:52.866 +02:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:37:53.084 +02:00 [INF] Executed DbCommand (154ms) [Parameters=[@p0='?' (Size = 8000) (DbType = Binary), @p1='?' (Size = 8000) (DbType = Binary), @p2='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([PasswordHash], [PasswordSalt], [Username])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2025-06-05 15:37:53.113 +02:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Products] AS [p]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:37:53.146 +02:00 [INF] Executed DbCommand (15ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Products] USING (
+VALUES (@p0, @p1, @p2, 0),
+(@p3, @p4, @p5, 1),
+(@p6, @p7, @p8, 2)) AS i ([Description], [Name], [Price], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Description], [Name], [Price])
+VALUES (i.[Description], i.[Name], i.[Price])
+OUTPUT INSERTED.[Id], i._Position;
+2025-06-05 15:37:53.172 +02:00 [INF] User profile is available. Using 'C:\Users\RubenSikkens\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 15:37:53.315 +02:00 [INF] Now listening on: https://localhost:7126
+2025-06-05 15:37:53.317 +02:00 [INF] Now listening on: http://localhost:5078
+2025-06-05 15:37:53.319 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 15:37:53.321 +02:00 [INF] Hosting environment: Development
+2025-06-05 15:37:53.322 +02:00 [INF] Content root path: C:\Projects\item-dash-server\ItemDashServer.Api
+2025-06-05 15:37:53.445 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/index.html - null null
+2025-06-05 15:37:53.580 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 50.1008 ms
+2025-06-05 15:37:53.586 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/index.html - 200 null text/html;charset=utf-8 144.4121ms
+2025-06-05 15:37:53.591 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - null null
+2025-06-05 15:37:53.599 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_framework/aspnetcore-browser-refresh.js - 200 13772 application/javascript; charset=utf-8 7.7679ms
+2025-06-05 15:37:53.607 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/_vs/browserLink - null null
+2025-06-05 15:37:53.636 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/_vs/browserLink - 200 null text/javascript; charset=UTF-8 29.5493ms
+2025-06-05 15:37:53.668 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - null null
+2025-06-05 15:37:53.726 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 53.5564 ms
+2025-06-05 15:37:53.728 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7126/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 60.6319ms
