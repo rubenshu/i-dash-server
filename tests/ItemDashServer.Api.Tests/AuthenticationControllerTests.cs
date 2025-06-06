@@ -1,18 +1,13 @@
-﻿using Xunit;
-using Moq;
-using Moq.Async;
+﻿using Moq;
 using MediatR;
-using Moq.Language.Flow;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ItemDashServer.Api.Controllers;
 using ItemDashServer.Api.Services;
 using ItemDashServer.Application.Users.Queries;
 using ItemDashServer.Application.Users;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
 using Microsoft.Extensions.Configuration;
+using ItemDashServer.Application.Users.Commands;
 
 namespace ItemDashServer.Api.Tests;
 
@@ -30,7 +25,7 @@ public class AuthenticationControllerTest
         {"JwtSettings:Audience", "TestAudience"},
         {"JwtSettings:ExpiryInMinutes", "60"}
     };
-        var configuration = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings!)
             .Build();
 
@@ -46,6 +41,41 @@ public class AuthenticationControllerTest
         );
     }
 
+    private void SetupMediatorForLogin(bool success, UserDto? user = null, Exception? exception = null)
+    {
+        if (exception != null)
+        {
+            _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(exception);
+        }
+        else
+        {
+            _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((success, user));
+        }
+    }
+
+    private void SetupMediatorForRegister(UserDto? user = null, Exception? exception = null)
+    {
+        if (exception != null)
+        {
+            _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(exception);
+        }
+        else
+        {
+            _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user!);
+        }
+    }
+
+    private void AssertUserDto(object? value, UserDto expected)
+    {
+        var user = Assert.IsType<UserDto>(value);
+        Assert.Equal(expected.Id, user.Id);
+        Assert.Equal(expected.Username, user.Username);
+    }
+
     private static AuthenticationController.LoginRequest ValidLoginRequest =>
         new("testuser", "testpass");
 
@@ -53,11 +83,10 @@ public class AuthenticationControllerTest
         new() { Id = 1, Username = "testuser" };
 
     [Fact]
-    public async Task Login_ValidCredentials_ReturnsOkWithTokenAndUserr()
+    public async Task Login_ValidCredentials_ReturnsOkWithTokenAndUser()
     {
         var userDto = GetUserDto();
-        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult<(bool Success, UserDto? User)>((true, userDto)));
+        SetupMediatorForLogin(true, userDto);
 
         var controller = CreateController();
 
@@ -82,8 +111,7 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Login_InvalidCredentials_ReturnsUnauthorized()
     {
-        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((false, null));
+        SetupMediatorForLogin(false);
 
         var controller = CreateController();
 
@@ -95,9 +123,7 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Login_ExceptionThrown_ReturnsInternalServerError()
     {
-        _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new Exception("fail"));
-
+        SetupMediatorForLogin(false, exception: new Exception("fail"));
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest);
@@ -122,9 +148,7 @@ public class AuthenticationControllerTest
     public async Task Register_Success_ReturnsOkWithUser()
     {
         var userDto = GetUserDto();
-        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(userDto);
-
+        SetupMediatorForRegister(userDto);
         var controller = CreateController();
 
         var result = await controller.Register(ValidLoginRequest);
@@ -138,9 +162,8 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Register_UsernameExists_ReturnsBadRequest()
     {
-        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new InvalidOperationException("Username already exists."));
-
+        var userDto = GetUserDto();
+        SetupMediatorForRegister(userDto, new Exception("Username already exists."));
         var controller = CreateController();
 
         var result = await controller.Register(ValidLoginRequest);
@@ -152,9 +175,7 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Register_ExceptionThrown_ReturnsInternalServerError()
     {
-        _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new Exception("fail"));
-
+        SetupMediatorForRegister(null, new Exception("fail"));
         var controller = CreateController();
 
         var result = await controller.Register(ValidLoginRequest);
@@ -173,12 +194,5 @@ public class AuthenticationControllerTest
         var result = await controller.Register(new AuthenticationController.LoginRequest(string.Empty, "pass"));
 
         Assert.IsType<BadRequestObjectResult>(result.Result);
-    }
-
-    // Minimal DTO for test context
-    public class LoginResponseDto
-    {
-        public required string Token { get; set; }
-        public required UserDto User { get; set; }
     }
 }
