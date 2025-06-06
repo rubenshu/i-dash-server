@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using MediatR;
 using ItemDashServer.Application.Products;
 using ItemDashServer.Application.Products.Queries;

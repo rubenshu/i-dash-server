@@ -1,14 +1,11 @@
-﻿using AutoMapper;
-using ItemDashServer.Application.Users;
-using ItemDashServer.Domain.Entities;
-using ItemDashServer.Infrastructure.Persistence;
+﻿using ItemDashServer.Application.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MediatR;
 using ItemDashServer.Application.Users.Queries;
 using System.ComponentModel.DataAnnotations;
 using ItemDashServer.Api.Services;
+using ItemDashServer.Application.Users.Commands;
 
 namespace ItemDashServer.Api.Controllers;
 
@@ -65,6 +62,9 @@ public class AuthenticationController(
         }
         catch (Exception ex)
         {
+            if (ex.Message == "Username already exists.")
+                return BadRequest(ex.Message);
+
             _logger.LogError(ex, "Error during registration for user {Username}", request.Username);
             return StatusCode(500, "Internal server error");
         }

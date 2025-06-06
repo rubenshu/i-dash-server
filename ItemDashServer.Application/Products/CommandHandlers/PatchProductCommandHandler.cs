@@ -2,25 +2,15 @@
 using ItemDashServer.Domain.Entities;
 using MediatR;
 using ItemDashServer.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class PatchProductCommandHandler : IRequestHandler<PatchProductCommand, bool>
+public class PatchProductCommandHandler(ApplicationDbContext context) : IRequestHandler<PatchProductCommand, bool>
 {
-    private readonly ApplicationDbContext _context;
-
-    public PatchProductCommandHandler(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ApplicationDbContext _context = context;
 
     public async Task<bool> Handle(PatchProductCommand request, CancellationToken cancellationToken)
     {

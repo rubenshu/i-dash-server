@@ -4,6 +4,7 @@ namespace ItemDashServer.Domain.Entities;
 
 public class User
 {
+    [Required]
     public int Id { get; set; }
 
     [Required]

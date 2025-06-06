@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
 using AutoMapper;
 using System.Text;
 using ItemDashServer.Application.Users.Queries;
+using System.Security.Cryptography;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 
@@ -18,7 +18,7 @@ public class LoginUserQueryHandler(ApplicationDbContext dbContext, IMapper mappe
         if (user == null)
             return Task.FromResult<(bool Success, UserDto? User)>((false, null));
 
-        using var hmac = new System.Security.Cryptography.HMACSHA512(user.PasswordSalt);
+        var hmac = new HMACSHA512(user.PasswordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
         if (!computedHash.SequenceEqual(user.PasswordHash))
             return Task.FromResult<(bool Success, UserDto? User)>((false, null));

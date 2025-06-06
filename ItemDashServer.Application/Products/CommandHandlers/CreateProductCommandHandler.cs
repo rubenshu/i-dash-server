@@ -3,25 +3,13 @@ using ItemDashServer.Application.Products.Commands;
 using ItemDashServer.Domain.Entities;
 using MediatR;
 using ItemDashServer.Infrastructure.Persistence; 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
+public class CreateProductCommandHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<CreateProductCommand, ProductDto>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public CreateProductCommandHandler(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {

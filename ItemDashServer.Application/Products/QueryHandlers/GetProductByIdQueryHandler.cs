@@ -2,25 +2,14 @@
 using ItemDashServer.Application.Products.Queries;
 using MediatR;
 using ItemDashServer.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Application.Products.QueryHandlers;
 
-public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto?>
+public class GetProductByIdQueryHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<GetProductByIdQuery, ProductDto?>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetProductByIdQueryHandler(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {

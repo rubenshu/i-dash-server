@@ -1,23 +1,13 @@
 ﻿using ItemDashServer.Application.Products.Commands;
 using MediatR;
 using ItemDashServer.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, bool>
+public class UpdateProductCommandHandler(ApplicationDbContext context) : IRequestHandler<UpdateProductCommand, bool>
 {
-    private readonly ApplicationDbContext _context;
-
-    public UpdateProductCommandHandler(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ApplicationDbContext _context = context;
 
     public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {

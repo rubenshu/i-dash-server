@@ -2,16 +2,8 @@
 using ItemDashServer.Application.Products.Queries;
 using MediatR;
 using ItemDashServer.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ItemDashServer.Application.Products.QueryHandlers;
 
