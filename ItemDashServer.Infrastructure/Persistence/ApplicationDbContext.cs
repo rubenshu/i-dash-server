@@ -3,15 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    {
-    }
-
-    public DbSet<Product> Products => Set<Product>();
     public DbSet<User> Users { get; set; }
-
+    public DbSet<Category> Categorys => Set<Category>();
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
