@@ -12,4 +12,6 @@ public class Category
     public string Description { get; set; } = default!;
     [Required]
     public decimal Price { get; set; } = default!;
+
+    public ICollection<ProductCategory> ProductCategories { get; set; } = [];
 }
