@@ -15,6 +15,8 @@ public class GetProductsQueryHandler(ApplicationDbContext context, IMapper mappe
     public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         return await _context.Products
+            .Include(p => p.ProductCategories)
+                .ThenInclude(pc => pc.Category)
             .AsNoTracking()
             .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);

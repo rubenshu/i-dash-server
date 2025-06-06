@@ -25,8 +25,9 @@ public static class ApplicationDbContextSeed
         {
             var categories = new List<Category>
             {
-                new() { Name = "Electronics", Description = "Electronic items", Price = 0 },
-                new() { Name = "Books", Description = "Books and literature", Price = 0 }
+                new() { Name = "Fun", Description = "Toys and games", Price = 0 },
+                new() { Name = "Water", Description = "Water-related products", Price = 0 },
+                new() { Name = "Outdoors", Description = "Outdoor equipment", Price = 0 }
             };
             context.Categorys.AddRange(categories);
             context.SaveChanges();
@@ -34,13 +35,12 @@ public static class ApplicationDbContextSeed
 
         if (!context.Products.Any())
         {
-            var electronics = context.Categorys.FirstOrDefault(c => c.Name == "Electronics");
-            var books = context.Categorys.FirstOrDefault(c => c.Name == "Books");
-
             var products = new List<Product>
             {
-                new() { Name = "Laptop", Description = "A portable computer", Price = 1200 },
-                new() { Name = "Novel", Description = "A fiction book", Price = 20 }
+                new() { Name = "Water Gun", Description = "A toy gun that shoots water", Price = 15 },
+                new() { Name = "Water Hose", Description = "A hose for watering plants", Price = 25 },
+                new() { Name = "Frisbee", Description = "A flying disc for outdoor fun", Price = 10 },
+                new() { Name = "Inflatable Pool", Description = "A small pool for kids", Price = 40 }
             };
             context.Products.AddRange(products);
             context.SaveChanges();
@@ -48,15 +48,33 @@ public static class ApplicationDbContextSeed
 
         if (!context.ProductCategories.Any())
         {
-            var laptop = context.Products.FirstOrDefault(p => p.Name == "Laptop");
-            var novel = context.Products.FirstOrDefault(p => p.Name == "Novel");
-            var electronics = context.Categorys.FirstOrDefault(c => c.Name == "Electronics");
-            var books = context.Categorys.FirstOrDefault(c => c.Name == "Books");
+            var fun = context.Categorys.FirstOrDefault(c => c.Name == "Fun");
+            var water = context.Categorys.FirstOrDefault(c => c.Name == "Water");
+            var outdoors = context.Categorys.FirstOrDefault(c => c.Name == "Outdoors");
+
+            var waterGun = context.Products.FirstOrDefault(p => p.Name == "Water Gun");
+            var waterHose = context.Products.FirstOrDefault(p => p.Name == "Water Hose");
+            var frisbee = context.Products.FirstOrDefault(p => p.Name == "Frisbee");
+            var inflatablePool = context.Products.FirstOrDefault(p => p.Name == "Inflatable Pool");
 
             var productCategories = new List<ProductCategory>
             {
-                new() { ProductId = laptop?.Id ?? 0, CategoryId = electronics?.Id ?? 0 }, // Laptop in Electronics
-                new() { ProductId = novel?.Id ?? 0, CategoryId = books?.Id ?? 0 }         // Novel in Books
+                // Water Gun is in Fun and Water
+                new() { ProductId = waterGun?.Id ?? 0, CategoryId = fun?.Id ?? 0 },
+                new() { ProductId = waterGun?.Id ?? 0, CategoryId = water?.Id ?? 0 },
+
+                // Water Hose is in Water and Outdoors
+                new() { ProductId = waterHose?.Id ?? 0, CategoryId = water?.Id ?? 0 },
+                new() { ProductId = waterHose?.Id ?? 0, CategoryId = outdoors?.Id ?? 0 },
+
+                // Frisbee is in Fun and Outdoors
+                new() { ProductId = frisbee?.Id ?? 0, CategoryId = fun?.Id ?? 0 },
+                new() { ProductId = frisbee?.Id ?? 0, CategoryId = outdoors?.Id ?? 0 },
+
+                // Inflatable Pool is in Fun, Water, and Outdoors
+                new() { ProductId = inflatablePool?.Id ?? 0, CategoryId = fun?.Id ?? 0 },
+                new() { ProductId = inflatablePool?.Id ?? 0, CategoryId = water?.Id ?? 0 },
+                new() { ProductId = inflatablePool?.Id ?? 0, CategoryId = outdoors?.Id ?? 0 }
             };
             context.ProductCategories.AddRange(productCategories);
             context.SaveChanges();

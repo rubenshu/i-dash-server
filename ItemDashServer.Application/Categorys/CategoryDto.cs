@@ -1,3 +1,19 @@
-﻿namespace ItemDashServer.Application.Categorys;
+﻿using ItemDashServer.Application.Products;
 
-public record CategoryDto(int Id, string Name, string Description, decimal Price, List<int> ProductIds);
+namespace ItemDashServer.Application.Categorys;
+
+public class CategoryDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public List<ProductSimpleDto> Products { get; set; } = [];
+
+}
+
+public class ProductSimpleDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+}

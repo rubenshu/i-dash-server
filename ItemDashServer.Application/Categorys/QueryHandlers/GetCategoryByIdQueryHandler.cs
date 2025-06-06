@@ -13,7 +13,10 @@ public class GetCategoryByIdQueryHandler(ApplicationDbContext context, IMapper m
 
     public async Task<CategoryDto?> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categorys.AsNoTracking()
+        var entity = await _context.Categorys
+            .Include(c => c.ProductCategories)
+                .ThenInclude(pc => pc.Product)
+            .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
 
         if (entity == null) return null;

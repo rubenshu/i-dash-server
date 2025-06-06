@@ -15,6 +15,8 @@ public class GetCategorysQueryHandler(ApplicationDbContext context, IMapper mapp
     public async Task<IEnumerable<CategoryDto>> Handle(GetCategorysQuery request, CancellationToken cancellationToken)
     {
         return await _context.Categorys
+            .Include(c => c.ProductCategories)
+                .ThenInclude(pc => pc.Product)
             .AsNoTracking()
             .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
