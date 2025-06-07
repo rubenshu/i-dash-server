@@ -104,7 +104,7 @@ public class AuthenticationControllerTest
     public void AuthService_GeneratesToken()
     {
         var service = CreateAuthService();
-        var token = service.GenerateJwtToken(1, "1");
+        var token = service.GenerateJwtToken(1, "1", "refreshToken");
         Assert.False(string.IsNullOrWhiteSpace(token));
     }
 

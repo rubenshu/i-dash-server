@@ -20,8 +20,8 @@ public class RefreshUserCommandHandler(ApplicationDbContext dbContext, IAuthServ
             return (false, null, null, null);
 
         // Generate new JWT and refresh token
-        var newJwt = _authService.GenerateJwtToken(user.Id, user.Username);
         var newRefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        var newJwt = _authService.GenerateJwtToken(user.Id, user.Username, newRefreshToken);
         user.RefreshToken = newRefreshToken;
         user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
         await _dbContext.SaveChangesAsync(cancellationToken);
