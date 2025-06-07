@@ -12,18 +12,26 @@ public class LoginUserQueryHandler(ApplicationDbContext dbContext, IMapper mappe
     private readonly ApplicationDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
 
-    public Task<(bool Success, UserDto? User)> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+    public async Task<(bool Success, UserDto? User)> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
         var user = _dbContext.Users.SingleOrDefault(u => u.Username == request.Username);
         if (user == null)
-            return Task.FromResult<(bool Success, UserDto? User)>((false, null));
+            return (false, null);
 
         var hmac = new HMACSHA512(user.PasswordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
         if (!computedHash.SequenceEqual(user.PasswordHash))
-            return Task.FromResult<(bool Success, UserDto? User)>((false, null));
+            return (false, null);
+
+        // If a refresh token is provided in the request, update it
+        if (!string.IsNullOrEmpty(request.RefreshToken))
+        {
+            user.RefreshToken = request.RefreshToken;
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
 
         var userDto = _mapper.Map<UserDto>(user);
-        return Task.FromResult<(bool Success, UserDto? User)>((true, userDto));
+        return (true, userDto);
     }
 }

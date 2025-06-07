@@ -15,4 +15,6 @@ public class User
 
     [Required]
     public byte[] PasswordSalt { get; set; } = default!;
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiry { get; set; }
 }

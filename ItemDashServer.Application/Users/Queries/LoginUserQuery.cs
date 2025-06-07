@@ -2,4 +2,4 @@
 
 namespace ItemDashServer.Application.Users.Queries;
 
-public record LoginUserQuery(string Username, string Password) : IRequest<(bool Success, UserDto? User)>;
+public record LoginUserQuery(string Username, string Password, string RefreshToken) : IRequest<(bool Success, UserDto? User)>;
