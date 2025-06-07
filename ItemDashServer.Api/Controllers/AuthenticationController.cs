@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using ItemDashServer.Application.Users.Queries;
 using System.ComponentModel.DataAnnotations;
-using ItemDashServer.Api.Services;
 using ItemDashServer.Application.Users.Commands;
+using System.Security.Cryptography;
+using ItemDashServer.Api.Services;
 
 namespace ItemDashServer.Api.Controllers;
 
@@ -13,12 +14,14 @@ namespace ItemDashServer.Api.Controllers;
 [Route("api/v1/auth")]
 public class AuthenticationController(
     IMediator mediator,
-    JwtTokenService jwtTokenService,
-    ILogger<AuthenticationController> logger) : ControllerBase
+    IAuthService authService,
+    ILogger<AuthenticationController> logger,
+    ILoginRateLimiter rateLimiter) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
-    private readonly JwtTokenService _jwtTokenService = jwtTokenService;
+    private readonly IAuthService _authService = authService;
     private readonly ILogger<AuthenticationController> _logger = logger;
+    private readonly ILoginRateLimiter _rateLimiter = rateLimiter;
 
     [AllowAnonymous]
     [HttpPost("login")]
@@ -27,18 +30,36 @@ public class AuthenticationController(
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        if (!await _rateLimiter.AllowAttemptAsync(request.Username))
+            return StatusCode(429, "Too many login attempts. Please try again later.");
+
         try
         {
-            var (success, userDto) = await _mediator.Send(new LoginUserQuery(request.Username, request.Password));
-            if (!success || userDto == null)
-                return Unauthorized();
+            var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            var refreshExpiry = DateTime.UtcNow.AddDays(7);
 
-            var token = _jwtTokenService.GenerateJwtToken(request.Username);
-            return Ok(new LoginResponseDto { Token = token, User = userDto });
+            var (success, userDto) = await _mediator.Send(new LoginUserQuery(request.Username, request.Password, refreshToken));
+            if (!success || userDto == null)
+            {
+                await _rateLimiter.RegisterFailureAsync(request.Username);
+                return Unauthorized();
+            }
+
+            await _rateLimiter.ResetFailuresAsync(request.Username);
+
+            var token = _authService.GenerateJwtToken(userDto.Id, userDto.Username);
+
+            // For local/dev, return refresh token in response (in production, use HttpOnly cookie)
+            return Ok(new
+            {
+                Token = token,
+                RefreshToken = refreshToken,
+                User = userDto
+            });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during login for user {Username}", request.Username);
+            _logger.LogError(ex, "Error during login");
             return StatusCode(500, "Internal server error");
         }
     }
@@ -50,22 +71,73 @@ public class AuthenticationController(
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        if (!_authService.IsPasswordComplex(request.Password))
+            return BadRequest("Password does not meet complexity requirements.");
+
         try
         {
             var userDto = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
             return Ok(userDto);
         }
-        catch (InvalidOperationException ex)
+        catch (InvalidOperationException)
         {
-            _logger.LogWarning(ex, "Registration failed for user {Username}", request.Username);
-            return BadRequest(ex.Message);
+            _logger.LogWarning("Registration failed for user");
+            return BadRequest("Registration failed.");
         }
         catch (Exception ex)
         {
-            if (ex.Message == "Username already exists.")
-                return BadRequest(ex.Message);
+            _logger.LogError(ex, "Error during registration");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 
-            _logger.LogError(ex, "Error during registration for user {Username}", request.Username);
+    [AllowAnonymous]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] RefreshRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            return BadRequest("Refresh token required.");
+
+        try
+        {
+            var user = await _mediator.Send(new GetUserByRefreshTokenQuery(request.RefreshToken));
+            if (user == null)
+                return Ok();
+
+            await _mediator.Send(new UpdateUserRefreshTokenCommand(user.Id, null, null));
+            _logger.LogInformation("User {UserId} logged out and refresh token invalidated.", user.Id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during logout");
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("refresh")]
+    public async Task<ActionResult<LoginResponseDto>> Refresh([FromBody] RefreshRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            return BadRequest("Refresh token required.");
+
+        try
+        {
+            var (success, token, refreshToken, userDto) = await _mediator.Send(new RefreshUserCommand(request.RefreshToken));
+            if (!success || userDto == null)
+                return Unauthorized();
+
+            return Ok(new
+            {
+                Token = token,
+                RefreshToken = refreshToken,
+                User = userDto
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during token refresh");
             return StatusCode(500, "Internal server error");
         }
     }
@@ -74,4 +146,5 @@ public class AuthenticationController(
         [Required] string Username,
         [Required] string Password
     );
+    public record RefreshRequest(string RefreshToken);
 }
