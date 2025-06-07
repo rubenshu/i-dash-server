@@ -16,7 +16,7 @@ public class AuthenticationControllerTest
     private readonly Mock<IMediator> _mediatorMock = new();
     private readonly Mock<ILogger<AuthenticationController>> _loggerMock = new();
 
-    private static JwtTokenService CreateJwtTokenService()
+    private static AuthService CreateAuthService()
     {
         var inMemorySettings = new Dictionary<string, string?>
     {
@@ -29,14 +29,14 @@ public class AuthenticationControllerTest
             .AddInMemoryCollection(inMemorySettings!)
             .Build();
 
-        return new JwtTokenService(configuration);
+        return new AuthService(configuration);
     }
 
-    private AuthenticationController CreateController(JwtTokenService? jwtTokenService = null)
+    private AuthenticationController CreateController(AuthService? authService = null)
     {
         return new AuthenticationController(
             _mediatorMock.Object,
-            jwtTokenService ?? CreateJwtTokenService(),
+            authService ?? CreateAuthService(),
             _loggerMock.Object
         );
     }
@@ -101,10 +101,10 @@ public class AuthenticationControllerTest
     }
 
     [Fact]
-    public void JwtTokenService_GeneratesToken()
+    public void AuthService_GeneratesToken()
     {
-        var service = CreateJwtTokenService();
-        var token = service.GenerateJwtToken("testuser");
+        var service = CreateAuthService();
+        var token = service.GenerateJwtToken(1, "1");
         Assert.False(string.IsNullOrWhiteSpace(token));
     }
 
