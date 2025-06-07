@@ -15,6 +15,7 @@ public class AuthenticationControllerTest
 {
     private readonly Mock<IMediator> _mediatorMock = new();
     private readonly Mock<ILogger<AuthenticationController>> _loggerMock = new();
+    private readonly Mock<ILoginRateLimiter> _rateLimiterMock = new();
 
     private static AuthService CreateAuthService()
     {
@@ -31,14 +32,15 @@ public class AuthenticationControllerTest
 
         return new AuthService(configuration);
     }
-
     private AuthenticationController CreateController(AuthService? authService = null)
     {
         return new AuthenticationController(
             _mediatorMock.Object,
             authService ?? CreateAuthService(),
-            _loggerMock.Object
+            _loggerMock.Object,
+            _rateLimiterMock.Object
         );
+    }
     }
 
     private void SetupMediatorForLogin(bool success, UserDto? user = null, Exception? exception = null)
@@ -104,7 +106,7 @@ public class AuthenticationControllerTest
     public void AuthService_GeneratesToken()
     {
         var service = CreateAuthService();
-        var token = service.GenerateJwtToken(1, "1", "refreshToken");
+        var token = service.GenerateJwtToken(1, "1");
         Assert.False(string.IsNullOrWhiteSpace(token));
     }
 

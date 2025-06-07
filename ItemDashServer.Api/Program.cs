@@ -23,17 +23,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowNuxtDev", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000") // Add your frontend origin(s)
-              .AllowAnyHeader() // This allows Authorization and others
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -97,26 +86,31 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowNuxtDev", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000", "https://localhost:3000") // Add your frontend origin(s)
+                    .AllowAnyHeader() // This allows Authorization and others
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+    });
+
+    builder.Services.AddSingleton<ILoginRateLimiter, InMemoryLoginRateLimiter>();
+}
+
 var app = builder.Build();
-app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+    app.UseCors("AllowNuxtDev");
 
-app.UseCors("AllowNuxtDev");
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-using (var scope = app.Services.CreateScope())
-{
+    using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
     // WARNING: This will delete ALL data every time the app starts!
@@ -124,5 +118,11 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();         // 2. Apply migrations
     ApplicationDbContextSeed.Seed(dbContext); // 3. Seed data
 }
+
+app.UseSerilogRequestLogging();
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
