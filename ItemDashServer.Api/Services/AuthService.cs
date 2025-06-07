@@ -10,8 +10,7 @@ public class AuthService(IConfiguration configuration) : IAuthService
 {
     private readonly IConfiguration _configuration = configuration;
 
-    // Updated to accept userId and username
-    public string GenerateJwtToken(int userId, string username, string refreshToken)
+    public string GenerateJwtToken(int userId, string username)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var secret = jwtSettings["Secret"];
@@ -23,9 +22,7 @@ public class AuthService(IConfiguration configuration) : IAuthService
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(ClaimTypes.Name, username),
-            new Claim("RefreshToken", refreshToken) // Include refresh token as a claim
-            // Add roles/other claims here as needed
+            new Claim(ClaimTypes.Name, username)
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -39,5 +36,16 @@ public class AuthService(IConfiguration configuration) : IAuthService
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    public bool IsPasswordComplex(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+            return false;
+        bool hasUpper = password.Any(char.IsUpper);
+        bool hasLower = password.Any(char.IsLower);
+        bool hasDigit = password.Any(char.IsDigit);
+        bool hasSpecial = password.Any(ch => !char.IsLetterOrDigit(ch));
+        return hasUpper && hasLower && hasDigit && hasSpecial;
     }
 }

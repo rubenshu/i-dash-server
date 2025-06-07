@@ -2,5 +2,6 @@
 
 public interface IAuthService
 {
-    string GenerateJwtToken(int userId, string username, string refreshToken);
+    string GenerateJwtToken(int userId, string username);
+    bool IsPasswordComplex(string password);
 }
