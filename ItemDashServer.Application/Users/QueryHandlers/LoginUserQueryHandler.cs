@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ItemDashServer.Infrastructure.Persistence;
+using ItemDashServer.Application.Users.Repositories;
 using AutoMapper;
 using System.Text;
 using ItemDashServer.Application.Users.Queries;
@@ -7,14 +7,14 @@ using System.Security.Cryptography;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 
-public class LoginUserQueryHandler(ApplicationDbContext dbContext, IMapper mapper) : IRequestHandler<LoginUserQuery, (bool Success, UserDto? User)>
+public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginUserQuery, (bool Success, UserDto? User)>
 {
-    private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<(bool Success, UserDto? User)> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
-        var user = _dbContext.Users.SingleOrDefault(u => u.Username == request.Username);
+        var user = await _userRepository.GetByUsernameAsync(request.Username, cancellationToken);
         if (user == null)
             return (false, null);
 
@@ -28,7 +28,7 @@ public class LoginUserQueryHandler(ApplicationDbContext dbContext, IMapper mappe
         {
             user.RefreshToken = request.RefreshToken;
             user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await _userRepository.UpdateAsync(user, cancellationToken);
         }
 
         var userDto = _mapper.Map<UserDto>(user);

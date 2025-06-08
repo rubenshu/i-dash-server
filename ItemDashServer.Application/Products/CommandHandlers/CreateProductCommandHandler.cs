@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using ItemDashServer.Application.Products.Commands;
+using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Domain.Entities;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence; 
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class CreateProductCommandHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<CreateProductCommand, ProductDto>
+public class CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper) : IRequestHandler<CreateProductCommand, ProductDto>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly IProductRepository _productRepository = productRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -20,9 +20,7 @@ public class CreateProductCommandHandler(ApplicationDbContext context, IMapper m
             Price = request.Price,
         };
 
-        _context.Products.Add(entity);
-        await _context.SaveChangesAsync(cancellationToken);
-
+        await _productRepository.AddAsync(entity, cancellationToken);
         return _mapper.Map<ProductDto>(entity);
     }
 }

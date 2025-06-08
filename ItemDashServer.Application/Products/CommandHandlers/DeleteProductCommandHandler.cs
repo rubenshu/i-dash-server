@@ -1,21 +1,19 @@
 ﻿using ItemDashServer.Application.Products.Commands;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence;     
-using Microsoft.EntityFrameworkCore;
+using ItemDashServer.Application.Products.Repositories;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class DeleteProductCommandHandler(ApplicationDbContext context) : IRequestHandler<DeleteProductCommand, bool>
+public class DeleteProductCommandHandler(IProductRepository productRepository) : IRequestHandler<DeleteProductCommand, bool>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly IProductRepository _productRepository = productRepository;
 
     public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Products.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        var entity = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return false;
 
-        _context.Products.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _productRepository.DeleteAsync(entity, cancellationToken);
         return true;
     }
 }

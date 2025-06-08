@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using ItemDashServer.Application.Categorys.Commands;
+using ItemDashServer.Application.Categorys.Repositories;
 using ItemDashServer.Domain.Entities;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence; 
 
 namespace ItemDashServer.Application.Categorys.CommandHandlers;
 
-public class CreateCategoryCommandHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryDto>
+public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryDto>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
@@ -20,9 +20,7 @@ public class CreateCategoryCommandHandler(ApplicationDbContext context, IMapper 
             Price = request.Price,
         };
 
-        _context.Categorys.Add(entity);
-        await _context.SaveChangesAsync(cancellationToken);
-
+        await _categoryRepository.AddAsync(entity, cancellationToken);
         return _mapper.Map<CategoryDto>(entity);
     }
 }

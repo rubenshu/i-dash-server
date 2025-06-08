@@ -1,30 +1,28 @@
 ﻿using ItemDashServer.Application.Categorys.Commands;
+using ItemDashServer.Application.Categorys.Repositories;
 using ItemDashServer.Domain.Entities;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Application.Categorys.CommandHandlers;
 
-public class PatchCategoryCommandHandler(ApplicationDbContext context) : IRequestHandler<PatchCategoryCommand, bool>
+public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<PatchCategoryCommand, bool>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
 
     public async Task<bool> Handle(PatchCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categorys.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        var entity = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return false;
 
         var entityJson = JsonSerializer.Serialize(entity);
         var entityNode = JsonNode.Parse(entityJson)!;
-
         var patchNode = JsonNode.Parse(request.PatchDoc.RootElement.GetRawText())!;
 
         foreach (var prop in patchNode.AsObject())
         {
-            entityNode[prop.Key] = prop.Value;
+            entityNode[prop.Key] = prop.Value is null ? null : JsonNode.Parse(prop.Value.ToJsonString());
         }
 
         var patchedEntity = entityNode.Deserialize<Category>();
@@ -34,8 +32,7 @@ public class PatchCategoryCommandHandler(ApplicationDbContext context) : IReques
         entity.Description = patchedEntity.Description;
         entity.Price = patchedEntity.Price;
 
-        await _context.SaveChangesAsync(cancellationToken);
-
+        await _categoryRepository.UpdateAsync(entity, cancellationToken);
         return true;
     }
 }

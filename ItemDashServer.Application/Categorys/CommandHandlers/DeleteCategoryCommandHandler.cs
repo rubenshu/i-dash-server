@@ -1,21 +1,19 @@
 ﻿using ItemDashServer.Application.Categorys.Commands;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence;     
-using Microsoft.EntityFrameworkCore;
+using ItemDashServer.Application.Categorys.Repositories;
 
 namespace ItemDashServer.Application.Categorys.CommandHandlers;
 
-public class DeleteCategoryCommandHandler(ApplicationDbContext context) : IRequestHandler<DeleteCategoryCommand, bool>
+public class DeleteCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<DeleteCategoryCommand, bool>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
 
     public async Task<bool> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categorys.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        var entity = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return false;
 
-        _context.Categorys.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _categoryRepository.DeleteAsync(entity, cancellationToken);
         return true;
     }
 }

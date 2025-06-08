@@ -1,24 +1,18 @@
 ﻿using AutoMapper;
 using ItemDashServer.Application.Products.Queries;
 using MediatR;
-using ItemDashServer.Infrastructure.Persistence;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
+using ItemDashServer.Application.Products.Repositories;
 
 namespace ItemDashServer.Application.Products.QueryHandlers;
 
-public class GetProductsQueryHandler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
+public class GetProductsQueryHandler(IProductRepository productRepository, IMapper mapper) : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
 {
-    private readonly ApplicationDbContext _context = context;
+    private readonly IProductRepository _productRepository = productRepository;
     private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Products
-            .Include(p => p.ProductCategories)
-                .ThenInclude(pc => pc.Category)
-            .AsNoTracking()
-            .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        var products = await _productRepository.GetAllAsync(cancellationToken);
+        return _mapper.Map<IEnumerable<ProductDto>>(products);
     }
 }

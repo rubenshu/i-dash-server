@@ -9,6 +9,9 @@ using ItemDashServer.Application.Products.Queries;
 using ItemDashServer.Application;
 using ItemDashServer.Api.Services;
 using ItemDashServer.Application.Users;
+using ItemDashServer.Application.Products.Repositories;
+using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Users.Repositories;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -85,6 +88,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 if (builder.Environment.IsDevelopment())
 {
