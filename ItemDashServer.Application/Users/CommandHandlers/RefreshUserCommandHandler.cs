@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ItemDashServer.Application;
+using ItemDashServer.Application.Services;
 using AutoMapper;
 using System.Security.Cryptography;
 using ItemDashServer.Application.Users.Commands;

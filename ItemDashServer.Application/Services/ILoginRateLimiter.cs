@@ -1,4 +1,4 @@
-namespace ItemDashServer.Api.Services;
+namespace ItemDashServer.Application.Services;
 
 public interface ILoginRateLimiter
 {

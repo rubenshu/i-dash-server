@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ItemDashServer.Api.Controllers;
 using ItemDashServer.Api.Services;
+using ItemDashServer.Application.Services;
 using ItemDashServer.Application.Users.Queries;
 using ItemDashServer.Application.Users;
 using Microsoft.Extensions.Configuration;

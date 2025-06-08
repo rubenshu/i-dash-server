@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using ItemDashServer.Application.Products.Queries;
 using ItemDashServer.Application;
 using ItemDashServer.Api.Services;
-using ItemDashServer.Application.Users;
+using ItemDashServer.Application.Services;
 using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Application.Categorys.Repositories;
 using ItemDashServer.Application.Users.Repositories;

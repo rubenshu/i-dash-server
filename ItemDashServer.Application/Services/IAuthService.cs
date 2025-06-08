@@ -1,4 +1,4 @@
-﻿namespace ItemDashServer.Application.Users;
+﻿namespace ItemDashServer.Application.Services;
 
 public interface IAuthService
 {
