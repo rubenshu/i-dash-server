@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace ItemDashServer.Application.Categorys.Commands;
+namespace ItemDashServer.Application.Categories.Commands;
 
 public record DeleteCategoryCommand(int Id) : IRequest<bool>;

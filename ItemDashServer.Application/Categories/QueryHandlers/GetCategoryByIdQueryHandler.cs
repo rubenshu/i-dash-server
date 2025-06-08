@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ItemDashServer.Application.Categorys.Queries;
+using ItemDashServer.Application.Categories.Queries;
 using MediatR;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Repositories;
 
-namespace ItemDashServer.Application.Categorys.QueryHandlers;
+namespace ItemDashServer.Application.Categories.QueryHandlers;
 
 public class GetCategoryByIdQueryHandler(ICategoryRepository categoryRepository, IMapper mapper) : IRequestHandler<GetCategoryByIdQuery, CategoryDto?>
 {

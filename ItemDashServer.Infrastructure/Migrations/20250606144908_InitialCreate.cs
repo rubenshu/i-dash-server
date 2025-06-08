@@ -11,7 +11,7 @@ namespace ItemDashServer.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categorys",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace ItemDashServer.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categorys", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,9 +66,9 @@ namespace ItemDashServer.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ProductCategories", x => new { x.ProductId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Categorys_CategoryId",
+                        name: "FK_ProductCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Categorys",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -101,7 +101,7 @@ namespace ItemDashServer.Infrastructure.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Categorys");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Products");

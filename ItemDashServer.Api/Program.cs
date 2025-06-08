@@ -10,7 +10,7 @@ using ItemDashServer.Application;
 using ItemDashServer.Api.Services;
 using ItemDashServer.Application.Services;
 using ItemDashServer.Application.Products.Repositories;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Application.Users.Repositories;
 
 Log.Logger = new LoggerConfiguration()

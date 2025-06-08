@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using ItemDashServer.Application;
-using ItemDashServer.Application.Categorys.Commands;
+using ItemDashServer.Application.Categories.Commands;
 using ItemDashServer.Domain.Entities;
 using MediatR;
 
-namespace ItemDashServer.Application.Categorys.CommandHandlers;
+namespace ItemDashServer.Application.Categories.CommandHandlers;
 
 public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryDto>
 {

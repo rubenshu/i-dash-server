@@ -21,7 +21,7 @@ public static class ApplicationDbContextSeed
             context.SaveChanges();
         }
 
-        if (!context.Categorys.Any())
+        if (!context.Categories.Any())
         {
             var categories = new List<Category>
             {
@@ -29,7 +29,7 @@ public static class ApplicationDbContextSeed
                 new() { Name = "Water", Description = "Water-related products", Price = 0 },
                 new() { Name = "Outdoors", Description = "Outdoor equipment", Price = 0 }
             };
-            context.Categorys.AddRange(categories);
+            context.Categories.AddRange(categories);
             context.SaveChanges();
         }
 
@@ -48,9 +48,9 @@ public static class ApplicationDbContextSeed
 
         if (!context.ProductCategories.Any())
         {
-            var fun = context.Categorys.FirstOrDefault(c => c.Name == "Fun");
-            var water = context.Categorys.FirstOrDefault(c => c.Name == "Water");
-            var outdoors = context.Categorys.FirstOrDefault(c => c.Name == "Outdoors");
+            var fun = context.Categories.FirstOrDefault(c => c.Name == "Fun");
+            var water = context.Categories.FirstOrDefault(c => c.Name == "Water");
+            var outdoors = context.Categories.FirstOrDefault(c => c.Name == "Outdoors");
 
             var waterGun = context.Products.FirstOrDefault(p => p.Name == "Water Gun");
             var waterHose = context.Products.FirstOrDefault(p => p.Name == "Water Hose");

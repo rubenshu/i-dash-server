@@ -1,9 +1,9 @@
 ﻿using ItemDashServer.Application;
-using ItemDashServer.Application.Categorys.Commands;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Application.Categories.Repositories;
 using MediatR;
 
-namespace ItemDashServer.Application.Categorys.CommandHandlers;
+namespace ItemDashServer.Application.Categories.CommandHandlers;
 
 public class UpdateCategoryCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateCategoryCommand, bool>
 {

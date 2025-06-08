@@ -1,11 +1,11 @@
-﻿using ItemDashServer.Application.Categorys.Commands;
-using ItemDashServer.Application.Categorys.Repositories;
+﻿using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Domain.Entities;
 using MediatR;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
-namespace ItemDashServer.Application.Categorys.CommandHandlers;
+namespace ItemDashServer.Application.Categories.CommandHandlers;
 
 public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<PatchCategoryCommand, bool>
 {

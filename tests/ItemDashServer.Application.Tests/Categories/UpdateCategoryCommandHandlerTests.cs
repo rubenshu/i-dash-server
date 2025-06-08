@@ -2,14 +2,14 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using ItemDashServer.Application.Categorys.CommandHandlers;
-using ItemDashServer.Application.Categorys.Commands;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.CommandHandlers;
+using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categorys.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Categories.CommandHandlers.Tests;
 
 public class UpdateCategoryCommandHandlerTests
 {

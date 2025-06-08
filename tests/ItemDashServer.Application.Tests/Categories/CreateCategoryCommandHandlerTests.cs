@@ -3,26 +3,26 @@ using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using ItemDashServer.Application.Categorys.QueryHandlers;
-using ItemDashServer.Application.Categorys.Queries;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.CommandHandlers;
+using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categorys.QueryHandlers.Tests;
+namespace ItemDashServer.Application.Categories.CommandHandlers.Tests;
 
-public class GetCategoryByIdQueryHandlerTests
+public class CreateCategoryCommandHandlerTests
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly CategoryRepository _repository;
 
-    public GetCategoryByIdQueryHandlerTests()
+    public CreateCategoryCommandHandlerTests()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("GetCategoryByIdHandlerTestDb")
+            .UseInMemoryDatabase("CreateCategoryHandlerTestDb")
             .Options;
         _dbContext = new ApplicationDbContext(options);
         _repository = new CategoryRepository(_dbContext);
@@ -31,13 +31,11 @@ public class GetCategoryByIdQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ReturnsCorrectCategory()
+    public async Task Handle_CreatesCategory()
     {
-        var category = new Category { Name = "C1", Description = "D1", Price = 1 };
-        await _repository.AddAsync(category);
-        var handler = new GetCategoryByIdQueryHandler(_repository, _mapper);
-        var result = await handler.Handle(new GetCategoryByIdQuery(category.Id), CancellationToken.None);
+        var handler = new CreateCategoryCommandHandler(_repository, _mapper);
+        var result = await handler.Handle(new CreateCategoryCommand("C1", "D1", 1), CancellationToken.None);
         result.Should().NotBeNull();
-        result!.Name.Should().Be("C1");
+        result.Name.Should().Be("C1");
     }
 }

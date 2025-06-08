@@ -1,4 +1,4 @@
-﻿using ItemDashServer.Application.Categorys;
+﻿using ItemDashServer.Application.Categories;
 using MediatR;
 
 namespace ItemDashServer.Application.Products.Commands;

@@ -2,7 +2,7 @@
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Application.Users;
 using ItemDashServer.Application.Products;
-using ItemDashServer.Application.Categorys;
+using ItemDashServer.Application.Categories;
 
 namespace ItemDashServer.Application;
 

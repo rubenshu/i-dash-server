@@ -1,4 +1,4 @@
-﻿namespace ItemDashServer.Application.ProductCategorys;
+﻿namespace ItemDashServer.Application.ProductCategories;
 
 public class ProductCategoryDto(int productId, int categoryId)
 {

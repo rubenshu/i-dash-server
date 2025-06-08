@@ -1,9 +1,9 @@
-﻿using ItemDashServer.Application.Categorys.Commands;
+﻿using ItemDashServer.Application.Categories.Commands;
 using MediatR;
 using ItemDashServer.Application;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Repositories;
 
-namespace ItemDashServer.Application.Categorys.CommandHandlers;
+namespace ItemDashServer.Application.Categories.CommandHandlers;
 
 public class DeleteCategoryCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteCategoryCommand, bool>
 {

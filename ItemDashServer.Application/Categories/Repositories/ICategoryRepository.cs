@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ItemDashServer.Application.Categorys.Repositories;
+namespace ItemDashServer.Application.Categories.Repositories;
 
 public interface ICategoryRepository
 {

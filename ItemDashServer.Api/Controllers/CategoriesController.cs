@@ -1,31 +1,31 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using ItemDashServer.Application.Categorys;
-using ItemDashServer.Application.Categorys.Queries;
-using ItemDashServer.Application.Categorys.Commands;
+using ItemDashServer.Application.Categories;
+using ItemDashServer.Application.Categories.Queries;
+using ItemDashServer.Application.Categories.Commands;
 
 namespace ItemDashServer.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/categorys")]
+[Route("api/v1/categories")]
 [Authorize]
-public class CategorysController(IMediator mediator, ILogger<CategorysController> logger) : ControllerBase
+public class CategoriesController(IMediator mediator, ILogger<CategoriesController> logger) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
-    private readonly ILogger<CategorysController> _logger = logger;
+    private readonly ILogger<CategoriesController> _logger = logger;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll()
     {
         try
         {
-            var categorys = await _mediator.Send(new GetCategorysQuery());
-            return Ok(categorys);
+            var categories = await _mediator.Send(new GetCategoriesQuery());
+            return Ok(categories);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error fetching categorys");
+            _logger.LogError(ex, "Error fetching categories");
             return StatusCode(500, "Internal server error");
         }
     }

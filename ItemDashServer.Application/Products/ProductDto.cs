@@ -1,4 +1,4 @@
-﻿using ItemDashServer.Application.Categorys;
+﻿using ItemDashServer.Application.Categories;
 
 namespace ItemDashServer.Application.Products;
 

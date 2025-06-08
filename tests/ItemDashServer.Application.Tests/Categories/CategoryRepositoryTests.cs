@@ -4,9 +4,9 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Repositories;
 
-namespace ItemDashServer.Application.Categorys.Repositories.Tests;
+namespace ItemDashServer.Application.Categories.Repositories.Tests;
 
 public class CategoryRepositoryTests
 {
@@ -35,8 +35,8 @@ public class CategoryRepositoryTests
     [Fact]
     public async Task GetAllAsync_ReturnsAll()
     {
-        _dbContext.Categorys.Add(new Category { Name = "A", Description = "D", Price = 1 });
-        _dbContext.Categorys.Add(new Category { Name = "B", Description = "D", Price = 2 });
+        _dbContext.Categories.Add(new Category { Name = "A", Description = "D", Price = 1 });
+        _dbContext.Categories.Add(new Category { Name = "B", Description = "D", Price = 2 });
         await _dbContext.SaveChangesAsync();
         var all = await _repository.GetAllAsync();
         all.Should().HaveCountGreaterOrEqualTo(2);

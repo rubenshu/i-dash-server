@@ -6,7 +6,7 @@ namespace ItemDashServer.Infrastructure.Persistence;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Category> Categorys => Set<Category>();
+    public DbSet<Category> Categories => Set<Category>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
 

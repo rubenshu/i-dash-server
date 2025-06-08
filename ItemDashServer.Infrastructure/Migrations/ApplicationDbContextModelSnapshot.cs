@@ -43,7 +43,7 @@ namespace ItemDashServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorys");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ItemDashServer.Domain.Entities.Product", b =>

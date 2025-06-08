@@ -1,6 +1,6 @@
 ﻿using ItemDashServer.Application.Products;
 
-namespace ItemDashServer.Application.Categorys;
+namespace ItemDashServer.Application.Categories;
 
 public class CategoryDto
 {

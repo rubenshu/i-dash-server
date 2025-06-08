@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using ItemDashServer.Application;
-using ItemDashServer.Application.Categorys.Repositories;
+using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
