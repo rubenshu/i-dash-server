@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ItemDashServer.Domain\ItemDashServer.Domain.csproj" />
-    <ProjectReference Include="..\ItemDashServer.Infrastructure\ItemDashServer.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

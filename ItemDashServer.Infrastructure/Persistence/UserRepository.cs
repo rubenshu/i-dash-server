@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ItemDashServer.Application.Users.Repositories;
 
-namespace ItemDashServer.Application.Users.Repositories;
+namespace ItemDashServer.Infrastructure.Persistence;
 
 public class UserRepository(ApplicationDbContext context) : IUserRepository
 {
@@ -23,15 +24,21 @@ public class UserRepository(ApplicationDbContext context) : IUserRepository
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _context.Users.ToListAsync(cancellationToken);
 
-    public async Task AddAsync(User user, CancellationToken cancellationToken = default)
+    public Task AddAsync(User user, CancellationToken cancellationToken = default)
     {
         _context.Users.Add(user);
-        await _context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
         _context.Users.Update(user);
-        await _context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteAsync(User user, CancellationToken cancellationToken = default)
+    {
+        _context.Users.Remove(user);
+        return Task.CompletedTask;
     }
 }

@@ -1,21 +1,23 @@
 using MediatR;
 using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Application.Users.Commands;
+using ItemDashServer.Application;
 
 namespace ItemDashServer.Application.Users.CommandHandlers;
 
-public class UpdateUserRefreshTokenCommandHandler(IUserRepository userRepository) : IRequestHandler<UpdateUserRefreshTokenCommand>
+public class UpdateUserRefreshTokenCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserRefreshTokenCommand>
 {
-    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task Handle(UpdateUserRefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var user = await _unitOfWork.Users.GetByIdAsync(request.UserId, cancellationToken);
         if (user != null)
         {
             user.RefreshToken = request.RefreshToken;
             user.RefreshTokenExpiry = request.RefreshTokenExpiry;
-            await _userRepository.UpdateAsync(user, cancellationToken);
+            await _unitOfWork.Users.UpdateAsync(user, cancellationToken);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

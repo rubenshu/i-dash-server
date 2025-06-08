@@ -15,5 +15,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ItemDashServer.Domain\ItemDashServer.Domain.csproj" />
+		<ProjectReference Include="..\ItemDashServer.Application\ItemDashServer.Application.csproj" />
 	</ItemGroup>
 </Project>

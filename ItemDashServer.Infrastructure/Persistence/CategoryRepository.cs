@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ItemDashServer.Application.Categorys.Repositories;
 
-namespace ItemDashServer.Application.Categorys.Repositories;
+namespace ItemDashServer.Infrastructure.Persistence;
 
 public class CategoryRepository(ApplicationDbContext context) : ICategoryRepository
 {
@@ -23,21 +24,21 @@ public class CategoryRepository(ApplicationDbContext context) : ICategoryReposit
                 .ThenInclude(pc => pc.Product)
             .ToListAsync(cancellationToken);
 
-    public async Task AddAsync(Category category, CancellationToken cancellationToken = default)
+    public Task AddAsync(Category category, CancellationToken cancellationToken = default)
     {
         _context.Categorys.Add(category);
-        await _context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(Category category, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(Category category, CancellationToken cancellationToken = default)
     {
         _context.Categorys.Update(category);
-        await _context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Category category, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(Category category, CancellationToken cancellationToken = default)
     {
         _context.Categorys.Remove(category);
-        await _context.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 }

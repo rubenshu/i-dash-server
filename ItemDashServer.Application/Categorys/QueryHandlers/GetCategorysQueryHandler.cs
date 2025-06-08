@@ -3,7 +3,6 @@ using ItemDashServer.Application.Categorys.Queries;
 using MediatR;
 using ItemDashServer.Application.Categorys.Repositories;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Application.Categorys.QueryHandlers;
 
