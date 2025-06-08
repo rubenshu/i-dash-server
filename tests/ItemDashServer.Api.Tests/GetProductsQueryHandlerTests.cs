@@ -35,7 +35,8 @@ namespace ItemDashServer.Api.Tests
         [Fact]
         public async Task Handle_ShouldReturnProducts()
         {
-            var handler = new GetProductsQueryHandler(_dbContext, _mapper);
+            var productRepository = new ItemDashServer.Application.Products.Repositories.ProductRepository(_dbContext);
+            var handler = new GetProductsQueryHandler(productRepository, _mapper);
             var result = await handler.Handle(new GetProductsQuery(), CancellationToken.None);
 
             result.Should().NotBeNull();

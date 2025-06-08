@@ -41,7 +41,6 @@ public class AuthenticationControllerTest
             _rateLimiterMock.Object
         );
     }
-    }
 
     private void SetupMediatorForLogin(bool success, UserDto? user = null, Exception? exception = null)
     {
