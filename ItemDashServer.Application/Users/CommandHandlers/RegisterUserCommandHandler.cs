@@ -4,19 +4,20 @@ using AutoMapper;
 using ItemDashServer.Application.Users.Commands;
 using ItemDashServer.Application;
 using ItemDashServer.Application.Users.Repositories;
+using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Users.CommandHandlers;
 
-public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<RegisterUserCommand, UserDto>
+public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<RegisterUserCommand, Result<UserDto>>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<UserDto> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var existing = await _unitOfWork.Users.GetByUsernameAsync(request.Username, cancellationToken);
         if (existing != null)
-            throw new InvalidOperationException("Username already exists.");
+            return Result<UserDto>.Failure("Username already exists.");
 
         using var hmac = new System.Security.Cryptography.HMACSHA512();
         var user = new User
@@ -27,6 +28,6 @@ public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) 
         };
         await _unitOfWork.Users.AddAsync(user, cancellationToken);
         await _unitOfWork.CommitAsync();
-        return _mapper.Map<UserDto>(user);
+        return Result<UserDto>.Success(_mapper.Map<UserDto>(user));
     }
 }

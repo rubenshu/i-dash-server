@@ -44,10 +44,12 @@ public class RefreshUserCommandHandlerTests
         await _dbContext.SaveChangesAsync(); // Ensure user is persisted
         var handler = new RefreshUserCommandHandler(_unitOfWork, _authService, _mapper);
         var cmd = new RefreshUserCommand("token");
-        var (success, token, refreshToken, userDto) = await handler.Handle(cmd, CancellationToken.None);
-        success.Should().BeTrue();
-        userDto.Should().NotBeNull();
-        refreshToken.Should().NotBeNull();
+        var result = await handler.Handle(cmd, CancellationToken.None);
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value.Token.Should().Be("dummy-token");
+        result.Value.RefreshToken.Should().NotBeNull();
+        result.Value.User.Should().NotBeNull();
     }
 
     private class DummyAuthService : IAuthService

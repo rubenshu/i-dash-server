@@ -36,7 +36,8 @@ public class GetProductByIdQueryHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new GetProductByIdQueryHandler(_repository, _mapper);
         var result = await handler.Handle(new GetProductByIdQuery(product.Id), CancellationToken.None);
-        result.Should().NotBeNull();
-        result!.Name.Should().Be("P1");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value!.Name.Should().Be("P1");
     }
 }

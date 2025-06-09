@@ -20,8 +20,10 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     {
         try
         {
-            var products = await _mediator.Send(new GetProductsQuery());
-            return Ok(products);
+            var result = await _mediator.Send(new GetProductsQuery());
+            if (!result.IsSuccess || result.Value == null)
+                return NotFound();
+            return Ok(result.Value);
         }
         catch (Exception ex)
         {
@@ -35,10 +37,10 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     {
         try
         {
-            var product = await _mediator.Send(new GetProductByIdQuery(id));
-            if (product == null)
+            var result = await _mediator.Send(new GetProductByIdQuery(id));
+            if (!result.IsSuccess || result.Value == null)
                 return NotFound();
-            return Ok(product);
+            return Ok(result.Value);
         }
         catch (Exception ex)
         {
@@ -55,8 +57,10 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
 
         try
         {
-            var created = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess || result.Value == null)
+                return BadRequest(result.Error ?? "Product creation failed.");
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
         }
         catch (Exception ex)
         {
@@ -76,8 +80,8 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
 
         try
         {
-            var updated = await _mediator.Send(command);
-            if (updated is bool result && !result)
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return Ok();
         }
@@ -94,7 +98,7 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
         try
         {
             var result = await _mediator.Send(new DeleteProductCommand(id));
-            if (!result)
+            if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return NoContent();
         }

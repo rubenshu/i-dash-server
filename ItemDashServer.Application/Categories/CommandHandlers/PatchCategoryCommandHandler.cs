@@ -1,5 +1,6 @@
 ﻿using ItemDashServer.Application.Categories.Commands;
 using ItemDashServer.Application.Categories.Repositories;
+using ItemDashServer.Application.Common;
 using ItemDashServer.Domain.Entities;
 using MediatR;
 using System.Text.Json.Nodes;
@@ -7,14 +8,14 @@ using System.Text.Json;
 
 namespace ItemDashServer.Application.Categories.CommandHandlers;
 
-public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<PatchCategoryCommand, bool>
+public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<PatchCategoryCommand, Result<bool>>
 {
     private readonly ICategoryRepository _categoryRepository = categoryRepository;
 
-    public async Task<bool> Handle(PatchCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(PatchCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null) return false;
+        if (entity == null) return Result<bool>.Failure("Category not found");
 
         var entityJson = JsonSerializer.Serialize(entity);
         var entityNode = JsonNode.Parse(entityJson)!;
@@ -26,13 +27,13 @@ public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository)
         }
 
         var patchedEntity = entityNode.Deserialize<Category>();
-        if (patchedEntity == null) return false;
+        if (patchedEntity == null) return Result<bool>.Failure("Patch failed");
 
         entity.Name = patchedEntity.Name;
         entity.Description = patchedEntity.Description;
         entity.Price = patchedEntity.Price;
 
         await _categoryRepository.UpdateAsync(entity, cancellationToken);
-        return true;
+        return Result<bool>.Success(true);
     }
 }

@@ -39,6 +39,8 @@ public class CreateCategoryCommandHandlerTests
         var handler = new CreateCategoryCommandHandler(unitOfWork, mapper);
         var result = await handler.Handle(new CreateCategoryCommand("C1", "D1", 1), CancellationToken.None);
         result.Should().NotBeNull();
-        result.Name.Should().Be("C1");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value.Name.Should().Be("C1");
     }
 }

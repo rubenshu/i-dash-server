@@ -39,4 +39,19 @@ public class UpdateUserRefreshTokenCommandHandlerTests
         var updated = await _repository.GetByIdAsync(user.Id);
         updated!.RefreshToken.Should().Be("refresh");
     }
+
+    [Fact]
+    public async Task Handle_UserNotFound_DoesNothing()
+    {
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, _repository);
+        var handler = new UpdateUserRefreshTokenCommandHandler(unitOfWork);
+        var nonExistentUserId = 9999;
+        var cmd = new UpdateUserRefreshTokenCommand(nonExistentUserId, "refresh", System.DateTime.UtcNow.AddDays(1));
+        // Should not throw
+        await handler.Handle(cmd, CancellationToken.None);
+        var updated = await _repository.GetByIdAsync(nonExistentUserId);
+        updated.Should().BeNull();
+    }
 }

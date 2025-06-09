@@ -37,7 +37,8 @@ public class UpdateCategoryCommandHandlerTests
         var handler = new UpdateCategoryCommandHandler(unitOfWork);
         var cmd = new UpdateCategoryCommand(category.Id, "New", "D", 2);
         var result = await handler.Handle(cmd, CancellationToken.None);
-        result.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeTrue();
         var updated = await categoryRepository.GetByIdAsync(category.Id);
         updated!.Name.Should().Be("New");
         updated.Price.Should().Be(2);

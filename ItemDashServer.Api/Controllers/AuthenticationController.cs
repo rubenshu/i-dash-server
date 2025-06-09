@@ -39,8 +39,8 @@ public class AuthenticationController(
             var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
             var refreshExpiry = DateTime.UtcNow.AddDays(7);
 
-            var (success, userDto) = await _mediator.Send(new LoginUserQuery(request.Username, request.Password, refreshToken));
-            if (!success || userDto == null)
+            var result = await _mediator.Send(new LoginUserQuery(request.Username, request.Password, refreshToken));
+            if (!result.IsSuccess || result.Value == null)
             {
                 await _rateLimiter.RegisterFailureAsync(request.Username);
                 return Unauthorized();
@@ -48,6 +48,7 @@ public class AuthenticationController(
 
             await _rateLimiter.ResetFailuresAsync(request.Username);
 
+            var userDto = result.Value;
             var token = _authService.GenerateJwtToken(userDto.Id, userDto.Username);
 
             var response = new LoginResponseDto
@@ -77,8 +78,10 @@ public class AuthenticationController(
 
         try
         {
-            var userDto = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
-            return Ok(userDto);
+            var result = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
+            if (!result.IsSuccess || result.Value == null)
+                return BadRequest(result.Error ?? "Registration failed.");
+            return Ok(result.Value);
         }
         catch (InvalidOperationException ex)
         {
@@ -101,12 +104,12 @@ public class AuthenticationController(
 
         try
         {
-            var user = await _mediator.Send(new GetUserByRefreshTokenQuery(request.RefreshToken));
-            if (user == null)
+            var userResult = await _mediator.Send(new GetUserByRefreshTokenQuery(request.RefreshToken));
+            if (!userResult.IsSuccess || userResult.Value == null)
                 return Ok();
 
-            await _mediator.Send(new UpdateUserRefreshTokenCommand(user.Id, null, null));
-            _logger.LogInformation("User {UserId} logged out and refresh token invalidated.", user.Id);
+            await _mediator.Send(new UpdateUserRefreshTokenCommand(userResult.Value.Id, null, null));
+            _logger.LogInformation("User {UserId} logged out and refresh token invalidated.", userResult.Value.Id);
             return Ok();
         }
         catch (Exception ex)
@@ -125,15 +128,15 @@ public class AuthenticationController(
 
         try
         {
-            var (success, token, refreshToken, userDto) = await _mediator.Send(new RefreshUserCommand(request.RefreshToken));
-            if (!success || userDto == null)
+            var result = await _mediator.Send(new RefreshUserCommand(request.RefreshToken));
+            if (!result.IsSuccess || result.Value == null)
                 return Unauthorized();
 
             return Ok(new
             {
-                Token = token,
-                RefreshToken = refreshToken,
-                User = userDto
+                Token = result.Value.Token,
+                RefreshToken = result.Value.RefreshToken,
+                User = result.Value.User
             });
         }
         catch (Exception ex)

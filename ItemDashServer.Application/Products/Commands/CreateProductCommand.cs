@@ -1,5 +1,6 @@
 ﻿using ItemDashServer.Application.Categories;
 using MediatR;
+using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Products.Commands;
 
@@ -8,4 +9,4 @@ public record CreateProductCommand(
     string Description,
     decimal Price,
     IEnumerable<int>? CategoryIds // Accept a list of category IDs
-) : IRequest<ProductDto>;
+) : IRequest<Result<ProductDto>>;

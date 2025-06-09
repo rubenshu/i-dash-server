@@ -37,7 +37,8 @@ public class DeleteCategoryCommandHandlerTests
         var handler = new DeleteCategoryCommandHandler(unitOfWork);
         var cmd = new DeleteCategoryCommand(category.Id);
         var result = await handler.Handle(cmd, CancellationToken.None);
-        result.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeTrue();
         var deleted = await categoryRepository.GetByIdAsync(category.Id);
         deleted.Should().BeNull();
     }

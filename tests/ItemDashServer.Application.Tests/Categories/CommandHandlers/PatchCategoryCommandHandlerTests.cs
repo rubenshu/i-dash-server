@@ -36,7 +36,8 @@ public class PatchCategoryCommandHandlerTests
         var cmd = new PatchCategoryCommand(category.Id, patchDoc);
         var result = await handler.Handle(cmd, CancellationToken.None);
         await _dbContext.SaveChangesAsync();
-        result.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeTrue();
         var patched = await _repository.GetByIdAsync(category.Id);
         patched!.Name.Should().Be("Patched");
         patched.Price.Should().Be(99);

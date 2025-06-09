@@ -39,6 +39,8 @@ public class RegisterUserCommandHandlerTests
         var handler = new RegisterUserCommandHandler(unitOfWork, mapper);
         var result = await handler.Handle(new RegisterUserCommand("newuser", "pass"), CancellationToken.None);
         result.Should().NotBeNull();
-        result.Username.Should().Be("newuser");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value.Username.Should().Be("newuser");
     }
 }

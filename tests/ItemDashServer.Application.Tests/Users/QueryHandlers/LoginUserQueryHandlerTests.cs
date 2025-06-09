@@ -37,9 +37,9 @@ public class LoginUserQueryHandlerTests
         await _repository.AddAsync(user);
         await _dbContext.SaveChangesAsync();
         var handler = new LoginUserQueryHandler(_repository, _mapper);
-        var (success, userDto) = await handler.Handle(new LoginUserQuery("user", password, null), CancellationToken.None);
-        success.Should().BeTrue();
-        userDto.Should().NotBeNull();
-        userDto!.Username.Should().Be("user");
+        var result = await handler.Handle(new LoginUserQuery("user", password, null), CancellationToken.None);
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value!.Username.Should().Be("user");
     }
 }

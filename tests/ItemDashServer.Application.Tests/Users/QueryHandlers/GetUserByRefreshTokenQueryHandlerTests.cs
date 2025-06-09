@@ -36,7 +36,8 @@ public class GetUserByRefreshTokenQueryHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new GetUserByRefreshTokenQueryHandler(_repository, _mapper);
         var result = await handler.Handle(new GetUserByRefreshTokenQuery("token"), CancellationToken.None);
-        result.Should().NotBeNull();
-        result!.Username.Should().Be("user");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value!.Username.Should().Be("user");
     }
 }

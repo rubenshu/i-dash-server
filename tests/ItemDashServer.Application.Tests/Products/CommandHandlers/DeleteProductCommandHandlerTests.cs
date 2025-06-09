@@ -38,7 +38,8 @@ public class DeleteProductCommandHandlerTests
         var handler = new DeleteProductCommandHandler(unitOfWork);
         var cmd = new DeleteProductCommand(product.Id);
         var result = await handler.Handle(cmd, CancellationToken.None);
-        result.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeTrue();
         var deleted = await productRepository.GetByIdAsync(product.Id);
         deleted.Should().BeNull();
     }

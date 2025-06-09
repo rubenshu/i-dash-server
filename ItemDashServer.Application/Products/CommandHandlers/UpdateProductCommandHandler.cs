@@ -1,17 +1,18 @@
 ﻿using ItemDashServer.Application;
+using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Products.Commands;
 using MediatR;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class UpdateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateProductCommand, bool>
+public class UpdateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateProductCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _unitOfWork.Products.GetByIdAsync(request.Id, cancellationToken);
-        if (entity == null) return false;
+        if (entity == null) return Result<bool>.Failure("Product not found");
 
         entity.Name = request.Name;
         entity.Description = request.Description;
@@ -19,6 +20,6 @@ public class UpdateProductCommandHandler(IUnitOfWork unitOfWork) : IRequestHandl
 
         await _unitOfWork.Products.UpdateAsync(entity, cancellationToken);
         await _unitOfWork.CommitAsync();
-        return true;
+        return Result<bool>.Success(true);
     }
 }

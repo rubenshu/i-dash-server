@@ -36,6 +36,7 @@ public class GetProductsQueryHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new GetProductsQueryHandler(_repository, _mapper);
         var result = await handler.Handle(new GetProductsQuery(), CancellationToken.None);
-        result.Should().HaveCountGreaterOrEqualTo(2);
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().HaveCountGreaterOrEqualTo(2);
     }
 }

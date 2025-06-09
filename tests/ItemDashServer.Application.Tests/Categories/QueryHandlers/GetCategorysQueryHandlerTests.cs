@@ -36,6 +36,7 @@ public class GetCategoriesQueryHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new GetCategoriesQueryHandler(_repository, _mapper);
         var result = await handler.Handle(new GetCategoriesQuery(), CancellationToken.None);
-        result.Should().HaveCountGreaterOrEqualTo(2);
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().HaveCountGreaterOrEqualTo(2);
     }
 }

@@ -4,24 +4,25 @@ using AutoMapper;
 using System.Text;
 using ItemDashServer.Application.Users.Queries;
 using System.Security.Cryptography;
+using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 
-public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginUserQuery, (bool Success, UserDto? User)>
+public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginUserQuery, Result<UserDto>>
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<(bool Success, UserDto? User)> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByUsernameAsync(request.Username, cancellationToken);
         if (user == null)
-            return (false, null);
+            return Result<UserDto>.Failure("User not found");
 
         var hmac = new HMACSHA512(user.PasswordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
         if (!computedHash.SequenceEqual(user.PasswordHash))
-            return (false, null);
+            return Result<UserDto>.Failure("Invalid credentials");
 
         // If a refresh token is provided in the request, update it
         if (!string.IsNullOrEmpty(request.RefreshToken))
@@ -32,6 +33,6 @@ public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mappe
         }
 
         var userDto = _mapper.Map<UserDto>(user);
-        return (true, userDto);
+        return Result<UserDto>.Success(userDto);
     }
 }

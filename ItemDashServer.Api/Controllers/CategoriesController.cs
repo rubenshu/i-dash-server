@@ -20,8 +20,10 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     {
         try
         {
-            var categories = await _mediator.Send(new GetCategoriesQuery());
-            return Ok(categories);
+            var result = await _mediator.Send(new GetCategoriesQuery());
+            if (!result.IsSuccess || result.Value == null)
+                return NotFound();
+            return Ok(result.Value);
         }
         catch (Exception ex)
         {
@@ -35,10 +37,10 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     {
         try
         {
-            var category = await _mediator.Send(new GetCategoryByIdQuery(id));
-            if (category == null)
+            var result = await _mediator.Send(new GetCategoryByIdQuery(id));
+            if (!result.IsSuccess || result.Value == null)
                 return NotFound();
-            return Ok(category);
+            return Ok(result.Value);
         }
         catch (Exception ex)
         {
@@ -55,8 +57,10 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
 
         try
         {
-            var created = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess || result.Value == null)
+                return BadRequest(result.Error ?? "Category creation failed.");
+            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
         }
         catch (Exception ex)
         {
@@ -76,8 +80,8 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
 
         try
         {
-            var updated = await _mediator.Send(command);
-            if (updated is bool result && !result)
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return Ok();
         }
@@ -94,7 +98,7 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
         try
         {
             var result = await _mediator.Send(new DeleteCategoryCommand(id));
-            if (!result)
+            if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return NoContent();
         }

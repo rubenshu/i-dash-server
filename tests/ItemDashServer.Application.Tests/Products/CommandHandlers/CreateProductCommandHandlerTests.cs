@@ -37,6 +37,8 @@ public class CreateProductCommandHandlerTests
         var handler = new CreateProductCommandHandler(unitOfWork, _mapper);
         var result = await handler.Handle(new CreateProductCommand("P1", "D1", 1, null), CancellationToken.None);
         result.Should().NotBeNull();
-        result.Name.Should().Be("P1");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value.Name.Should().Be("P1");
     }
 }

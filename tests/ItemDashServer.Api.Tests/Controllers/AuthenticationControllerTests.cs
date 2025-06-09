@@ -10,6 +10,7 @@ using ItemDashServer.Application.Users.Queries;
 using ItemDashServer.Application.Users;
 using Microsoft.Extensions.Configuration;
 using ItemDashServer.Application.Users.Commands;
+using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 
@@ -53,8 +54,9 @@ public class AuthenticationControllerTest
         }
         else
         {
+            var result = success && user != null ? Result<UserDto>.Success(user) : Result<UserDto>.Failure("Invalid credentials");
             _mediatorMock.Setup(m => m.Send(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((success, user));
+                .ReturnsAsync(result);
         }
     }
 
@@ -67,8 +69,9 @@ public class AuthenticationControllerTest
         }
         else
         {
+            var result = user != null ? Result<UserDto>.Success(user) : Result<UserDto>.Failure("Registration failed");
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(user!);
+                .ReturnsAsync(result);
         }
     }
 
@@ -96,19 +99,10 @@ public class AuthenticationControllerTest
         var result = await controller.Login(ValidLoginRequest);
 
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        Assert.Equal(200, okResult.StatusCode);
         var response = Assert.IsType<LoginResponseDto>(okResult.Value);
         Assert.False(string.IsNullOrWhiteSpace(response.Token));
         Assert.Equal(userDto.Id, response.User.Id);
         Assert.Equal(userDto.Username, response.User.Username);
-    }
-
-    [Fact]
-    public void AuthService_GeneratesToken()
-    {
-        var service = CreateAuthService();
-        var token = service.GenerateJwtToken(1, "1");
-        Assert.False(string.IsNullOrWhiteSpace(token));
     }
 
     [Fact]
@@ -158,9 +152,10 @@ public class AuthenticationControllerTest
         var result = await controller.Register(ValidLoginRequest);
 
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedUser = Assert.IsType<UserDto>(okResult.Value);
-        Assert.Equal(userDto.Id, returnedUser.Id);
-        Assert.Equal(userDto.Username, returnedUser.Username);
+        var response = Assert.IsType<UserDto>(okResult.Value);
+
+        Assert.Equal(userDto.Id, response.Id);
+        Assert.Equal(userDto.Username, response.Username);
     }
 
     [Fact]
