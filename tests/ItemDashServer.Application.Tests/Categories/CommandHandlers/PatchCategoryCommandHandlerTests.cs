@@ -4,13 +4,12 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Commands;
-using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using System.Text.Json;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categories.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Categories.CommandHandlers;
 
 public class PatchCategoryCommandHandlerTests
 {
@@ -31,10 +30,12 @@ public class PatchCategoryCommandHandlerTests
     {
         var category = new Category { Name = "Patch", Description = "D", Price = 1 };
         await _repository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
         var patchDoc = JsonDocument.Parse("{\"Name\": \"Patched\", \"Price\": 99}");
         var handler = new PatchCategoryCommandHandler(_repository);
         var cmd = new PatchCategoryCommand(category.Id, patchDoc);
         var result = await handler.Handle(cmd, CancellationToken.None);
+        await _dbContext.SaveChangesAsync();
         result.Should().BeTrue();
         var patched = await _repository.GetByIdAsync(category.Id);
         patched!.Name.Should().Be("Patched");

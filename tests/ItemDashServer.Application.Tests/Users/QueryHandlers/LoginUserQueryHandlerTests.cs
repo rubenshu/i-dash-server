@@ -5,24 +5,22 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ItemDashServer.Application.Users.QueryHandlers;
 using ItemDashServer.Application.Users.Queries;
-using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Users.QueryHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Users.QueryHandlers;
 
-public class GetUserByRefreshTokenQueryHandlerTests
+public class LoginUserQueryHandlerTests
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly UserRepository _repository;
 
-    public GetUserByRefreshTokenQueryHandlerTests()
+    public LoginUserQueryHandlerTests()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("GetUserByRefreshTokenHandlerTestDb")
+            .UseInMemoryDatabase("LoginUserHandlerTestDb")
             .Options;
         _dbContext = new ApplicationDbContext(options);
         _repository = new UserRepository(_dbContext);
@@ -31,13 +29,17 @@ public class GetUserByRefreshTokenQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ReturnsUser_WhenRefreshTokenMatches()
+    public async Task Handle_ReturnsUser_WhenCredentialsAreValid()
     {
-        var user = new User { Username = "user", PasswordHash = new byte[1], PasswordSalt = new byte[1], RefreshToken = "token" };
+        var password = "pass";
+        using var hmac = new System.Security.Cryptography.HMACSHA512();
+        var user = new User { Username = "user", PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)), PasswordSalt = hmac.Key };
         await _repository.AddAsync(user);
-        var handler = new GetUserByRefreshTokenQueryHandler(_repository, _mapper);
-        var result = await handler.Handle(new GetUserByRefreshTokenQuery("token"), CancellationToken.None);
-        result.Should().NotBeNull();
-        result!.Username.Should().Be("user");
+        await _dbContext.SaveChangesAsync();
+        var handler = new LoginUserQueryHandler(_repository, _mapper);
+        var (success, userDto) = await handler.Handle(new LoginUserQuery("user", password, null), CancellationToken.None);
+        success.Should().BeTrue();
+        userDto.Should().NotBeNull();
+        userDto!.Username.Should().Be("user");
     }
 }

@@ -1,13 +1,11 @@
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Application.Products.Repositories;
 
-namespace ItemDashServer.Application.Products.Repositories.Tests;
+namespace ItemDashServer.Application.Tests.Products.Repositories;
 
 public class ProductRepositoryTests
 {
@@ -28,6 +26,7 @@ public class ProductRepositoryTests
     {
         var product = new Product { Name = "Test", Description = "Desc", Price = 1.23M };
         await _repository.AddAsync(product);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(product.Id);
         found.Should().NotBeNull();
         found!.Name.Should().Be("Test");
@@ -48,8 +47,10 @@ public class ProductRepositoryTests
     {
         var product = new Product { Name = "Old", Description = "D", Price = 1 };
         await _repository.AddAsync(product);
+        await _dbContext.SaveChangesAsync();
         product.Name = "New";
         await _repository.UpdateAsync(product);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(product.Id);
         found!.Name.Should().Be("New");
     }
@@ -59,7 +60,9 @@ public class ProductRepositoryTests
     {
         var product = new Product { Name = "Del", Description = "D", Price = 1 };
         await _repository.AddAsync(product);
+        await _dbContext.SaveChangesAsync();
         await _repository.DeleteAsync(product);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(product.Id);
         found.Should().BeNull();
     }

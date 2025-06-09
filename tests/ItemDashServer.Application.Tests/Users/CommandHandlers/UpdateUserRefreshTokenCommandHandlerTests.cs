@@ -2,16 +2,13 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using ItemDashServer.Application.Users.CommandHandlers;
 using ItemDashServer.Application.Users.Commands;
-using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Users.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Users.CommandHandlers;
 
 public class UpdateUserRefreshTokenCommandHandlerTests
 {
@@ -32,7 +29,11 @@ public class UpdateUserRefreshTokenCommandHandlerTests
     {
         var user = new User { Username = "user", PasswordHash = new byte[1], PasswordSalt = new byte[1] };
         await _repository.AddAsync(user);
-        var handler = new UpdateUserRefreshTokenCommandHandler(_repository);
+        await _dbContext.SaveChangesAsync(); // Ensure user is persisted
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, _repository);
+        var handler = new UpdateUserRefreshTokenCommandHandler(unitOfWork);
         var cmd = new UpdateUserRefreshTokenCommand(user.Id, "refresh", System.DateTime.UtcNow.AddDays(1));
         await handler.Handle(cmd, CancellationToken.None);
         var updated = await _repository.GetByIdAsync(user.Id);

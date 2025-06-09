@@ -4,9 +4,8 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Application.Categories.Repositories;
 
-namespace ItemDashServer.Application.Categories.Repositories.Tests;
+namespace ItemDashServer.Application.Tests.Categories.Repositories;
 
 public class CategoryRepositoryTests
 {
@@ -27,6 +26,7 @@ public class CategoryRepositoryTests
     {
         var category = new Category { Name = "TestCat", Description = "Desc", Price = 1 };
         await _repository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(category.Id);
         found.Should().NotBeNull();
         found!.Name.Should().Be("TestCat");
@@ -47,8 +47,10 @@ public class CategoryRepositoryTests
     {
         var category = new Category { Name = "Old", Description = "D", Price = 1 };
         await _repository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
         category.Name = "New";
         await _repository.UpdateAsync(category);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(category.Id);
         found!.Name.Should().Be("New");
     }
@@ -58,7 +60,9 @@ public class CategoryRepositoryTests
     {
         var category = new Category { Name = "Del", Description = "D", Price = 1 };
         await _repository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
         await _repository.DeleteAsync(category);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(category.Id);
         found.Should().BeNull();
     }

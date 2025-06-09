@@ -4,9 +4,8 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Domain.Entities;
 using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Application.Users.Repositories;
 
-namespace ItemDashServer.Application.Users.Repositories.Tests;
+namespace ItemDashServer.Application.Tests.Users.Repositories;
 
 public class UserRepositoryTests
 {
@@ -27,6 +26,7 @@ public class UserRepositoryTests
     {
         var user = new User { Username = "user1", PasswordHash = new byte[1], PasswordSalt = new byte[1] };
         await _repository.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(user.Id);
         found.Should().NotBeNull();
         found!.Username.Should().Be("user1");
@@ -37,6 +37,7 @@ public class UserRepositoryTests
     {
         var user = new User { Username = "user2", PasswordHash = new byte[1], PasswordSalt = new byte[1] };
         await _repository.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByUsernameAsync("user2");
         found.Should().NotBeNull();
         found!.Username.Should().Be("user2");
@@ -47,6 +48,7 @@ public class UserRepositoryTests
     {
         var user = new User { Username = "user3", PasswordHash = new byte[1], PasswordSalt = new byte[1], RefreshToken = "token123" };
         await _repository.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByRefreshTokenAsync("token123");
         found.Should().NotBeNull();
         found!.RefreshToken.Should().Be("token123");
@@ -57,8 +59,10 @@ public class UserRepositoryTests
     {
         var user = new User { Username = "user4", PasswordHash = new byte[1], PasswordSalt = new byte[1] };
         await _repository.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
         user.Username = "user4-updated";
         await _repository.UpdateAsync(user);
+        await _dbContext.SaveChangesAsync();
         var found = await _repository.GetByIdAsync(user.Id);
         found!.Username.Should().Be("user4-updated");
     }

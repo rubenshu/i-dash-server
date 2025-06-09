@@ -1,4 +1,5 @@
 ﻿using Moq;
+using Xunit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using ItemDashServer.Application.Users;
 using Microsoft.Extensions.Configuration;
 using ItemDashServer.Application.Users.Commands;
 
-namespace ItemDashServer.Api.Tests;
+namespace ItemDashServer.Api.Tests.Controllers;
 
 public class AuthenticationControllerTest
 {
@@ -79,7 +80,7 @@ public class AuthenticationControllerTest
     }
 
     private static AuthenticationController.LoginRequest ValidLoginRequest =>
-        new("testuser", "testpass");
+        new("testuser", "TestPass1!");
 
     private static UserDto GetUserDto() =>
         new() { Id = 1, Username = "testuser" };
@@ -89,17 +90,17 @@ public class AuthenticationControllerTest
     {
         var userDto = GetUserDto();
         SetupMediatorForLogin(true, userDto);
-
+        _rateLimiterMock.Setup(r => r.AllowAttemptAsync(It.IsAny<string>())).ReturnsAsync(true);
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest);
 
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         Assert.Equal(200, okResult.StatusCode);
-        dynamic response = okResult.Value!;
-        Assert.False(string.IsNullOrWhiteSpace((string)response.Token));
-        Assert.Equal(userDto.Id, (int)response.User.Id);
-        Assert.Equal(userDto.Username, (string)response.User.Username);
+        var response = Assert.IsType<LoginResponseDto>(okResult.Value);
+        Assert.False(string.IsNullOrWhiteSpace(response.Token));
+        Assert.Equal(userDto.Id, response.User.Id);
+        Assert.Equal(userDto.Username, response.User.Username);
     }
 
     [Fact]
@@ -114,7 +115,7 @@ public class AuthenticationControllerTest
     public async Task Login_InvalidCredentials_ReturnsUnauthorized()
     {
         SetupMediatorForLogin(false);
-
+        _rateLimiterMock.Setup(r => r.AllowAttemptAsync(It.IsAny<string>())).ReturnsAsync(true);
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest);
@@ -126,6 +127,7 @@ public class AuthenticationControllerTest
     public async Task Login_ExceptionThrown_ReturnsInternalServerError()
     {
         SetupMediatorForLogin(false, exception: new Exception("fail"));
+        _rateLimiterMock.Setup(r => r.AllowAttemptAsync(It.IsAny<string>())).ReturnsAsync(true);
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest);
@@ -165,11 +167,9 @@ public class AuthenticationControllerTest
     public async Task Register_UsernameExists_ReturnsBadRequest()
     {
         var userDto = GetUserDto();
-        SetupMediatorForRegister(userDto, new Exception("Username already exists."));
+        SetupMediatorForRegister(userDto, new InvalidOperationException("Username already exists."));
         var controller = CreateController();
-
         var result = await controller.Register(ValidLoginRequest);
-
         var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.Equal("Username already exists.", badRequest.Value);
     }

@@ -5,13 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ItemDashServer.Application.Users.CommandHandlers;
 using ItemDashServer.Application.Users.Commands;
-using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
-using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Users.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Users.CommandHandlers;
 
 public class RegisterUserCommandHandlerTests
 {
@@ -33,7 +30,13 @@ public class RegisterUserCommandHandlerTests
     [Fact]
     public async Task Handle_RegistersUser()
     {
-        var handler = new RegisterUserCommandHandler(_repository, _mapper);
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var userRepository = new UserRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
+        var config = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+        var mapper = config.CreateMapper();
+        var handler = new RegisterUserCommandHandler(unitOfWork, mapper);
         var result = await handler.Handle(new RegisterUserCommand("newuser", "pass"), CancellationToken.None);
         result.Should().NotBeNull();
         result.Username.Should().Be("newuser");

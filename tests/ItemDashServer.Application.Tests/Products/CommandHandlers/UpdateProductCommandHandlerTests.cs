@@ -2,16 +2,13 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using ItemDashServer.Application.Products.CommandHandlers;
 using ItemDashServer.Application.Products.Commands;
-using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Products.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Products.CommandHandlers;
 
 public class UpdateProductCommandHandlerTests
 {
@@ -30,13 +27,18 @@ public class UpdateProductCommandHandlerTests
     [Fact]
     public async Task Handle_UpdatesProduct()
     {
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var userRepository = new UserRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
         var product = new Product { Name = "Old", Description = "D", Price = 1 };
-        await _repository.AddAsync(product);
-        var handler = new UpdateProductCommandHandler(_repository);
+        await productRepository.AddAsync(product);
+        await _dbContext.SaveChangesAsync();
+        var handler = new UpdateProductCommandHandler(unitOfWork);
         var cmd = new UpdateProductCommand(product.Id, "New", "D", 2);
         var result = await handler.Handle(cmd, CancellationToken.None);
         result.Should().BeTrue();
-        var updated = await _repository.GetByIdAsync(product.Id);
+        var updated = await productRepository.GetByIdAsync(product.Id);
         updated!.Name.Should().Be("New");
         updated.Price.Should().Be(2);
     }

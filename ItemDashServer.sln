@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -13,7 +12,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Api", "ItemD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2ECA5B05-F2E1-45A9-AB85-9B3533160024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application.Tests", "tests\ItemDashServer.Api.Tests\ItemDashServer.Api.Tests.csproj", "{877B0A2B-C731-4677-A27E-BB2902B5A3A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Api.Tests", "tests\ItemDashServer.Api.Tests\ItemDashServer.Api.Tests.csproj", "{877B0A2B-C731-4677-A27E-BB2902B5A3A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDashServer.Application.Tests", "tests\ItemDashServer.Application.Tests\ItemDashServer.Application.Tests.csproj", "{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,8 +45,13 @@ Global
 		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{877B0A2B-C731-4677-A27E-BB2902B5A3A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{877B0A2B-C731-4677-A27E-BB2902B5A3A8} = {2ECA5B05-F2E1-45A9-AB85-9B3533160024}
+		{A1B2C3D4-E5F6-7890-1234-56789ABCDEF0} = {2ECA5B05-F2E1-45A9-AB85-9B3533160024}
 	EndGlobalSection
 EndGlobal

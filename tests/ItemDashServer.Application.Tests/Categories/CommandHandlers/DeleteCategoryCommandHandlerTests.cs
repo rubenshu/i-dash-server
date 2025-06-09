@@ -4,12 +4,11 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Commands;
-using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categories.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Categories.CommandHandlers;
 
 public class DeleteCategoryCommandHandlerTests
 {
@@ -28,13 +27,18 @@ public class DeleteCategoryCommandHandlerTests
     [Fact]
     public async Task Handle_DeletesCategory()
     {
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var userRepository = new UserRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
         var category = new Category { Name = "Del", Description = "D", Price = 1 };
-        await _repository.AddAsync(category);
-        var handler = new DeleteCategoryCommandHandler(_repository);
+        await categoryRepository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
+        var handler = new DeleteCategoryCommandHandler(unitOfWork);
         var cmd = new DeleteCategoryCommand(category.Id);
         var result = await handler.Handle(cmd, CancellationToken.None);
         result.Should().BeTrue();
-        var deleted = await _repository.GetByIdAsync(category.Id);
+        var deleted = await categoryRepository.GetByIdAsync(category.Id);
         deleted.Should().BeNull();
     }
 }

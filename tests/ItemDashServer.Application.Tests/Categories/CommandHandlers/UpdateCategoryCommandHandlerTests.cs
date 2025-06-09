@@ -4,12 +4,11 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Commands;
-using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categories.CommandHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Categories.CommandHandlers;
 
 public class UpdateCategoryCommandHandlerTests
 {
@@ -28,13 +27,18 @@ public class UpdateCategoryCommandHandlerTests
     [Fact]
     public async Task Handle_UpdatesCategory()
     {
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var userRepository = new UserRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
         var category = new Category { Name = "Old", Description = "D", Price = 1 };
-        await _repository.AddAsync(category);
-        var handler = new UpdateCategoryCommandHandler(_repository);
+        await categoryRepository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
+        var handler = new UpdateCategoryCommandHandler(unitOfWork);
         var cmd = new UpdateCategoryCommand(category.Id, "New", "D", 2);
         var result = await handler.Handle(cmd, CancellationToken.None);
         result.Should().BeTrue();
-        var updated = await _repository.GetByIdAsync(category.Id);
+        var updated = await categoryRepository.GetByIdAsync(category.Id);
         updated!.Name.Should().Be("New");
         updated.Price.Should().Be(2);
     }

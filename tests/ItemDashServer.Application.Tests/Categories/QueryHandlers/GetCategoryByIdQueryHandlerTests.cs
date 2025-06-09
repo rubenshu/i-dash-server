@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ItemDashServer.Application.Categories.QueryHandlers;
 using ItemDashServer.Application.Categories.Queries;
-using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categories.QueryHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Categories.QueryHandlers;
 
 public class GetCategoryByIdQueryHandlerTests
 {
@@ -35,6 +33,7 @@ public class GetCategoryByIdQueryHandlerTests
     {
         var category = new Category { Name = "C1", Description = "D1", Price = 1 };
         await _repository.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
         var handler = new GetCategoryByIdQueryHandler(_repository, _mapper);
         var result = await handler.Handle(new GetCategoryByIdQuery(category.Id), CancellationToken.None);
         result.Should().NotBeNull();

@@ -50,13 +50,13 @@ public class AuthenticationController(
 
             var token = _authService.GenerateJwtToken(userDto.Id, userDto.Username);
 
-            // For local/dev, return refresh token in response (in production, use HttpOnly cookie)
-            return Ok(new
+            var response = new LoginResponseDto
             {
                 Token = token,
                 RefreshToken = refreshToken,
                 User = userDto
-            });
+            };
+            return Ok(response);
         }
         catch (Exception ex)
         {
@@ -80,10 +80,10 @@ public class AuthenticationController(
             var userDto = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
             return Ok(userDto);
         }
-        catch (InvalidOperationException)
+        catch (InvalidOperationException ex)
         {
-            _logger.LogWarning("Registration failed for user");
-            return BadRequest("Registration failed.");
+            _logger.LogWarning(ex, "Registration failed for user");
+            return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {

@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ItemDashServer.Application.Categories.QueryHandlers;
 using ItemDashServer.Application.Categories.Queries;
-using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Categories.QueryHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Categories.QueryHandlers;
 
 public class GetCategoriesQueryHandlerTests
 {

@@ -5,24 +5,22 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ItemDashServer.Application.Products.QueryHandlers;
 using ItemDashServer.Application.Products.Queries;
-using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
-using ItemDashServer.Application;
 using System.Threading;
 
-namespace ItemDashServer.Application.Products.QueryHandlers.Tests;
+namespace ItemDashServer.Application.Tests.Products.QueryHandlers;
 
-public class GetProductByIdQueryHandlerTests
+public class GetProductsQueryHandlerTests
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly ProductRepository _repository;
 
-    public GetProductByIdQueryHandlerTests()
+    public GetProductsQueryHandlerTests()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("GetProductByIdHandlerTestDb")
+            .UseInMemoryDatabase("GetProductsHandlerTestDb")
             .Options;
         _dbContext = new ApplicationDbContext(options);
         _repository = new ProductRepository(_dbContext);
@@ -31,13 +29,13 @@ public class GetProductByIdQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ReturnsCorrectProduct()
+    public async Task Handle_ReturnsAllProducts()
     {
-        var product = new Product { Name = "P1", Description = "D1", Price = 1 };
-        await _repository.AddAsync(product);
-        var handler = new GetProductByIdQueryHandler(_repository, _mapper);
-        var result = await handler.Handle(new GetProductByIdQuery(product.Id), CancellationToken.None);
-        result.Should().NotBeNull();
-        result!.Name.Should().Be("P1");
+        _dbContext.Products.Add(new Product { Name = "P1", Description = "D1", Price = 1 });
+        _dbContext.Products.Add(new Product { Name = "P2", Description = "D2", Price = 2 });
+        await _dbContext.SaveChangesAsync();
+        var handler = new GetProductsQueryHandler(_repository, _mapper);
+        var result = await handler.Handle(new GetProductsQuery(), CancellationToken.None);
+        result.Should().HaveCountGreaterOrEqualTo(2);
     }
 }
