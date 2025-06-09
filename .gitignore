@@ -17,6 +17,7 @@ obj/
 # Test results
 TestResults/
 *.trx
+tests/coveragereport/
 
 # Entity Framework Migrations snapshot files (optional, keep if you want to track schema)
 # *.Designer.cs

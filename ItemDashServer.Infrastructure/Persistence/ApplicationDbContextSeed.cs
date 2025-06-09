@@ -8,6 +8,14 @@ public static class ApplicationDbContextSeed
 {
     public static void Seed(ApplicationDbContext context)
     {
+        SeedUsers(context);
+        SeedCategories(context);
+        SeedProducts(context);
+        SeedProductCategories(context);
+    }
+
+    private static void SeedUsers(ApplicationDbContext context)
+    {
         if (!context.Users.Any())
         {
             var hmac = new System.Security.Cryptography.HMACSHA512();
@@ -20,7 +28,10 @@ public static class ApplicationDbContextSeed
             context.Users.Add(user);
             context.SaveChanges();
         }
+    }
 
+    private static void SeedCategories(ApplicationDbContext context)
+    {
         if (!context.Categories.Any())
         {
             var categories = new List<Category>
@@ -32,7 +43,10 @@ public static class ApplicationDbContextSeed
             context.Categories.AddRange(categories);
             context.SaveChanges();
         }
+    }
 
+    private static void SeedProducts(ApplicationDbContext context)
+    {
         if (!context.Products.Any())
         {
             var products = new List<Product>
@@ -45,7 +59,10 @@ public static class ApplicationDbContextSeed
             context.Products.AddRange(products);
             context.SaveChanges();
         }
+    }
 
+    private static void SeedProductCategories(ApplicationDbContext context)
+    {
         if (!context.ProductCategories.Any())
         {
             var fun = context.Categories.FirstOrDefault(c => c.Name == "Fun");
