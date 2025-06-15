@@ -11,7 +11,7 @@ using ItemDashServer.Api.Services;
 using ItemDashServer.Application.Services;
 using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Application.Categories.Repositories;
-using ItemDashServer.Application.Users.Repositories;
+using ItemDashServer.Application.Users.Repositories;    
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -19,8 +19,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddEnvironmentVariables();
 
 builder.Host.UseSerilog();
 
