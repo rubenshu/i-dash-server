@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
-using ItemDashServer.Application;
 using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Products.Commands;
-using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Domain.Entities;
-using MediatR;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateProductCommand, Result<ProductDto>>
+public class CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : ICreateProductCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ProductDto>> ExecuteAsync(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var entity = new Product
         {

@@ -1,6 +1,4 @@
-﻿using ItemDashServer.Application.Categories;
-
-namespace ItemDashServer.Application.Products;
+﻿namespace ItemDashServer.Application.Products;
 
 public class ProductDto
 {

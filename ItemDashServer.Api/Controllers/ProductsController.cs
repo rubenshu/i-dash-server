@@ -1,26 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using ItemDashServer.Application.Products;
 using ItemDashServer.Application.Products.Queries;
 using ItemDashServer.Application.Products.Commands;
+using ItemDashServer.Application.Products.QueryHandlers;
+using ItemDashServer.Application.Products.CommandHandlers;
 
 namespace ItemDashServer.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/products")]
 [Authorize]
-public class ProductsController(IMediator mediator, ILogger<ProductsController> logger) : ControllerBase
+public class ProductsController(ILogger<ProductsController> logger) : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
     private readonly ILogger<ProductsController> _logger = logger;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(
+        [FromServices] IGetProductsQueryHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new GetProductsQuery());
+            var result = await handler.ExecuteAsync(new GetProductsQuery(), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return NotFound();
             return Ok(result.Value);
@@ -33,11 +35,14 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ProductDto>> GetById(int id)
+    public async Task<ActionResult<ProductDto>> GetById(
+        int id,
+        [FromServices] IGetProductByIdQueryHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new GetProductByIdQuery(id));
+            var result = await handler.ExecuteAsync(new GetProductByIdQuery(id), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return NotFound();
             return Ok(result.Value);
@@ -50,14 +55,17 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProductDto>> Create([FromBody] CreateProductCommand command)
+    public async Task<ActionResult<ProductDto>> Create(
+        [FromBody] CreateProductCommand command,
+        [FromServices] ICreateProductCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            var result = await _mediator.Send(command);
+            var result = await handler.ExecuteAsync(command, cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return BadRequest(result.Error ?? "Product creation failed.");
             return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
@@ -70,7 +78,11 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateProductCommand command)
+    public async Task<IActionResult> Update(
+        int id,
+        [FromBody] UpdateProductCommand command,
+        [FromServices] IUpdateProductCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -80,7 +92,7 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
 
         try
         {
-            var result = await _mediator.Send(command);
+            var result = await handler.ExecuteAsync(command, cancellationToken);
             if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return Ok();
@@ -93,11 +105,14 @@ public class ProductsController(IMediator mediator, ILogger<ProductsController> 
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(
+        int id,
+        [FromServices] IDeleteProductCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new DeleteProductCommand(id));
+            var result = await handler.ExecuteAsync(new DeleteProductCommand(id), cancellationToken);
             if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return NoContent();

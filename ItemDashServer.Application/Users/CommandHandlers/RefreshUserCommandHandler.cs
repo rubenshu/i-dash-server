@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ItemDashServer.Application.Services;
+﻿using ItemDashServer.Application.Services;
 using AutoMapper;
 using System.Security.Cryptography;
 using ItemDashServer.Application.Users.Commands;
@@ -14,13 +13,13 @@ public class RefreshUserResultDto
     public UserDto? User { get; set; }
 }
 
-public class RefreshUserCommandHandler(IUnitOfWork unitOfWork, IAuthService authService, IMapper mapper) : IRequestHandler<RefreshUserCommand, Result<RefreshUserResultDto>>
+public class RefreshUserCommandHandler(IUnitOfWork unitOfWork, IAuthService authService, IMapper mapper) : IRefreshUserCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAuthService _authService = authService;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<RefreshUserResultDto>> Handle(RefreshUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<RefreshUserResultDto>> ExecuteAsync(RefreshUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.Users.GetByRefreshTokenAsync(request.RefreshToken, cancellationToken);
 

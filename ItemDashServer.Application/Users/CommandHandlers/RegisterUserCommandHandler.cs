@@ -1,19 +1,16 @@
-﻿using MediatR;
-using ItemDashServer.Domain.Entities;
+﻿using ItemDashServer.Domain.Entities;
 using AutoMapper;
 using ItemDashServer.Application.Users.Commands;
-using ItemDashServer.Application;
-using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Users.CommandHandlers;
 
-public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<RegisterUserCommand, Result<UserDto>>
+public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRegisterUserCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<UserDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> ExecuteAsync(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var existing = await _unitOfWork.Users.GetByUsernameAsync(request.Username, cancellationToken);
         if (existing != null)

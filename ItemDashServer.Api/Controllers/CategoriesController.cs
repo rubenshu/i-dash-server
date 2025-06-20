@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using ItemDashServer.Application.Categories;
+using ItemDashServer.Application.Categories.QueryHandlers;
+using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Queries;
 using ItemDashServer.Application.Categories.Commands;
 
@@ -10,17 +11,18 @@ namespace ItemDashServer.Api.Controllers;
 [ApiController]
 [Route("api/v1/categories")]
 [Authorize]
-public class CategoriesController(IMediator mediator, ILogger<CategoriesController> logger) : ControllerBase
+public class CategoriesController(ILogger<CategoriesController> logger) : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
     private readonly ILogger<CategoriesController> _logger = logger;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll(
+        [FromServices] IGetCategoriesQueryHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new GetCategoriesQuery());
+            var result = await handler.ExecuteAsync(new GetCategoriesQuery(), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return NotFound();
             return Ok(result.Value);
@@ -33,11 +35,14 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<CategoryDto>> GetById(int id)
+    public async Task<ActionResult<CategoryDto>> GetById(
+        int id,
+        [FromServices] IGetCategoryByIdQueryHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new GetCategoryByIdQuery(id));
+            var result = await handler.ExecuteAsync(new GetCategoryByIdQuery(id), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return NotFound();
             return Ok(result.Value);
@@ -50,14 +55,17 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     }
 
     [HttpPost]
-    public async Task<ActionResult<CategoryDto>> Create([FromBody] CreateCategoryCommand command)
+    public async Task<ActionResult<CategoryDto>> Create(
+        [FromBody] CreateCategoryCommand command,
+        [FromServices] ICreateCategoryCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            var result = await _mediator.Send(command);
+            var result = await handler.ExecuteAsync(command, cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return BadRequest(result.Error ?? "Category creation failed.");
             return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
@@ -70,7 +78,11 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryCommand command)
+    public async Task<IActionResult> Update(
+        int id,
+        [FromBody] UpdateCategoryCommand command,
+        [FromServices] IUpdateCategoryCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -80,7 +92,7 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
 
         try
         {
-            var result = await _mediator.Send(command);
+            var result = await handler.ExecuteAsync(command, cancellationToken);
             if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return Ok();
@@ -93,11 +105,14 @@ public class CategoriesController(IMediator mediator, ILogger<CategoriesControll
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(
+        int id,
+        [FromServices] IDeleteCategoryCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _mediator.Send(new DeleteCategoryCommand(id));
+            var result = await handler.ExecuteAsync(new DeleteCategoryCommand(id), cancellationToken);
             if (!result.IsSuccess || !result.Value)
                 return NotFound();
             return NoContent();

@@ -1,7 +1,4 @@
 using ItemDashServer.Domain.Entities;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ItemDashServer.Application.Products.Repositories;
 

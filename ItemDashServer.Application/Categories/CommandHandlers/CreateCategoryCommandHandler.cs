@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using ItemDashServer.Application;
 using ItemDashServer.Application.Categories.Commands;
 using ItemDashServer.Application.Common;
 using ItemDashServer.Domain.Entities;
-using MediatR;
 
 namespace ItemDashServer.Application.Categories.CommandHandlers;
 
-public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateCategoryCommand, Result<CategoryDto>>
+public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : ICreateCategoryCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<CategoryDto>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CategoryDto>> ExecuteAsync(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = new Category
         {

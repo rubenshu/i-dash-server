@@ -1,5 +1,4 @@
-﻿using MediatR;
-using ItemDashServer.Application.Users.Repositories;
+﻿using ItemDashServer.Application.Users.Repositories;
 using AutoMapper;
 using System.Text;
 using ItemDashServer.Application.Users.Queries;
@@ -8,12 +7,12 @@ using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 
-public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginUserQuery, Result<UserDto>>
+public class LoginUserQueryHandler(IUserRepository userRepository, IMapper mapper) : ILoginUserQueryHandler
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<UserDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> ExecuteAsync(LoginUserQuery request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByUsernameAsync(request.Username, cancellationToken);
         if (user == null)

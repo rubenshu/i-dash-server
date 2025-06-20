@@ -1,32 +1,33 @@
-﻿using ItemDashServer.Application.Users;
+﻿using ItemDashServer.Application.Users.QueryHandlers;
+using ItemDashServer.Application.Users.CommandHandlers;
+using ItemDashServer.Application.Users.Queries;
+using ItemDashServer.Application.Users.Commands;
+using ItemDashServer.Application.Users;
 using ItemDashServer.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using ItemDashServer.Application.Users.Queries;
 using System.ComponentModel.DataAnnotations;
-using ItemDashServer.Application.Users.Commands;
 using System.Security.Cryptography;
-using ItemDashServer.Api.Services;
 
 namespace ItemDashServer.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/auth")]
 public class AuthenticationController(
-    IMediator mediator,
     IAuthService authService,
     ILogger<AuthenticationController> logger,
     ILoginRateLimiter rateLimiter) : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
     private readonly IAuthService _authService = authService;
     private readonly ILogger<AuthenticationController> _logger = logger;
     private readonly ILoginRateLimiter _rateLimiter = rateLimiter;
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginRequest request)
+    public async Task<ActionResult<LoginResponseDto>> Login(
+        [FromBody] LoginRequest request,
+        [FromServices] ILoginUserQueryHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -39,7 +40,7 @@ public class AuthenticationController(
             var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
             var refreshExpiry = DateTime.UtcNow.AddDays(7);
 
-            var result = await _mediator.Send(new LoginUserQuery(request.Username, request.Password, refreshToken));
+            var result = await handler.ExecuteAsync(new LoginUserQuery(request.Username, request.Password, refreshToken), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
             {
                 await _rateLimiter.RegisterFailureAsync(request.Username);
@@ -68,7 +69,10 @@ public class AuthenticationController(
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> Register([FromBody] LoginRequest request)
+    public async Task<ActionResult<UserDto>> Register(
+        [FromBody] LoginRequest request,
+        [FromServices] IRegisterUserCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -78,7 +82,7 @@ public class AuthenticationController(
 
         try
         {
-            var result = await _mediator.Send(new RegisterUserCommand(request.Username, request.Password));
+            var result = await handler.ExecuteAsync(new RegisterUserCommand(request.Username, request.Password), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return BadRequest(result.Error ?? "Registration failed.");
             return Ok(result.Value);
@@ -97,18 +101,22 @@ public class AuthenticationController(
 
     [AllowAnonymous]
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout([FromBody] RefreshRequest request)
+    public async Task<IActionResult> Logout(
+        [FromBody] RefreshRequest request,
+        [FromServices] IGetUserByRefreshTokenQueryHandler getUserHandler,
+        [FromServices] IUpdateUserRefreshTokenCommandHandler updateUserHandler,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.RefreshToken))
             return BadRequest("Refresh token required.");
 
         try
         {
-            var userResult = await _mediator.Send(new GetUserByRefreshTokenQuery(request.RefreshToken));
+            var userResult = await getUserHandler.ExecuteAsync(new GetUserByRefreshTokenQuery(request.RefreshToken), cancellationToken);
             if (!userResult.IsSuccess || userResult.Value == null)
                 return Ok();
 
-            await _mediator.Send(new UpdateUserRefreshTokenCommand(userResult.Value.Id, null, null));
+            await updateUserHandler.ExecuteAsync(new UpdateUserRefreshTokenCommand(userResult.Value.Id, null, null), cancellationToken);
             _logger.LogInformation("User {UserId} logged out and refresh token invalidated.", userResult.Value.Id);
             return Ok();
         }
@@ -121,14 +129,17 @@ public class AuthenticationController(
 
     [AllowAnonymous]
     [HttpPost("refresh")]
-    public async Task<ActionResult<LoginResponseDto>> Refresh([FromBody] RefreshRequest request)
+    public async Task<ActionResult<LoginResponseDto>> Refresh(
+        [FromBody] RefreshRequest request,
+        [FromServices] IRefreshUserCommandHandler handler,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.RefreshToken))
             return BadRequest("Refresh token required.");
 
         try
         {
-            var result = await _mediator.Send(new RefreshUserCommand(request.RefreshToken));
+            var result = await handler.ExecuteAsync(new RefreshUserCommand(request.RefreshToken), cancellationToken);
             if (!result.IsSuccess || result.Value == null)
                 return Unauthorized();
 
