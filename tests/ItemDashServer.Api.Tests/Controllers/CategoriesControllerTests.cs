@@ -7,6 +7,8 @@ using ItemDashServer.Application.Categories;
 using ItemDashServer.Application.Categories.Queries;
 using ItemDashServer.Application.Categories.QueryHandlers;
 using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Categories.CommandHandlers;
+using ItemDashServer.Application.Categories.Commands;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 
@@ -15,6 +17,8 @@ public class CategoriesControllerTests
     private readonly Mock<IGetCategoriesQueryHandler> _getCategoriesHandler = new();
     private readonly Mock<IGetCategoryByIdQueryHandler> _getCategoryByIdHandler = new();
     private readonly Mock<ILogger<CategoriesController>> _logger = new();
+    private readonly Mock<ICreateCategoryCommandHandler> _createCategoryHandler = new();
+    private readonly Mock<IUpdateCategoryCommandHandler> _updateCategoryHandler = new();
     private CategoriesController CreateController() => new(_logger.Object);
 
     [Fact]
@@ -49,5 +53,83 @@ public class CategoriesControllerTests
         var controller = CreateController();
         var result = await controller.GetById(1, _getCategoryByIdHandler.Object, default);
         Assert.IsType<NotFoundResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsCreated_WhenSuccessful()
+    {
+        var category = new CategoryDto { Id = 1, Name = "C1" };
+        _createCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<CategoryDto>.Success(category));
+        var controller = CreateController();
+        var command = new CreateCategoryCommand("C1", "desc", 1m);
+        var result = await controller.Create(command, _createCategoryHandler.Object, default);
+        var created = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var value = Assert.IsType<CategoryDto>(created.Value);
+        Assert.Equal(category.Id, value.Id);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsBadRequest_WhenModelInvalid()
+    {
+        var controller = CreateController();
+        controller.ModelState.AddModelError("Name", "Required");
+        var command = new CreateCategoryCommand("", "", 0m);
+        var result = await controller.Create(command, _createCategoryHandler.Object, default);
+        Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsBadRequest_WhenHandlerFails()
+    {
+        _createCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<CategoryDto>.Failure("fail"));
+        var controller = CreateController();
+        var command = new CreateCategoryCommand("C1", "desc", 1m);
+        var result = await controller.Create(command, _createCategoryHandler.Object, default);
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+        Assert.Equal("fail", badRequest.Value);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsOk_WhenSuccessful()
+    {
+        _updateCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<bool>.Success(true));
+        var controller = CreateController();
+        var command = new UpdateCategoryCommand(1, "C1", "desc", 1m);
+        var result = await controller.Update(1, command, _updateCategoryHandler.Object, default);
+        Assert.IsType<OkResult>(result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsBadRequest_WhenModelInvalid()
+    {
+        var controller = CreateController();
+        controller.ModelState.AddModelError("Name", "Required");
+        var command = new UpdateCategoryCommand(1, "", "", 0m);
+        var result = await controller.Update(1, command, _updateCategoryHandler.Object, default);
+        Assert.IsType<BadRequestObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsBadRequest_WhenIdMismatch()
+    {
+        var controller = CreateController();
+        var command = new UpdateCategoryCommand(2, "C1", "desc", 1m);
+        var result = await controller.Update(1, command, _updateCategoryHandler.Object, default);
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.Equal("ID in URL does not match ID in body.", badRequest.Value);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsNotFound_WhenHandlerFails()
+    {
+        _updateCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<bool>.Success(false));
+        var controller = CreateController();
+        var command = new UpdateCategoryCommand(1, "C1", "desc", 1m);
+        var result = await controller.Update(1, command, _updateCategoryHandler.Object, default);
+        Assert.IsType<NotFoundResult>(result);
     }
 }

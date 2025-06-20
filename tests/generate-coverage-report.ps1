@@ -39,5 +39,7 @@ if (-not (Get-Command reportgenerator -ErrorAction SilentlyContinue)) {
 
 # Generate the HTML report from all coverage files
 $targetDir = ".\tests\coveragereport"
-reportgenerator -reports:$coverageFilesArg -targetdir:$targetDir -reporttypes:Html  -assemblyfilters:+ItemDashServer.* -classfilters:"-*.Dto;-*Dto;-*MappingProfile"
-Write-Host "Coverage report generated at $targetDir\index.html"
+reportgenerator -reports:$coverageFilesArg -targetdir:$targetDir -reporttypes:Html `
+  -assemblyfilters:+ItemDashServer.* `
+  -classfilters:"-*.Dto;-*Dto;-*MappingProfile;-*Migrations*;-*Program;-*Startup;-*Designer;-*Test*;-*Tests*"
+  Write-Host "Coverage report generated at $targetDir\index.html"
