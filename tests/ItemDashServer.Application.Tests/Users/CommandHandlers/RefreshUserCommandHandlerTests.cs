@@ -9,6 +9,7 @@ using ItemDashServer.Application.Services;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Domain.Entities;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace ItemDashServer.Application.Tests.Users.CommandHandlers;
 
@@ -54,7 +55,7 @@ public class RefreshUserCommandHandlerTests
 
     private class DummyAuthService : IAuthService
     {
-        public string GenerateJwtToken(int userId, string username) => "dummy-token";
+        public string GenerateJwtToken(int userId, string username, string role, List<string> rights) => "dummy-token";
         public bool IsPasswordComplex(string password) => true;
     }
 }

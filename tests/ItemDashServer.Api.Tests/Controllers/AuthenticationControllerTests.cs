@@ -86,7 +86,7 @@ public class AuthenticationControllerTest
         new("testuser", "TestPass1!");
 
     private static UserDto GetUserDto() =>
-        new() { Id = 1, Username = "testuser" };
+        new() { Id = 1, Username = "testuser", Role = "User", Rights = ["Read", "Write"] };
 
     [Fact]
     public async Task Login_ValidCredentials_ReturnsOkWithTokenAndUser()

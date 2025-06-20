@@ -22,6 +22,8 @@ public static class ApplicationDbContextSeed
             var user = new User
             {
                 Username = "username",
+                Role = "User",
+                Rights = ["ExampleRight"],
                 PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes("password")),
                 PasswordSalt = hmac.Key
             };
