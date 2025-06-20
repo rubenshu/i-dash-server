@@ -37,7 +37,7 @@ public class RegisterUserCommandHandlerTests
         var config = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
         var mapper = config.CreateMapper();
         var handler = new RegisterUserCommandHandler(unitOfWork, mapper);
-        var result = await handler.Handle(new RegisterUserCommand("newuser", "pass"), CancellationToken.None);
+        var result = await handler.ExecuteAsync(new RegisterUserCommand("newuser", "pass"), CancellationToken.None);
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();

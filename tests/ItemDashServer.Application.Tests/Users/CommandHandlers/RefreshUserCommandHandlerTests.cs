@@ -45,7 +45,7 @@ public class RefreshUserCommandHandlerTests
         await _dbContext.SaveChangesAsync(); // Ensure user is persisted
         var handler = new RefreshUserCommandHandler(_unitOfWork, _authService, _mapper);
         var cmd = new RefreshUserCommand("token");
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value.Token.Should().Be("dummy-token");

@@ -36,7 +36,7 @@ public class UpdateProductCommandHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new UpdateProductCommandHandler(unitOfWork);
         var cmd = new UpdateProductCommand(product.Id, "New", "D", 2);
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
         var updated = await productRepository.GetByIdAsync(product.Id);

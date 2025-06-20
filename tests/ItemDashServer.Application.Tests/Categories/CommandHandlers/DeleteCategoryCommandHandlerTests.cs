@@ -36,7 +36,7 @@ public class DeleteCategoryCommandHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new DeleteCategoryCommandHandler(unitOfWork);
         var cmd = new DeleteCategoryCommand(category.Id);
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
         var deleted = await categoryRepository.GetByIdAsync(category.Id);

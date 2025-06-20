@@ -35,7 +35,7 @@ public class GetCategoryByIdQueryHandlerTests
         await _repository.AddAsync(category);
         await _dbContext.SaveChangesAsync();
         var handler = new GetCategoryByIdQueryHandler(_repository, _mapper);
-        var result = await handler.Handle(new GetCategoryByIdQuery(category.Id), CancellationToken.None);
+        var result = await handler.ExecuteAsync(new GetCategoryByIdQuery(category.Id), CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value!.Name.Should().Be("C1");

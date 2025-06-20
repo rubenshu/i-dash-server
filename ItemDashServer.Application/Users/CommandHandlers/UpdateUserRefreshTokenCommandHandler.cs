@@ -15,7 +15,14 @@ public class UpdateUserRefreshTokenCommandHandler(IUnitOfWork unitOfWork) : IUpd
         user.RefreshToken = request.RefreshToken;
         user.RefreshTokenExpiry = request.RefreshTokenExpiry;
         await _unitOfWork.Users.UpdateAsync(user, cancellationToken);
-        await _unitOfWork.CommitAsync();
+        try
+        {
+            await _unitOfWork.CommitAsync();
+        }
+        catch (Exception ex)
+        {
+            return Result<bool>.Failure(ex.Message);
+        }
         return Result<bool>.Success(true);
     }
 }

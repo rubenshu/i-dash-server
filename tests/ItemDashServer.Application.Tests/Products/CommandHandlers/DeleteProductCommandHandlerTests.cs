@@ -37,7 +37,7 @@ public class DeleteProductCommandHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new DeleteProductCommandHandler(unitOfWork);
         var cmd = new DeleteProductCommand(product.Id);
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
         var deleted = await productRepository.GetByIdAsync(product.Id);

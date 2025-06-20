@@ -32,9 +32,13 @@ public class PatchCategoryCommandHandlerTests
         await _repository.AddAsync(category);
         await _dbContext.SaveChangesAsync();
         var patchDoc = JsonDocument.Parse("{\"Name\": \"Patched\", \"Price\": 99}");
-        var handler = new PatchCategoryCommandHandler(_repository);
+        var categoryRepository = new CategoryRepository(_dbContext);
+        var productRepository = new ProductRepository(_dbContext);
+        var userRepository = new UserRepository(_dbContext);
+        var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
+        var handler = new PatchCategoryCommandHandler(categoryRepository);
         var cmd = new PatchCategoryCommand(category.Id, patchDoc);
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         await _dbContext.SaveChangesAsync();
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();

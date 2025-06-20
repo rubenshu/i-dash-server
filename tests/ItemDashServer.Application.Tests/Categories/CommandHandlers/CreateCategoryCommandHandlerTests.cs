@@ -37,7 +37,7 @@ public class CreateCategoryCommandHandlerTests
         var config = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
         var mapper = config.CreateMapper();
         var handler = new CreateCategoryCommandHandler(unitOfWork, mapper);
-        var result = await handler.Handle(new CreateCategoryCommand("C1", "D1", 1), CancellationToken.None);
+        var result = await handler.ExecuteAsync(new CreateCategoryCommand("C1", "D1", 1), CancellationToken.None);
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();

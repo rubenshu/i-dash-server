@@ -35,7 +35,7 @@ public class CreateProductCommandHandlerTests
         var userRepository = new UserRepository(_dbContext);
         var unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, userRepository);
         var handler = new CreateProductCommandHandler(unitOfWork, _mapper);
-        var result = await handler.Handle(new CreateProductCommand("P1", "D1", 1, null), CancellationToken.None);
+        var result = await handler.ExecuteAsync(new CreateProductCommand("P1", "D1", 1, null), CancellationToken.None);
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();

@@ -36,7 +36,7 @@ public class UpdateCategoryCommandHandlerTests
         await _dbContext.SaveChangesAsync();
         var handler = new UpdateCategoryCommandHandler(unitOfWork);
         var cmd = new UpdateCategoryCommand(category.Id, "New", "D", 2);
-        var result = await handler.Handle(cmd, CancellationToken.None);
+        var result = await handler.ExecuteAsync(cmd, CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeTrue();
         var updated = await categoryRepository.GetByIdAsync(category.Id);

@@ -35,7 +35,7 @@ public class GetCategoriesQueryHandlerTests
         _dbContext.Categories.Add(new Category { Name = "C2", Description = "D2", Price = 2 });
         await _dbContext.SaveChangesAsync();
         var handler = new GetCategoriesQueryHandler(_repository, _mapper);
-        var result = await handler.Handle(new GetCategoriesQuery(), CancellationToken.None);
+        var result = await handler.ExecuteAsync(new GetCategoriesQuery(), CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().HaveCountGreaterOrEqualTo(2);
     }
