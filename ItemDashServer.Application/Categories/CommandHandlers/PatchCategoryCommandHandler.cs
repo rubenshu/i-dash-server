@@ -2,17 +2,16 @@
 using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Application.Common;
 using ItemDashServer.Domain.Entities;
-using MediatR;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
 namespace ItemDashServer.Application.Categories.CommandHandlers;
 
-public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<PatchCategoryCommand, Result<bool>>
+public class PatchCategoryCommandHandler(ICategoryRepository categoryRepository)
 {
     private readonly ICategoryRepository _categoryRepository = categoryRepository;
 
-    public async Task<Result<bool>> Handle(PatchCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> ExecuteAsync(PatchCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return Result<bool>.Failure("Category not found");

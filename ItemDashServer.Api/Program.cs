@@ -55,8 +55,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// MediatR and AutoMapper from Application assembly
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetProductsQuery).Assembly));
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // JWT Authentication configuration

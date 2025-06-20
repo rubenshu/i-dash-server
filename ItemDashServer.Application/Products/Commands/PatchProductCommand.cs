@@ -1,7 +1,6 @@
-﻿using ItemDashServer.Application.Common;
-using MediatR;
-using System.Text.Json;
+﻿using System.Text.Json;
+using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Products.Commands;
 
-public record PatchProductCommand(int Id, JsonDocument PatchDoc) : IRequest<Result<bool>>;
+public record PatchProductCommand(int Id, JsonDocument PatchDoc) : ICommand;

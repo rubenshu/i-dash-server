@@ -2,19 +2,18 @@
 using ItemDashServer.Application.Products.Commands;
 using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Domain.Entities;
-using MediatR;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class PatchProductCommandHandler(IProductRepository productRepository) : IRequestHandler<PatchProductCommand, Result<bool>>
+public class PatchProductCommandHandler(IUnitOfWork unitOfWork) : IPatchProductCommandHandler
 {
-    private readonly IProductRepository _productRepository = productRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<Result<bool>> Handle(PatchProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> ExecuteAsync(PatchProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        var entity = await _unitOfWork.Products.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return Result<bool>.Failure("Product not found");
 
         var entityJson = JsonSerializer.Serialize(entity);
@@ -30,12 +29,12 @@ public class PatchProductCommandHandler(IProductRepository productRepository) : 
         if (patchedEntity == null)
             return Result<bool>.Failure("Patch failed: deserialization error");
 
-        // Optionally, add more validation here if needed
         entity.Name = patchedEntity.Name;
         entity.Description = patchedEntity.Description;
         entity.Price = patchedEntity.Price;
 
-        await _productRepository.UpdateAsync(entity, cancellationToken);
+        await _unitOfWork.Products.UpdateAsync(entity, cancellationToken);
+        await _unitOfWork.CommitAsync();
         return Result<bool>.Success(true);
     }
 }

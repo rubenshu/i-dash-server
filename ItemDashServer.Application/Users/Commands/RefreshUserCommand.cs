@@ -1,7 +1,5 @@
-﻿using MediatR;
-using ItemDashServer.Application.Common;
-using ItemDashServer.Application.Users.CommandHandlers; // For RefreshUserResultDto
+﻿using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Users.Commands;
 
-public record RefreshUserCommand(string RefreshToken) : IRequest<Result<RefreshUserResultDto>>;
+public sealed record RefreshUserCommand(string RefreshToken) : ICommand;
