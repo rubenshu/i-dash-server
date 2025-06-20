@@ -28,7 +28,7 @@ public class RefreshUserCommandHandler(IUnitOfWork unitOfWork, IAuthService auth
             return Result<RefreshUserResultDto>.Failure("Invalid or expired refresh token");
 
         // Generate new JWT and refresh token
-        var newJwt = _authService.GenerateJwtToken(user.Id, user.Username);
+        var newJwt = _authService.GenerateJwtToken(user.Id, user.Username, user.Role, user.Rights);
         var newRefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         user.RefreshToken = newRefreshToken;
         user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);

@@ -49,7 +49,7 @@ public class AuthenticationController(
             await _rateLimiter.ResetFailuresAsync(request.Username);
 
             var userDto = result.Value;
-            var token = _authService.GenerateJwtToken(userDto.Id, userDto.Username);
+            var token = _authService.GenerateJwtToken(userDto.Id, userDto.Username, userDto.Role, userDto.Rights);
 
             var response = new LoginResponseDto
             {

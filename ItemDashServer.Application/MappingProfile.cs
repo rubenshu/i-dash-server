@@ -10,7 +10,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<User, UserDto>();
+        CreateMap<User, UserDto>()
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+            .ForMember(dest => dest.Rights, opt => opt.MapFrom(src => src.Rights));
 
         // Product -> ProductDto (with simple categories)
         CreateMap<Product, ProductDto>()

@@ -17,4 +17,9 @@ public class User
     public byte[] PasswordSalt { get; set; } = default!;
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiry { get; set; }
+
+    [Required]
+    public string Role { get; set; } = "User"; // User, Administrator, Manager
+    [Required]
+    public List<string> Rights { get; set; } = [];
 }

@@ -10,7 +10,7 @@ public class AuthService(IConfiguration configuration) : IAuthService
 {
     private readonly IConfiguration _configuration = configuration;
 
-    public string GenerateJwtToken(int userId, string username)
+    public string GenerateJwtToken(int userId, string username, string role, List<string> rights)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var secret = jwtSettings["Secret"];
@@ -19,11 +19,19 @@ public class AuthService(IConfiguration configuration) : IAuthService
         var secretKey = Encoding.UTF8.GetBytes(secret);
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(ClaimTypes.Name, username)
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(ClaimTypes.Name, username),
+            new(ClaimTypes.Role, role)
         };
+        if (rights != null)
+        {
+            foreach (var right in rights)
+            {
+                claims.Add(new Claim("right", right));
+            }
+        }
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
