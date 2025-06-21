@@ -15,7 +15,7 @@ public class ProductsControllerTests
     private readonly Mock<IGetProductsQueryHandler> _getProductsHandler = new();
     private readonly Mock<IGetProductByIdQueryHandler> _getProductByIdHandler = new();
     private readonly Mock<ILogger<ProductsController>> _logger = new();
-    private ProductsController CreateController() => new(_logger.Object);
+    private ProductsController CreateController() => new();
 
     [Fact]
     public async Task GetAll_ReturnsOkWithProducts()
@@ -24,7 +24,7 @@ public class ProductsControllerTests
             .ReturnsAsync(Result<IEnumerable<ProductDto>>.Success(new List<ProductDto> { new() { Id = 1, Name = "P1" } }));
         var controller = CreateController();
         var result = await controller.GetAll(_getProductsHandler.Object, default);
-        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var ok = Assert.IsType<OkObjectResult>(result);
         var products = Assert.IsAssignableFrom<IEnumerable<ProductDto>>(ok.Value);
         Assert.Single(products);
     }
@@ -36,7 +36,7 @@ public class ProductsControllerTests
             .ReturnsAsync(Result<ProductDto>.Success(new ProductDto { Id = 1, Name = "P1" }));
         var controller = CreateController();
         var result = await controller.GetById(1, _getProductByIdHandler.Object, default);
-        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var ok = Assert.IsType<OkObjectResult>(result);
         var product = Assert.IsType<ProductDto>(ok.Value);
         Assert.Equal(1, product.Id);
     }
@@ -48,6 +48,6 @@ public class ProductsControllerTests
             .ReturnsAsync(Result<ProductDto>.Failure("Not found"));
         var controller = CreateController();
         var result = await controller.GetById(1, _getProductByIdHandler.Object, default);
-        Assert.IsType<NotFoundResult>(result.Result);
+        Assert.IsType<NotFoundResult>(result);
     }
 }

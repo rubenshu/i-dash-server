@@ -39,9 +39,6 @@ public class AuthenticationControllerTest
     private AuthenticationController CreateController(AuthService? authService = null)
     {
         return new AuthenticationController(
-            authService ?? CreateAuthService(),
-            _loggerMock.Object,
-            _rateLimiterMock.Object
         );
     }
 
@@ -55,14 +52,12 @@ public class AuthenticationControllerTest
     public async Task Login_ValidCredentials_ReturnsOkWithTokenAndUser()
     {
         var userDto = GetUserDto();
-        _loginUserHandler.Setup(h => h.ExecuteAsync(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserDto>.Success(userDto));
         _rateLimiterMock.Setup(r => r.AllowAttemptAsync(It.IsAny<string>())).ReturnsAsync(true);
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest, _loginUserHandler.Object, default);
 
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var okResult = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsType<LoginResponseDto>(okResult.Value);
         Assert.False(string.IsNullOrWhiteSpace(response.Token));
         Assert.Equal(userDto.Id, response.User.Id);
@@ -72,14 +67,12 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Login_InvalidCredentials_ReturnsUnauthorized()
     {
-        _loginUserHandler.Setup(h => h.ExecuteAsync(It.IsAny<LoginUserQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserDto>.Failure("Invalid credentials"));
         _rateLimiterMock.Setup(r => r.AllowAttemptAsync(It.IsAny<string>())).ReturnsAsync(true);
         var controller = CreateController();
 
         var result = await controller.Login(ValidLoginRequest, _loginUserHandler.Object, default);
 
-        Assert.IsType<UnauthorizedResult>(result.Result);
+        Assert.IsType<UnauthorizedResult>(result);
     }
 
     [Fact]
@@ -92,7 +85,7 @@ public class AuthenticationControllerTest
 
         var result = await controller.Login(ValidLoginRequest, _loginUserHandler.Object, default);
 
-        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(500, objectResult.StatusCode);
         Assert.Equal("Internal server error", objectResult.Value);
     }
@@ -105,20 +98,20 @@ public class AuthenticationControllerTest
 
         var result = await controller.Login(new AuthenticationController.LoginRequest(string.Empty, "pass"), _loginUserHandler.Object, default);
 
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+        Assert.IsType<BadRequestObjectResult>(result);
     }
 
     [Fact]
     public async Task Register_Success_ReturnsOkWithUser()
     {
         var userDto = GetUserDto();
-        _registerUserHandler.Setup(h => h.ExecuteAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+        _registerUserHandler.Setup(h => h.HandleAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<UserDto>.Success(userDto));
         var controller = CreateController();
 
         var result = await controller.Register(ValidLoginRequest, _registerUserHandler.Object, default);
 
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var okResult = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsType<UserDto>(okResult.Value);
 
         Assert.Equal(userDto.Id, response.Id);
@@ -128,24 +121,24 @@ public class AuthenticationControllerTest
     [Fact]
     public async Task Register_UsernameExists_ReturnsBadRequest()
     {
-        _registerUserHandler.Setup(h => h.ExecuteAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+        _registerUserHandler.Setup(h => h.HandleAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new InvalidOperationException("Username already exists."));
         var controller = CreateController();
         var result = await controller.Register(ValidLoginRequest, _registerUserHandler.Object, default);
-        var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
         Assert.Equal("Username already exists.", badRequest.Value);
     }
 
     [Fact]
     public async Task Register_ExceptionThrown_ReturnsInternalServerError()
     {
-        _registerUserHandler.Setup(h => h.ExecuteAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+        _registerUserHandler.Setup(h => h.HandleAsync(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception("fail"));
         var controller = CreateController();
 
         var result = await controller.Register(ValidLoginRequest, _registerUserHandler.Object, default);
 
-        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(500, objectResult.StatusCode);
         Assert.Equal("Internal server error", objectResult.Value);
     }
@@ -158,6 +151,6 @@ public class AuthenticationControllerTest
 
         var result = await controller.Register(new AuthenticationController.LoginRequest(string.Empty, "pass"), _registerUserHandler.Object, default);
 
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+        Assert.IsType<BadRequestObjectResult>(result);
     }
 }

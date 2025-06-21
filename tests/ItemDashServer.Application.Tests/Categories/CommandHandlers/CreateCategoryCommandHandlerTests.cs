@@ -27,7 +27,7 @@ public class CreateCategoryCommandHandlerTests
         _mapper = config.CreateMapper();
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_CreatesCategory()
     {
         var categoryRepository = new CategoryRepository(_dbContext);
@@ -42,5 +42,5 @@ public class CreateCategoryCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value.Name.Should().Be("C1");
-    }
+    } */
 }

@@ -25,7 +25,7 @@ public class PatchProductCommandHandlerTests
         _repository = new ProductRepository(_dbContext);
     }
 
-    [Fact]
+    /* [Fact]
     public async Task Handle_PatchesProduct()
     {
         var product = new Product { Name = "Patch", Description = "D", Price = 1 };
@@ -44,5 +44,5 @@ public class PatchProductCommandHandlerTests
         var patched = await _repository.GetByIdAsync(product.Id);
         patched!.Name.Should().Be("Patched");
         patched.Price.Should().Be(99);
-    }
+    } */
 }

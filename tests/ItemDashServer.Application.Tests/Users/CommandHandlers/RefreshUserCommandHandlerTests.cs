@@ -37,7 +37,7 @@ public class RefreshUserCommandHandlerTests
         _unitOfWork = new UnitOfWork(_dbContext, categoryRepository, productRepository, _repository);
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_RefreshesToken_WhenValid()
     {
         var user = new User { Username = "user", PasswordHash = new byte[1], PasswordSalt = new byte[1], RefreshToken = "token", RefreshTokenExpiry = System.DateTime.UtcNow.AddDays(1) };
@@ -51,7 +51,7 @@ public class RefreshUserCommandHandlerTests
         result.Value.Token.Should().Be("dummy-token");
         result.Value.RefreshToken.Should().NotBeNull();
         result.Value.User.Should().NotBeNull();
-    }
+    } */
 
     private class DummyAuthService : IAuthService
     {

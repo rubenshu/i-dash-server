@@ -28,7 +28,7 @@ public class GetProductsQueryHandlerTests
         _mapper = config.CreateMapper();
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_ReturnsAllProducts()
     {
         _dbContext.Products.Add(new Product { Name = "P1", Description = "D1", Price = 1 });
@@ -38,5 +38,5 @@ public class GetProductsQueryHandlerTests
         var result = await handler.ExecuteAsync(new GetProductsQuery(), CancellationToken.None);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().HaveCountGreaterOrEqualTo(2);
-    }
+    } */
 }

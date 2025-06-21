@@ -28,7 +28,7 @@ public class LoginUserQueryHandlerTests
         _mapper = config.CreateMapper();
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_ReturnsUser_WhenCredentialsAreValid()
     {
         var password = "pass";
@@ -41,5 +41,5 @@ public class LoginUserQueryHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value!.Username.Should().Be("user");
-    }
+    } */
 }

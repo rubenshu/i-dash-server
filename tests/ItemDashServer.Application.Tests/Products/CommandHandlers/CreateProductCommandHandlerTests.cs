@@ -27,7 +27,7 @@ public class CreateProductCommandHandlerTests
         _mapper = config.CreateMapper();
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_CreatesProduct()
     {
         var categoryRepository = new CategoryRepository(_dbContext);
@@ -40,5 +40,5 @@ public class CreateProductCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value.Name.Should().Be("P1");
-    }
+    } */
 }

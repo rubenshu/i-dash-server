@@ -9,6 +9,7 @@ using ItemDashServer.Application.Categories.QueryHandlers;
 using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Domain.Entities;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 
@@ -19,7 +20,7 @@ public class CategoriesControllerTests
     private readonly Mock<ILogger<CategoriesController>> _logger = new();
     private readonly Mock<ICreateCategoryCommandHandler> _createCategoryHandler = new();
     private readonly Mock<IUpdateCategoryCommandHandler> _updateCategoryHandler = new();
-    private CategoriesController CreateController() => new(_logger.Object);
+    private CategoriesController CreateController() => new();
 
     [Fact]
     public async Task GetAll_ReturnsOkWithCategories()
@@ -28,7 +29,7 @@ public class CategoriesControllerTests
             .ReturnsAsync(Result<IEnumerable<CategoryDto>>.Success(new List<CategoryDto> { new() { Id = 1, Name = "C1" } }));
         var controller = CreateController();
         var result = await controller.GetAll(_getCategoriesHandler.Object, default);
-        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var ok = Assert.IsType<OkObjectResult>(result);
         var categories = Assert.IsAssignableFrom<IEnumerable<CategoryDto>>(ok.Value);
         Assert.Single(categories);
     }
@@ -40,7 +41,7 @@ public class CategoriesControllerTests
             .ReturnsAsync(Result<CategoryDto>.Success(new CategoryDto { Id = 1, Name = "C1" }));
         var controller = CreateController();
         var result = await controller.GetById(1, _getCategoryByIdHandler.Object, default);
-        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var ok = Assert.IsType<OkObjectResult>(result);
         var category = Assert.IsType<CategoryDto>(ok.Value);
         Assert.Equal(1, category.Id);
     }
@@ -52,19 +53,19 @@ public class CategoriesControllerTests
             .ReturnsAsync(Result<CategoryDto>.Failure("Not found"));
         var controller = CreateController();
         var result = await controller.GetById(1, _getCategoryByIdHandler.Object, default);
-        Assert.IsType<NotFoundResult>(result.Result);
+        Assert.IsType<NotFoundResult>(result);
     }
 
     [Fact]
     public async Task Create_ReturnsCreated_WhenSuccessful()
     {
         var category = new CategoryDto { Id = 1, Name = "C1" };
-        _createCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
+        _createCategoryHandler.Setup(h => h.HandleAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<CategoryDto>.Success(category));
         var controller = CreateController();
-        var command = new CreateCategoryCommand("C1", "desc", 1m);
-        var result = await controller.Create(command, _createCategoryHandler.Object, default);
-        var created = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var product = new Product { Name = "C1", Description = "desc", Price = 1m };
+        var result = await controller.Create(product, _createCategoryHandler.Object, default);
+        var created = Assert.IsType<CreatedAtActionResult>(result);
         var value = Assert.IsType<CategoryDto>(created.Value);
         Assert.Equal(category.Id, value.Id);
     }
@@ -74,27 +75,27 @@ public class CategoriesControllerTests
     {
         var controller = CreateController();
         controller.ModelState.AddModelError("Name", "Required");
-        var command = new CreateCategoryCommand("", "", 0m);
-        var result = await controller.Create(command, _createCategoryHandler.Object, default);
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+        var product = new Product { Name = "C1", Description = "desc", Price = 1m };
+        var result = await controller.Create(product, _createCategoryHandler.Object, default);
+        Assert.IsType<BadRequestObjectResult>(result);
     }
 
     [Fact]
     public async Task Create_ReturnsBadRequest_WhenHandlerFails()
     {
-        _createCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
+        _createCategoryHandler.Setup(h => h.HandleAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<CategoryDto>.Failure("fail"));
         var controller = CreateController();
-        var command = new CreateCategoryCommand("C1", "desc", 1m);
-        var result = await controller.Create(command, _createCategoryHandler.Object, default);
-        var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+                var product = new Product { Name = "C1", Description = "desc", Price = 1m };
+        var result = await controller.Create(product, _createCategoryHandler.Object, default);
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
         Assert.Equal("fail", badRequest.Value);
     }
 
     [Fact]
     public async Task Update_ReturnsOk_WhenSuccessful()
     {
-        _updateCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
+        _updateCategoryHandler.Setup(h => h.HandleAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<bool>.Success(true));
         var controller = CreateController();
         var command = new UpdateCategoryCommand(1, "C1", "desc", 1m);
@@ -125,7 +126,7 @@ public class CategoriesControllerTests
     [Fact]
     public async Task Update_ReturnsNotFound_WhenHandlerFails()
     {
-        _updateCategoryHandler.Setup(h => h.ExecuteAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
+        _updateCategoryHandler.Setup(h => h.HandleAsync(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<bool>.Success(false));
         var controller = CreateController();
         var command = new UpdateCategoryCommand(1, "C1", "desc", 1m);

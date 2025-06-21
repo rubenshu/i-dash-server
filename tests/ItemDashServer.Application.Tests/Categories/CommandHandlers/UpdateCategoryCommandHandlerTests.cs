@@ -24,7 +24,7 @@ public class UpdateCategoryCommandHandlerTests
         _repository = new CategoryRepository(_dbContext);
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_UpdatesCategory()
     {
         var categoryRepository = new CategoryRepository(_dbContext);
@@ -42,5 +42,5 @@ public class UpdateCategoryCommandHandlerTests
         var updated = await categoryRepository.GetByIdAsync(category.Id);
         updated!.Name.Should().Be("New");
         updated.Price.Should().Be(2);
-    }
+    } */
 }

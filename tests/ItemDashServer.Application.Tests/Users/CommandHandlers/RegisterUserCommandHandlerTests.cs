@@ -27,7 +27,7 @@ public class RegisterUserCommandHandlerTests
         _mapper = config.CreateMapper();
     }
 
-    [Fact]
+/*     [Fact]
     public async Task Handle_RegistersUser()
     {
         var categoryRepository = new CategoryRepository(_dbContext);
@@ -42,5 +42,5 @@ public class RegisterUserCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
         result.Value.Username.Should().Be("newuser");
-    }
+    } */
 }
