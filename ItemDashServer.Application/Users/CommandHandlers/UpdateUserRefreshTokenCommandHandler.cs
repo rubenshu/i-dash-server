@@ -1,6 +1,7 @@
 using ItemDashServer.Application.Users.Commands;
-using ItemDashServer.Application.Common;
-using AutoMapper;
+using ItemDashServer.Application.Common.Abstractions;
+using ItemDashServer.Application.Common.Handlers;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Application.Users.CommandHandlers;
 

@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using ItemDashServer.Application;
 using ItemDashServer.Application.Categories.Repositories;
+using ItemDashServer.Application.Common.Abstractions;
 using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Application.Users.Repositories;
-using ItemDashServer.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemDashServer.Infrastructure.Persistence

@@ -1,5 +1,4 @@
-﻿using ItemDashServer.Application.Common;
-using ItemDashServer.Domain.Entities;
+﻿using ItemDashServer.Application.Common.Abstractions;
 
 namespace ItemDashServer.Application.Categories.Commands;
 

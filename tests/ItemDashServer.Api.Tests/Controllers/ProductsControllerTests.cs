@@ -6,7 +6,7 @@ using ItemDashServer.Api.Controllers;
 using ItemDashServer.Application.Products;
 using ItemDashServer.Application.Products.Queries;
 using ItemDashServer.Application.Products.QueryHandlers;
-using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 

@@ -1,8 +1,10 @@
-﻿using ItemDashServer.Application.Common;
-using ItemDashServer.Application.Products.Commands;
+﻿using ItemDashServer.Application.Products.Commands;
 using ItemDashServer.Domain.Entities;
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using ItemDashServer.Application.Common.Handlers;
+using ItemDashServer.Application.Common.Abstractions;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 

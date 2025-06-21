@@ -10,7 +10,7 @@ using ItemDashServer.Application.Categories.Repositories;
 using ItemDashServer.Application.Users.Repositories;
 using ItemDashServer.Infrastructure.Persistence;
 using ItemDashServer.Api.Services;
-using ItemDashServer.Application;
+using ItemDashServer.Application.Common.Abstractions;
 
 namespace ItemDashServer.Api.DependencyInjection;
 
@@ -22,7 +22,7 @@ public static class HandlerServiceCollectionExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         // Logger
-        services.AddSingleton<Application.Common.ILogger, ConsoleLogger>();
+        services.AddSingleton<Application.Common.Abstractions.ILogger, ConsoleLogger>();
 
         // Services
         services.AddScoped<IAuthService, AuthService>();

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using ItemDashServer.Application.Categories.Queries;
 using ItemDashServer.Application.Categories.Repositories;
-using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Common.Abstractions;
+using ItemDashServer.Application.Common.Handlers;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Application.Categories.QueryHandlers;
 

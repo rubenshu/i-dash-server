@@ -1,7 +1,7 @@
 using ItemDashServer.Application.Users.Repositories;
 using AutoMapper;
 using ItemDashServer.Application.Users.Queries;
-using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 

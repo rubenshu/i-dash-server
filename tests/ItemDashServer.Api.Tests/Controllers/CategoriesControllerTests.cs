@@ -10,6 +10,7 @@ using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Commands;
 using ItemDashServer.Domain.Entities;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 
@@ -86,7 +87,7 @@ public class CategoriesControllerTests
         _createCategoryHandler.Setup(h => h.HandleAsync(It.IsAny<CreateCategoryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<CategoryDto>.Failure("fail"));
         var controller = CreateController();
-                var product = new Product { Name = "C1", Description = "desc", Price = 1m };
+        var product = new Product { Name = "C1", Description = "desc", Price = 1m };
         var result = await controller.Create(product, _createCategoryHandler.Object, default);
         var badRequest = Assert.IsType<BadRequestObjectResult>(result);
         Assert.Equal("fail", badRequest.Value);

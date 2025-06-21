@@ -1,4 +1,4 @@
-﻿using ItemDashServer.Application.Common;
+﻿using ItemDashServer.Application.Common.Abstractions;
 
 namespace ItemDashServer.Application.Products.Queries;
 

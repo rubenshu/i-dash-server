@@ -12,6 +12,7 @@ using ItemDashServer.Application.Users.Commands;
 using ItemDashServer.Application.Users.QueryHandlers;
 using ItemDashServer.Application.Users.CommandHandlers;
 using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Api.Tests.Controllers;
 

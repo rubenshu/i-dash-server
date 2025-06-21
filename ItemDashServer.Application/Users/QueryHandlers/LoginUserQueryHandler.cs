@@ -5,6 +5,7 @@ using ItemDashServer.Application.Users.Queries;
 using System.Security.Cryptography;
 using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Services;
+using ItemDashServer.Application.Common.Results;
 
 namespace ItemDashServer.Application.Users.QueryHandlers;
 

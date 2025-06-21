@@ -1,10 +1,8 @@
-using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Common.Abstractions;
+using ItemDashServer.Application.Common.Results;
 using ItemDashServer.Application.Users.Queries;
 
 namespace ItemDashServer.Application.Users.QueryHandlers
 {
-    public interface IGetUserByRefreshTokenQueryHandler
-    {
-        Task<Result<UserDto>> ExecuteAsync(GetUserByRefreshTokenQuery query, CancellationToken cancellationToken);
-    }
+    public interface IGetUserByRefreshTokenQueryHandler : IAsyncQueryHandler<GetUserByRefreshTokenQuery, Result<UserDto>> { }
 }

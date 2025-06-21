@@ -1,4 +1,4 @@
-namespace ItemDashServer.Application.Common;
+namespace ItemDashServer.Application.Common.Abstractions;
 
 public interface ILogger
 {

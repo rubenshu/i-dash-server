@@ -1,6 +1,9 @@
+using System;
+using ItemDashServer.Application.Common.Abstractions;
+
 namespace ItemDashServer.Api.Services;
 
-public class ConsoleLogger : Application.Common.ILogger
+public class ConsoleLogger : ItemDashServer.Application.Common.Abstractions.ILogger
 {
     public void Debug(Type type, string message, params object[] args) =>
         Console.WriteLine($"DEBUG [{type.Name}]: {string.Format(message, args)}");
