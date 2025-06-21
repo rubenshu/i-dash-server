@@ -5,6 +5,6 @@ namespace ItemDashServer.Application.Users.QueryHandlers
 {
     public interface ILoginUserQueryHandler
     {
-        Task<Result<UserDto>> ExecuteAsync(LoginUserQuery query, CancellationToken cancellationToken);
+        Task<Result<LoginResponseDto>> ExecuteAsync(LoginUserQuery query, CancellationToken cancellationToken);
     }
 }

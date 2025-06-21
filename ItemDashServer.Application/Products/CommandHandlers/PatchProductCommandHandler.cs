@@ -1,17 +1,16 @@
 ﻿using ItemDashServer.Application.Common;
 using ItemDashServer.Application.Products.Commands;
-using ItemDashServer.Application.Products.Repositories;
 using ItemDashServer.Domain.Entities;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class PatchProductCommandHandler(IUnitOfWork unitOfWork) : IPatchProductCommandHandler
+public class PatchProductCommandHandler(ILogger logger, IUnitOfWork unitOfWork) : AsyncCommandHandlerBase<PatchProductCommand, Result<bool>>(logger, unitOfWork), IPatchProductCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<Result<bool>> ExecuteAsync(PatchProductCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<bool>> DoHandle(PatchProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _unitOfWork.Products.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return Result<bool>.Failure("Product not found");

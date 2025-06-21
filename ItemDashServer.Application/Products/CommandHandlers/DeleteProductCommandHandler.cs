@@ -3,17 +3,14 @@ using ItemDashServer.Application.Products.Commands;
 
 namespace ItemDashServer.Application.Products.CommandHandlers;
 
-public class DeleteProductCommandHandler(IUnitOfWork unitOfWork) : IDeleteProductCommandHandler
+public class DeleteProductCommandHandler(ILogger logger, IUnitOfWork unitOfWork) : AsyncCommandHandlerBase<DeleteProductCommand, Result<bool>>(logger, unitOfWork), IDeleteProductCommandHandler
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
-
-    public async Task<Result<bool>> ExecuteAsync(DeleteProductCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<bool>> DoHandle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _unitOfWork.Products.GetByIdAsync(request.Id, cancellationToken);
+        var entity = await UnitOfWork.Products.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return Result<bool>.Failure("Product not found");
-
-        await _unitOfWork.Products.DeleteAsync(entity, cancellationToken);
-        await _unitOfWork.CommitAsync();
+        await UnitOfWork.Products.DeleteAsync(entity, cancellationToken);
+        // Commit handled by base
         return Result<bool>.Success(true);
     }
 }

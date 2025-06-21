@@ -3,8 +3,5 @@ using ItemDashServer.Application.Categories.Commands;
 
 namespace ItemDashServer.Application.Categories.CommandHandlers
 {
-    public interface IUpdateCategoryCommandHandler
-    {
-        Task<Result<bool>> ExecuteAsync(UpdateCategoryCommand command, CancellationToken cancellationToken);
-    }
+    public interface IUpdateCategoryCommandHandler : IAsyncCommandHandler<UpdateCategoryCommand, Result<bool>> { }
 }

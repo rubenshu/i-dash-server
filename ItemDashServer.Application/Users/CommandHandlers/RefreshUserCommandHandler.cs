@@ -13,13 +13,18 @@ public class RefreshUserResultDto
     public UserDto? User { get; set; }
 }
 
-public class RefreshUserCommandHandler(IUnitOfWork unitOfWork, IAuthService authService, IMapper mapper) : IRefreshUserCommandHandler
+public class RefreshUserCommandHandler(
+    ILogger logger,
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IAuthService authService
+) : AsyncCommandHandlerBase<RefreshUserCommand, Result<RefreshUserResultDto>>(logger, unitOfWork), IRefreshUserCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAuthService _authService = authService;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<RefreshUserResultDto>> ExecuteAsync(RefreshUserCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<RefreshUserResultDto>> DoHandle(RefreshUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.Users.GetByRefreshTokenAsync(request.RefreshToken, cancellationToken);
 

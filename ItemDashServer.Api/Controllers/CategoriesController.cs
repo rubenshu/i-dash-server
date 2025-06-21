@@ -5,76 +5,45 @@ using ItemDashServer.Application.Categories.QueryHandlers;
 using ItemDashServer.Application.Categories.CommandHandlers;
 using ItemDashServer.Application.Categories.Queries;
 using ItemDashServer.Application.Categories.Commands;
+using ItemDashServer.Application.Common;
+using ItemDashServer.Domain.Entities;
 
 namespace ItemDashServer.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/categories")]
 [Authorize]
-public class CategoriesController(ILogger<CategoriesController> logger) : ControllerBase
+public class CategoriesController() : ControllerBase
 {
-    private readonly ILogger<CategoriesController> _logger = logger;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll(
+    public async Task<IActionResult> GetAll(
         [FromServices] IGetCategoriesQueryHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new GetCategoriesQuery(), cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return NotFound();
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error fetching categories");
-            return StatusCode(500, "Internal server error");
-        }
+        var result = await handler.ExecuteAsync(new GetCategoriesQuery(), cancellationToken);
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<CategoryDto>> GetById(
+    public async Task<IActionResult> GetById(
         int id,
         [FromServices] IGetCategoryByIdQueryHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new GetCategoryByIdQuery(id), cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return NotFound();
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error fetching category with id {CategoryId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        var result = await handler.ExecuteAsync(new GetCategoryByIdQuery(id), cancellationToken);
+        return Ok(result);
     }
 
     [HttpPost]
-    public async Task<ActionResult<CategoryDto>> Create(
-        [FromBody] CreateCategoryCommand command,
+    public async Task<IActionResult> Create(
+        [FromBody] Product product,
         [FromServices] ICreateCategoryCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        try
-        {
-            var result = await handler.ExecuteAsync(command, cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return BadRequest(result.Error ?? "Category creation failed.");
-            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating category");
-            return StatusCode(500, "Internal server error");
-        }
+        var cmd = new CreateCategoryCommand(product.Id, product.Name, product.Description, product.Price);
+        var result = await handler.HandleAsync(cmd, cancellationToken);
+        return Ok(result);
     }
 
     [HttpPut("{id:int}")]
@@ -84,24 +53,8 @@ public class CategoriesController(ILogger<CategoriesController> logger) : Contro
         [FromServices] IUpdateCategoryCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        if (id != command.Id)
-            return BadRequest("ID in URL does not match ID in body.");
-
-        try
-        {
-            var result = await handler.ExecuteAsync(command, cancellationToken);
-            if (!result.IsSuccess || !result.Value)
-                return NotFound();
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating category with id {CategoryId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        var result = await handler.HandleAsync(command, cancellationToken);
+        return Ok(result);
     }
 
     [HttpDelete("{id:int}")]
@@ -110,17 +63,7 @@ public class CategoriesController(ILogger<CategoriesController> logger) : Contro
         [FromServices] IDeleteCategoryCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new DeleteCategoryCommand(id), cancellationToken);
-            if (!result.IsSuccess || !result.Value)
-                return NotFound();
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error deleting category with id {CategoryId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        var result = await handler.HandleAsync(new DeleteCategoryCommand(id), cancellationToken);
+        return Ok(result);
     }
 }

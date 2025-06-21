@@ -5,12 +5,11 @@ using ItemDashServer.Domain.Entities;
 
 namespace ItemDashServer.Application.Categories.CommandHandlers;
 
-public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : ICreateCategoryCommandHandler
+public class CreateCategoryCommandHandler(ILogger logger, IUnitOfWork unitOfWork, IMapper mapper) : AsyncCommandHandlerBase<CreateCategoryCommand, Result<CategoryDto>>(logger, unitOfWork), ICreateCategoryCommandHandler
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<CategoryDto>> ExecuteAsync(CreateCategoryCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<CategoryDto>> DoHandle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = new Category
         {
@@ -18,9 +17,8 @@ public class CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper
             Description = request.Description,
             Price = request.Price,
         };
-
-        await _unitOfWork.Categories.AddAsync(entity, cancellationToken);
-        await _unitOfWork.CommitAsync();
+        await UnitOfWork.Categories.AddAsync(entity, cancellationToken);
+        // Commit handled by base
         return Result<CategoryDto>.Success(_mapper.Map<CategoryDto>(entity));
     }
 }

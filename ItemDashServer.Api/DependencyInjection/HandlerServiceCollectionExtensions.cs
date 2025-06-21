@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using ItemDashServer.Application.Products.QueryHandlers;
 using ItemDashServer.Application.Products.CommandHandlers;
 using ItemDashServer.Application.Categories.QueryHandlers;
@@ -21,6 +20,9 @@ public static class HandlerServiceCollectionExtensions
     {
         // Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        // Logger
+        services.AddSingleton<Application.Common.ILogger, ConsoleLogger>();
 
         // Services
         services.AddScoped<IAuthService, AuthService>();

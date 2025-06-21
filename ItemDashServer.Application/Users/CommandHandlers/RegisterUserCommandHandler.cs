@@ -2,16 +2,26 @@
 using AutoMapper;
 using ItemDashServer.Application.Users.Commands;
 using ItemDashServer.Application.Common;
+using ItemDashServer.Application.Services;
 
 namespace ItemDashServer.Application.Users.CommandHandlers;
 
-public class RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRegisterUserCommandHandler
+public class RegisterUserCommandHandler(
+    ILogger logger,
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IAuthService authService
+) : AsyncCommandHandlerBase<RegisterUserCommand, Result<UserDto>>(logger, unitOfWork), IRegisterUserCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IAuthService _authService = authService;
 
-    public async Task<Result<UserDto>> ExecuteAsync(RegisterUserCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<UserDto>> DoHandle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
+        if (!_authService.IsPasswordComplex(request.Password))
+            return Result<UserDto>.Failure("Password does not meet complexity requirements.");
+
         var existing = await _unitOfWork.Users.GetByUsernameAsync(request.Username, cancellationToken);
         if (existing != null)
             return Result<UserDto>.Failure("Username already exists.");

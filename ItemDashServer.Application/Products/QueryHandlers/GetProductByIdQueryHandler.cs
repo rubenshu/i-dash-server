@@ -5,12 +5,12 @@ using ItemDashServer.Application.Common;
 
 namespace ItemDashServer.Application.Products.QueryHandlers;
 
-public class GetProductByIdQueryHandler(IProductRepository productRepository, IMapper mapper) : IGetProductByIdQueryHandler
+public class GetProductByIdQueryHandler(ILogger logger, IProductRepository productRepository, IMapper mapper) : AsyncQueryHandlerBase<GetProductByIdQuery, Result<ProductDto>>(logger), IGetProductByIdQueryHandler
 {
     private readonly IProductRepository _productRepository = productRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<ProductDto>> ExecuteAsync(GetProductByIdQuery query, CancellationToken cancellationToken)
+    protected override async Task<Result<ProductDto>> DoExecute(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
         var entity = await _productRepository.GetByIdAsync(query.Id, cancellationToken);
         if (entity == null) return Result<ProductDto>.Failure("Product not found");

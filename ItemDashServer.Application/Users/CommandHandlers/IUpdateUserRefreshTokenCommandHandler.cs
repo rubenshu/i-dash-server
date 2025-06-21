@@ -3,8 +3,5 @@ using ItemDashServer.Application.Users.Commands;
 
 namespace ItemDashServer.Application.Users.CommandHandlers
 {
-    public interface IUpdateUserRefreshTokenCommandHandler
-    {
-        Task<Result<bool>> ExecuteAsync(UpdateUserRefreshTokenCommand command, CancellationToken cancellationToken);
-    }
+    public interface IUpdateUserRefreshTokenCommandHandler : IAsyncCommandHandler<UpdateUserRefreshTokenCommand, Result<bool>> { }
 }

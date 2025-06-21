@@ -11,70 +11,34 @@ namespace ItemDashServer.Api.Controllers;
 [ApiController]
 [Route("api/v1/products")]
 [Authorize]
-public class ProductsController(ILogger<ProductsController> logger) : ControllerBase
+public class ProductsController() : ControllerBase
 {
-    private readonly ILogger<ProductsController> _logger = logger;
-
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(
+    public async Task<IActionResult> GetAll(
         [FromServices] IGetProductsQueryHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new GetProductsQuery(), cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return NotFound();
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error fetching products");
-            return StatusCode(500, "Internal server error");
-        }
+        var query = new GetProductsQuery();
+        return Ok(await handler.ExecuteAsync(query, cancellationToken));
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ProductDto>> GetById(
+    public async Task<IActionResult> GetById(
         int id,
         [FromServices] IGetProductByIdQueryHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new GetProductByIdQuery(id), cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return NotFound();
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error fetching product with id {ProductId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        var query = new GetProductByIdQuery(id);
+        return Ok(await handler.ExecuteAsync(query, cancellationToken));
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProductDto>> Create(
+    public async Task<IActionResult> Create(
         [FromBody] CreateProductCommand command,
         [FromServices] ICreateProductCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        try
-        {
-            var result = await handler.ExecuteAsync(command, cancellationToken);
-            if (!result.IsSuccess || result.Value == null)
-                return BadRequest(result.Error ?? "Product creation failed.");
-            return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating product");
-            return StatusCode(500, "Internal server error");
-        }
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     [HttpPut("{id:int}")]
@@ -84,24 +48,7 @@ public class ProductsController(ILogger<ProductsController> logger) : Controller
         [FromServices] IUpdateProductCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        if (id != command.Id)
-            return BadRequest("ID in URL does not match ID in body.");
-
-        try
-        {
-            var result = await handler.ExecuteAsync(command, cancellationToken);
-            if (!result.IsSuccess || !result.Value)
-                return NotFound();
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating product with id {ProductId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 
     [HttpDelete("{id:int}")]
@@ -110,17 +57,7 @@ public class ProductsController(ILogger<ProductsController> logger) : Controller
         [FromServices] IDeleteProductCommandHandler handler,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await handler.ExecuteAsync(new DeleteProductCommand(id), cancellationToken);
-            if (!result.IsSuccess || !result.Value)
-                return NotFound();
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error deleting product with id {ProductId}", id);
-            return StatusCode(500, "Internal server error");
-        }
+        var command = new DeleteProductCommand(id);
+        return Ok(await handler.HandleAsync(command, cancellationToken));
     }
 }
