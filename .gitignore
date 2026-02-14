@@ -34,3 +34,10 @@ Thumbs.db
 # NuGet packages
 *.nupkg
 packages/
+
+# Configuration files with secrets
+appsettings.json
+appsettings.*.json
+!appsettings.Development.json
+.env
+.env.*
